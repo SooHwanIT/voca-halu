@@ -83,7 +83,7 @@ h1,h2,h3{text-wrap:balance;margin:0}
 
 /* bottom nav (< 640) */
 .bottomnav{position:fixed;left:0;right:0;bottom:0;z-index:20;background:var(--surface);border-top:1px solid var(--line);display:block;padding-bottom:env(safe-area-inset-bottom)}
-.bottomnav .in{display:grid;grid-template-columns:repeat(3,1fr);height:var(--nav-h)}
+.bottomnav .in{display:grid;grid-template-columns:repeat(4,1fr);height:var(--nav-h)}
 .bottomnav button{border:0;background:transparent;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:3px;color:var(--ink-3);font-size:11px;font-weight:500;position:relative}
 .bottomnav button[aria-selected="true"]{color:var(--ink)}
 .bottomnav button[aria-selected="true"]::before{content:"";position:absolute;top:0;left:28%;right:28%;height:2px;background:var(--signal)}
@@ -311,6 +311,36 @@ dialog.sheet::backdrop{background:rgba(20,20,18,.5)}
 .exam .choices{grid-template-columns:repeat(2,1fr)}
 .exam .choice{min-height:44px;font-size:14.5px;font-family:var(--latin)}
 
+/* ---------- stats ---------- */
+.stat-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:0;border:1px solid var(--line);border-radius:var(--r-lg);overflow:hidden;margin-top:16px}
+.stat{padding:14px 16px;border-right:1px solid var(--line);display:flex;flex-direction:column;gap:2px;background:var(--surface)}
+.stat:last-child{border-right:0}
+.stat .big{font-family:var(--latin);font-size:26px;font-weight:600;line-height:1.1}
+.stat .big small{font-size:13px;color:var(--ink-3);font-weight:500;margin-left:2px}
+.stat .sub{font-size:12px;color:var(--ink-3)}
+.period{display:grid;grid-template-columns:110px repeat(4,1fr);align-items:center;padding:12px 0;border-bottom:1px solid var(--line);font-size:14px}
+.period:last-child{border-bottom:0}
+.period .name{font-weight:500}
+.period .name small{display:block;font-size:11.5px;color:var(--ink-3);font-weight:400}
+.period .v{font-family:var(--latin);font-variant-numeric:tabular-nums;font-size:15px}
+.period .v small{font-size:11px;color:var(--ink-3);margin-left:2px}
+.period.head{padding:6px 0;font-family:var(--mono);font-size:11px;color:var(--ink-3);text-transform:uppercase;letter-spacing:.04em}
+.bars{display:grid;grid-template-columns:repeat(30,1fr);gap:3px;align-items:end;height:120px;margin-top:10px}
+.bars i{display:block;background:var(--surface-3);border-radius:2px 2px 0 0;min-height:2px;position:relative}
+.bars i.on{background:var(--signal)}
+.bars i.today{outline:1px solid var(--ink);outline-offset:1px}
+.bar-lab{display:grid;grid-template-columns:repeat(30,1fr);gap:3px;margin-top:4px;font-family:var(--mono);font-size:10px;color:var(--ink-3)}
+.bar-lab span{text-align:center;overflow:hidden;white-space:nowrap}
+.bars i[title]:hover::after{content:attr(title);position:absolute;bottom:100%;left:50%;transform:translateX(-50%);background:var(--ink);color:var(--bg);font-family:var(--mono);font-size:10.5px;padding:2px 6px;border-radius:3px;white-space:nowrap;margin-bottom:4px;z-index:2}
+@media (max-width:639px){
+  .stat-grid{grid-template-columns:repeat(2,1fr)}
+  .stat:nth-child(2){border-right:0}
+  .stat:nth-child(-n+2){border-bottom:1px solid var(--line)}
+  .period{grid-template-columns:84px repeat(4,1fr);font-size:13px}
+  .period .v{font-size:14px}
+  .bottomnav .in{grid-template-columns:repeat(4,1fr)}
+}
+
 /* ---------- responsive ---------- */
 @media (min-width:640px){
   .tabs{display:flex}
@@ -364,6 +394,7 @@ dialog.sheet::backdrop{background:rgba(20,20,18,.5)}
     <button data-view="list" aria-selected="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M4 5.5A2.5 2.5 0 016.5 3H20v16H6.5A2.5 2.5 0 004 21.5z"/><path d="M4 19a2 2 0 012-2h14"/></svg>단어장</button>
     <button data-view="quiz" aria-selected="false"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M9 11l3 3 8-8"/><path d="M20 12v6a2 2 0 01-2 2H6a2 2 0 01-2-2V6a2 2 0 012-2h9"/></svg>퀴즈</button>
     <button data-view="exam" aria-selected="false"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M8 3h8l4 4v14H4V3z"/><path d="M8 12h8M8 16h5"/></svg>기출 문제</button>
+    <button data-view="stats" aria-selected="false"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M4 20V10M10 20V4M16 20v-8M22 20H2"/></svg>기록</button>
   </nav>
   <div>
     <div class="sec-h"><span class="eyebrow">학습 범위</span><button class="btn ghost" id="railEdit">편집</button></div>
@@ -384,6 +415,7 @@ dialog.sheet::backdrop{background:rgba(20,20,18,.5)}
     <button role="tab" id="tab-list" aria-selected="true" data-view="list">단어장</button>
     <button role="tab" id="tab-quiz" aria-selected="false" data-view="quiz">퀴즈</button>
     <button role="tab" id="tab-exam" aria-selected="false" data-view="exam">기출 문제</button>
+    <button role="tab" id="tab-stats" aria-selected="false" data-view="stats">기록</button>
   </nav>
   <span class="spacer"></span>
   <button class="range" id="rangeBtn" aria-haspopup="dialog" aria-label="학습 범위 선택">
@@ -491,6 +523,17 @@ dialog.sheet::backdrop{background:rgba(20,20,18,.5)}
   <div class="page-h"><div><h2>기출 변형 문제</h2><div class="sub num" id="examMeta"></div></div><button class="btn ghost" id="examReset">푼 기록 지우기</button></div>
   <div id="examList" style="margin-top:14px"></div>
 </section>
+<!-- ===== STATS ===== -->
+<section id="view-stats" aria-labelledby="tab-stats" hidden>
+  <div class="page-h"><div><h2>기록</h2><div class="sub" id="statsSub"></div></div></div>
+  <div class="stat-grid" id="statToday"></div>
+  <div class="sec"><h2>기간별</h2><span class="meta">문제 수 · 정답률 · 암기 완료 · 학습 시간</span></div>
+  <div id="periods"></div>
+  <div class="sec"><h2>최근 30일</h2><span class="meta">하루에 푼 문제 수</span></div>
+  <div class="bars" id="bars"></div><div class="bar-lab" id="barLab"></div>
+  <div class="sec"><h2>전체 진행</h2><span class="meta" id="totalMeta"></span></div>
+  <div class="rail-day" style="display:block;padding:0"><span class="bar" style="display:block;height:6px;margin:0"><i id="totalBar"></i></span></div>
+</section>
 </div><!-- /main -->
 </div><!-- /frame -->
 
@@ -498,6 +541,7 @@ dialog.sheet::backdrop{background:rgba(20,20,18,.5)}
   <button data-view="list" aria-selected="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M4 5.5A2.5 2.5 0 016.5 3H20v16H6.5A2.5 2.5 0 004 21.5z"/><path d="M4 19a2 2 0 012-2h14"/></svg>단어장</button>
   <button data-view="quiz" aria-selected="false"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M9 11l3 3 8-8"/><path d="M20 12v6a2 2 0 01-2 2H6a2 2 0 01-2-2V6a2 2 0 012-2h9"/></svg>퀴즈</button>
   <button data-view="exam" aria-selected="false"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M8 3h8l4 4v14H4V3z"/><path d="M8 12h8M8 16h5"/></svg>기출</button>
+  <button data-view="stats" aria-selected="false"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M4 20V10M10 20V4M16 20v-8M22 20H2"/></svg>기록</button>
 </div></nav>
 
 <dialog class="sheet" id="setDlg" aria-labelledby="setTitle">
@@ -560,6 +604,13 @@ let streak=load('voca.streak',{});           // 연속 정답 횟수 (표시하�
 let done=new Set(load('voca.done',[]));       // 암기 완료
 function setDone(id,on){on?done.add(id):done.delete(id);if(!on)streak[id]=0;save('voca.done',[...done]);save('voca.streak',streak);}
 let showMemos=load('voca.showMemos',false);
+// ---------- activity log (per day) ----------
+let LOG=load('voca.log',{});
+const dkey=(d=new Date())=>`${d.getFullYear()}-${String(d.getMonth()+1).padStart(2,'0')}-${String(d.getDate()).padStart(2,'0')}`;
+function bump(k,n=1){const d=dkey();const e=LOG[d]||(LOG[d]={});e[k]=(e[k]||0)+n;save('voca.log',LOG);}
+let lastAct=Date.now();
+['click','keydown','touchstart','scroll','input'].forEach(ev=>document.addEventListener(ev,()=>{lastAct=Date.now();},{passive:true}));
+setInterval(()=>{if(!document.hidden&&Date.now()-lastAct<60000)bump('sec',15);},15000);
 const pool=()=>WORDS.filter(w=>selected.has(w.d));
 let showEx=load('voca.showEx',false);
 const exEn=(w,mode)=>esc(w.ex).replace(/\[([^\]]+)\]/,(m,g)=>mode==='blank'?'<span class="blank">&nbsp;</span>':mode==='ok'?`<span class="blank ok">${g}</span>`:mode==='no'?`<span class="blank no">${g}</span>`:`<b>${g}</b>`);
@@ -644,6 +695,7 @@ async function startPlay(){
       r.scrollIntoView({block:'center',behavior:smooth});
       $('#ttsNow').innerHTML=esc(w.w)+'<small>'+(i+1)+' / '+rows.length+'</small>';
       if(rows[i+1])prefetch(WORDS[+rows[i+1].dataset.id].w);
+      bump('tts');
       await speak(w.w,'en');if(tok!==playToken)return;
       if($('#ttsKo').checked){await wait(250);await speak(w.m.replace(/\s*\/\s*/g,', '),'ko');if(tok!==playToken)return;}
       await wait(500);
@@ -736,7 +788,7 @@ $('#rangeApply').addEventListener('click',()=>{if(!draft.size)return;if(playing)
 let view='list';
 function setView(v){view=v;if(playing)stopPlay();
   $$('[data-view]').forEach(b=>b.setAttribute('aria-selected',b.dataset.view===v));
-  ['list','quiz','exam'].forEach(x=>$('#view-'+x).hidden=x!==v);
+  ['list','quiz','exam','stats'].forEach(x=>$('#view-'+x).hidden=x!==v);
   window.scrollTo({top:0});render();}
 $$('[data-view]').forEach(b=>b.addEventListener('click',()=>setView(b.dataset.view)));
 
@@ -794,7 +846,7 @@ document.addEventListener('click',e=>{
   const sy=e.target.closest('.row .say-word, .row .en.say');
   if(sy){const r=sy.closest('.row');const txt=r.dataset.id!=null?WORDS[+r.dataset.id].w:r.dataset.say;sayNow(txt,'en');return;}
   const db=e.target.closest('.row .done-btn');
-  if(db){const r=db.closest('.row');const id=+r.dataset.id;const on=!done.has(id);setDone(id,on);
+  if(db){const r=db.closest('.row');const id=+r.dataset.id;const on=!done.has(id);setDone(id,on);if(on)bump('done');
     r.classList.toggle('done',on);db.classList.toggle('on',on);db.setAttribute('aria-pressed',on);db.innerHTML=on?CHECK_F:CHECK;
     const wEl=r.querySelector('.w');let bd=wEl.querySelector('.badge.done');
     if(on&&!bd){bd=document.createElement('span');bd.className='badge done';bd.textContent='완료';wEl.querySelector('.en').after(bd);}else if(!on&&bd)bd.remove();
@@ -898,9 +950,10 @@ function answerSA(){
   finish(ok,w,v);
 }
 function finish(ok,w,given){
-  if(ok){Q.correct++;streak[w.id]=(streak[w.id]||0)+1;if(streak[w.id]>=3&&!done.has(w.id)){done.add(w.id);Q.newDone=(Q.newDone||0)+1;save('voca.done',[...done]);}}
+  if(ok){Q.correct++;streak[w.id]=(streak[w.id]||0)+1;if(streak[w.id]>=3&&!done.has(w.id)){done.add(w.id);Q.newDone=(Q.newDone||0)+1;save('voca.done',[...done]);bump('done');}}
   else{Q.wrong.push({w,given});wrongs[w.id]=wc(w.id)+1;save('voca.wrong',wrongs);streak[w.id]=0;if(done.has(w.id)){done.delete(w.id);Q.lostDone=(Q.lostDone||0)+1;save('voca.done',[...done]);}}
   save('voca.streak',streak);
+  bump('q');if(ok)bump('ok');
   const fb=$('#qFeed');fb.hidden=false;fb.className='feedback '+(ok?'good':'bad');
   fb.innerHTML=(ok?'정답 · ':'오답 · 정답은 ')+`<b>${esc(w.w)}</b> ${esc(w.p)} ${esc(w.m)}`+(ok&&streak[w.id]===3&&done.has(w.id)?' <span class="badge done">암기 완료</span>':'')+((hasSpeech||canNeural)?` <button type="button" class="say-btn" id="fbSay" aria-label="발음 듣기" style="width:32px;height:32px">${SPK}</button>`:'');
   if(hasSpeech||canNeural){if(Q.mode==='fill')sayNow(w.ex.replace(/[\[\]]/g,''),'en');else if(!(Q.mode==='mc'&&Q.dir==='en'))sayNow(w.w,'en');}
@@ -954,11 +1007,38 @@ function renderExam(){
       return `<button type="button" class="${cls}" data-key="${esc(k)}" data-k="${i}" ${a!=null?'disabled':''}><span class="k">${'ABCD'[i]}</span><span>${esc(o)}</span></button>`;}).join('')}</div></div>`;}).join('')
     :`<div class="empty panel"><strong>이 범위에는 기출 문제가 없어요</strong><span>기출 변형 문제는 Day 01~30에 3문제씩 들어 있어요.</span><button type="button" class="btn" id="emptyRange">범위 바꾸기</button></div>`;
 }
-$('#examList').addEventListener('click',e=>{const b=e.target.closest('.choice');if(!b||b.disabled)return;examAns[b.dataset.key]=+b.dataset.k;save('voca.exam',examAns);renderExam();});
+$('#examList').addEventListener('click',e=>{const b=e.target.closest('.choice');if(!b||b.disabled)return;examAns[b.dataset.key]=+b.dataset.k;save('voca.exam',examAns);
+  const q=EXAM.find(x=>x.d+'#'+x.n===b.dataset.key);bump('q');if(q&&'ABCD'[+b.dataset.k]===q.a[1])bump('ok');renderExam();});
 $('#examReset').addEventListener('click',()=>{EXAM.filter(q=>selected.has(q.d)).forEach(q=>delete examAns[q.d+'#'+q.n]);save('voca.exam',examAns);renderExam();});
 
+// ---------- stats ----------
+function sumLog(from,to){const o={q:0,ok:0,done:0,sec:0,tts:0,days:0};for(const [d,e] of Object.entries(LOG)){if(d<from||d>to)continue;o.days+=((e.q||0)+(e.sec||0)+(e.tts||0))>0?1:0;for(const k of ['q','ok','done','sec','tts'])o[k]+=e[k]||0;}return o;}
+const fmtTime=s=>s<60?`${s}초`:s<3600?`${Math.round(s/60)}분`:`${Math.floor(s/3600)}시간 ${Math.round(s%3600/60)}분`;
+const fmtTimeS=s=>s<60?`${s}초`:s<3600?`${Math.round(s/60)}분`:`${(s/3600).toFixed(1)}시간`;
+function renderStats(){
+  const now=new Date(),today=dkey(now);
+  const mon=new Date(now);mon.setDate(now.getDate()-((now.getDay()+6)%7));
+  const first=new Date(now.getFullYear(),now.getMonth(),1);
+  const T=sumLog(today,today),W=sumLog(dkey(mon),today),M=sumLog(dkey(first),today),A=sumLog('0000','9999');
+  // streak
+  let streakDays=0;for(let i=0;i<3650;i++){const d=new Date(now);d.setDate(now.getDate()-i);const e=LOG[dkey(d)];const act=e&&((e.q||0)+(e.sec||0)+(e.tts||0))>0;if(act)streakDays++;else if(i>0)break;}
+  $('#statsSub').textContent=`${today} · 연속 ${streakDays}일째 학습 중`+(A.days?` · 총 ${A.days}일 학습`:'');
+  const pct=o=>o.q?Math.round(o.ok/o.q*100):0;
+  $('#statToday').innerHTML=[['푼 문제',T.q,'개',T.q?`정답률 ${pct(T)}%`:'아직 안 풀었어요'],['암기 완료',T.done,'개','오늘 새로 완료'],['학습 시간',fmtTime(T.sec),'','화면을 보고 있던 시간'],['들은 단어',T.tts,'개','연속 듣기']]
+    .map(([l,v,u,s])=>`<div class="stat"><span class="sub">${l}</span><span class="big">${v}<small>${u}</small></span><span class="sub">${s}</span></div>`).join('');
+  const row=(name,sub,o)=>`<div class="period"><div class="name">${name}<small>${sub}</small></div><div class="v">${o.q}<small>문제</small></div><div class="v">${o.q?pct(o)+'<small>%</small>':'<small>—</small>'}</div><div class="v">${o.done}<small>개</small></div><div class="v">${fmtTimeS(o.sec)}</div></div>`;
+  $('#periods').innerHTML=`<div class="period head"><div></div><div>문제</div><div>정답률</div><div>완료</div><div>시간</div></div>`+row('오늘',today.slice(5).replace('-','/'),T)+row('이번 주',`${dkey(mon).slice(5).replace('-','/')} ~`,W)+row('이번 달',`${now.getMonth()+1}월`,M)+row('전체',`${A.days}일 학습`,A);
+  const days=[];for(let i=29;i>=0;i--){const d=new Date(now);d.setDate(now.getDate()-i);days.push(d);}
+  const vals=days.map(d=>(LOG[dkey(d)]||{}).q||0);const max=Math.max(1,...vals);
+  $('#bars').innerHTML=days.map((d,i)=>`<i class="${vals[i]?'on':''}${i===29?' today':''}" style="height:${Math.max(2,vals[i]/max*100)}%" title="${dkey(d).slice(5).replace('-','/')} · ${vals[i]}문제"></i>`).join('');
+  $('#barLab').innerHTML=days.map((d,i)=>`<span>${(d.getDate()===1||i===0||i===29||d.getDay()===1)?d.getDate():''}</span>`).join('');
+  const dn=done.size,pctAll=Math.round(dn/WORDS.length*100);
+  $('#totalMeta').textContent=`암기 완료 ${dn} / ${WORDS.length}단어 (${pctAll}%) · ★ ${stars.size} · 메모 ${Object.keys(memos).length}`;
+  $('#totalBar').style.width=pctAll+'%';
+}
 function render(){
-  if(view==='list')renderList();
+  if(view==='stats')renderStats();
+  else if(view==='list')renderList();
   else if(view==='quiz'){const busy=!$('#quizPlay').hidden||!$('#quizResult').hidden;$('#quizSetup').hidden=busy;updateStartMeta();}
   else renderExam();
 }
