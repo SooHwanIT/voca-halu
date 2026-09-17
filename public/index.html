@@ -404,7 +404,7 @@ dialog.sheet::backdrop{background:rgba(20,20,18,.5)}
     <label><input type="checkbox" id="ttsLoop">반복</label>
     <label><input type="checkbox" id="ttsDone">완료 단어 포함</label>
   </div>
-  <div class="nospeech" id="noSpeech" hidden>이 브라우저에서는 음성 읽기를 지원하지 않아요. Chrome, Edge, Safari에서 열어 주세요.</div>
+  <div class="nospeech" id="noSpeech" hidden>이 브라우저에서는 음성을 재생할 수 없어요. Chrome, Edge, Safari에서 열어 주세요.</div>
   <div class="panel list" id="wordList" data-hide="none"></div>
   <div class="sec"><h2>기출 Collocation</h2><span class="meta" id="collMeta"></span></div>
   <div class="panel list colls" id="collList" data-hide="none"></div>
@@ -544,11 +544,34 @@ if(hasSpeech){loadVoices();synth.onvoiceschanged=loadVoices;}
 function pickVoice(lang){
   const pref=lang==='en'?['en-us','en-gb','en']:['ko-kr','ko'];
   const L=v=>v.lang.replace('_','-').toLowerCase();
-  for(const p of pref){const v=voices.find(v=>L(v).startsWith(p)&&v.localService)||voices.find(v=>L(v).startsWith(p));if(v)return v;}
+  const good=v=>/natural|neural|premium|enhanced|google|siri|samantha|karen|daniel/i.test(v.name);
+  for(const p of pref){const c=voices.filter(v=>L(v).startsWith(p));const v=c.find(good)||c[0];if(v)return v;}
   return null;
 }
 let ttsRate=1;
-function speak(text,lang,rate){
+// ---- neural TTS (Cloudflare Workers AI) for English, with Web Speech fallback
+const TTS_API='https://voca-halu.suhwanit.workers.dev/api/tts';
+const canNeural=/^https?:/.test(location.protocol);
+let neuralOK=canNeural;                     // flips to false after a network/CSP failure
+const audioCache=new Map();                 // text -> object URL
+let curAudio=null;
+function fetchAudio(text){
+  const k=text.toLowerCase();
+  if(audioCache.has(k))return audioCache.get(k);
+  const pr=fetch(TTS_API+'?t='+encodeURIComponent(text)).then(r=>{if(!r.ok)throw new Error(r.status);return r.blob();}).then(b=>URL.createObjectURL(b));
+  audioCache.set(k,pr);pr.catch(()=>audioCache.delete(k));
+  return pr;
+}
+function prefetch(text){if(neuralOK&&text)fetchAudio(text).catch(()=>{});}
+function speakNeural(text){
+  return fetchAudio(text).then(url=>new Promise((res,rej)=>{
+    const a=new Audio(url);a.playbackRate=ttsRate;curAudio=a;
+    a.onended=()=>{if(curAudio===a)curAudio=null;res();};
+    a.onerror=()=>rej(new Error('audio'));
+    a.play().catch(rej);
+  }));
+}
+function speakLocal(text,lang,rate){
   return new Promise(res=>{
     if(!hasSpeech||!text){res();return;}
     const u=new SpeechSynthesisUtterance(text);
@@ -557,17 +580,26 @@ function speak(text,lang,rate){
     synth.speak(u);
   });
 }
-function sayNow(text,lang){if(!hasSpeech){$('#noSpeech').hidden=false;return;}if(playing)stopPlay();synth.cancel();speak(text,lang);}
+async function speak(text,lang,rate){
+  if(!text)return;
+  if(lang==='en'&&neuralOK){
+    try{await speakNeural(text);return;}
+    catch(e){if(!(e&&e.name==='NotAllowedError'))neuralOK=false;}
+  }
+  return speakLocal(text,lang,rate);
+}
+function stopAudio(){if(curAudio){try{curAudio.pause();}catch(e){}curAudio=null;}if(hasSpeech)synth.cancel();}
+function sayNow(text,lang){if(!hasSpeech&&!canNeural){$('#noSpeech').hidden=false;return;}if(playing)stopPlay();stopAudio();speak(text,lang);}
 let playing=false,playToken=0;
 const wait=ms=>new Promise(r=>setTimeout(r,ms));
-function stopPlay(){playing=false;playToken++;if(hasSpeech)synth.cancel();$('#ttsBar').hidden=true;$('#ttsPlay').setAttribute('aria-pressed','false');$$('.row.playing').forEach(r=>r.classList.remove('playing'));}
+function stopPlay(){playing=false;playToken++;stopAudio();$('#ttsBar').hidden=true;$('#ttsPlay').setAttribute('aria-pressed','false');$$('.row.playing').forEach(r=>r.classList.remove('playing'));}
 async function startPlay(){
-  if(!hasSpeech){$('#noSpeech').hidden=false;return;}
+  if(!hasSpeech&&!canNeural){$('#noSpeech').hidden=false;return;}
   let rows=$$('#wordList .row[data-id]');
   if(!$('#ttsDone').checked&&filter!=='done')rows=rows.filter(r=>!done.has(+r.dataset.id));
   if(!rows.length){$('#ttsBar').hidden=false;$('#ttsNow').innerHTML='<small>읽을 단어가 없어요. 이 범위는 전부 암기 완료했어요 — 「완료 단어 포함」을 켜면 읽어요.</small>';return;}
   playing=true;const tok=++playToken;$('#ttsBar').hidden=false;$('#ttsPlay').setAttribute('aria-pressed','true');
-  synth.cancel();
+  stopAudio();
   const smooth=matchMedia('(prefers-reduced-motion: reduce)').matches?'auto':'smooth';
   do{
     for(let i=0;i<rows.length;i++){
@@ -576,6 +608,7 @@ async function startPlay(){
       $$('.row.playing').forEach(x=>x.classList.remove('playing'));r.classList.add('playing');
       r.scrollIntoView({block:'center',behavior:smooth});
       $('#ttsNow').innerHTML=esc(w.w)+'<small>'+(i+1)+' / '+rows.length+'</small>';
+      if(rows[i+1])prefetch(WORDS[+rows[i+1].dataset.id].w);
       await speak(w.w,'en');if(tok!==playToken)return;
       if($('#ttsKo').checked){await wait(250);await speak(w.m.replace(/\s*\/\s*/g,', '),'ko');if(tok!==playToken)return;}
       await wait(500);
@@ -759,6 +792,7 @@ function startQuiz(list){
   const n=list?list.length:(opt.count==='all'?p.length:Math.min(+opt.count,p.length));
   const items=(!list&&opt.pool==='wrong')?shuffle(p.slice(0,n)):shuffle(p).slice(0,n);
   Q={items,i:0,correct:0,wrong:[],mode:opt.type,dir:opt.dir,answered:false};
+  items.slice(0,2).forEach(x=>prefetch(opt.type==='fill'?x.ex.replace(/[\[\]]/g,''):x.w));
   $('#quizSetup').hidden=true;$('#quizResult').hidden=true;$('#quizPlay').hidden=false;
   window.scrollTo({top:0});showQ();
 }
@@ -783,7 +817,7 @@ function showQ(){
   const prompt=$('#qPrompt');const P=prompt.parentElement;P.classList.toggle('fill',fill);P.classList.toggle('ko',!askEn&&!fill);
   if(fill){prompt.innerHTML=exEn(w,'blank');$('#qKo').hidden=false;$('#qKo').innerHTML=exKo(w);}
   else{prompt.textContent=askEn?w.w:w.m;$('#qKo').hidden=true;}
-  $('#qSay').hidden=!(askEn||fill)||!hasSpeech;
+  $('#qSay').hidden=!(askEn||fill)||!(hasSpeech||canNeural);
   $('#qHint').textContent=fill?'':w.p;$('#qHint').hidden=fill;
   const ch=$('#qChoices');ch.innerHTML='';
   if(Q.mode==='mc'||fill){
@@ -796,7 +830,9 @@ function showQ(){
     $('#qAnswer').hidden=false;const inp=$('#qInput');inp.value='';inp.className='';inp.disabled=false;$('#qCheck').disabled=false;
     setTimeout(()=>inp.focus(),0);
   }
-  if(hasSpeech){if(askEn)sayNow(w.w,'en');else if(fill)sayNow(w.ex.replace(/\[[^\]]+\]/,' ... '),'en');}
+  const nx=Q.items[Q.i+1];if(nx)prefetch(Q.mode==='fill'?nx.ex.replace(/[\[\]]/g,''):nx.w);
+  if(fill)prefetch(w.ex.replace(/[\[\]]/g,''));
+  if(hasSpeech||canNeural){if(askEn)sayNow(w.w,'en');else if(fill)sayNow(w.ex.replace(/\[[^\]]+\]/,' ... '),'en');}
 }
 function answerMC(btn,x,w,opts){
   if(Q.answered)return;Q.answered=true;
@@ -817,8 +853,8 @@ function finish(ok,w,given){
   else{Q.wrong.push({w,given});wrongs[w.id]=wc(w.id)+1;save('voca.wrong',wrongs);streak[w.id]=0;if(done.has(w.id)){done.delete(w.id);Q.lostDone=(Q.lostDone||0)+1;save('voca.done',[...done]);}}
   save('voca.streak',streak);
   const fb=$('#qFeed');fb.hidden=false;fb.className='feedback '+(ok?'good':'bad');
-  fb.innerHTML=(ok?'정답 · ':'오답 · 정답은 ')+`<b>${esc(w.w)}</b> ${esc(w.p)} ${esc(w.m)}`+(ok&&streak[w.id]===3&&done.has(w.id)?' <span class="badge done">암기 완료</span>':'')+(hasSpeech?` <button type="button" class="say-btn" id="fbSay" aria-label="발음 듣기" style="width:32px;height:32px">${SPK}</button>`:'');
-  if(hasSpeech){if(Q.mode==='fill')sayNow(w.ex.replace(/[\[\]]/g,''),'en');else if(!(Q.mode==='mc'&&Q.dir==='en'))sayNow(w.w,'en');}
+  fb.innerHTML=(ok?'정답 · ':'오답 · 정답은 ')+`<b>${esc(w.w)}</b> ${esc(w.p)} ${esc(w.m)}`+(ok&&streak[w.id]===3&&done.has(w.id)?' <span class="badge done">암기 완료</span>':'')+((hasSpeech||canNeural)?` <button type="button" class="say-btn" id="fbSay" aria-label="발음 듣기" style="width:32px;height:32px">${SPK}</button>`:'');
+  if(hasSpeech||canNeural){if(Q.mode==='fill')sayNow(w.ex.replace(/[\[\]]/g,''),'en');else if(!(Q.mode==='mc'&&Q.dir==='en'))sayNow(w.w,'en');}
   $('#qScore').textContent=`맞힘 ${Q.correct} · 틀림 ${Q.wrong.length}`;
   $('#qNext').hidden=false;$('#qNext').focus();
 }
@@ -833,7 +869,7 @@ document.addEventListener('keydown',e=>{
 function next(){if(!Q.answered)return;Q.i++;if(Q.i>=Q.items.length)showResult();else showQ();}
 $('#qNext').addEventListener('click',next);
 $('#qFeed').addEventListener('click',e=>{if(e.target.closest('#fbSay')&&Q)sayNow(Q.items[Q.i].w,'en');});
-$('#qQuit').addEventListener('click',()=>{if(hasSpeech)synth.cancel();Q=null;$('#quizPlay').hidden=true;$('#quizSetup').hidden=false;updateStartMeta();renderRail();});
+$('#qQuit').addEventListener('click',()=>{stopAudio();Q=null;$('#quizPlay').hidden=true;$('#quizSetup').hidden=false;updateStartMeta();renderRail();});
 $('#startQuiz').addEventListener('click',()=>startQuiz());
 function showResult(){
   $('#quizPlay').hidden=true;$('#quizResult').hidden=false;window.scrollTo({top:0});
