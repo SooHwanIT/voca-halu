@@ -142,6 +142,23 @@ dialog.sheet::backdrop{background:rgba(20,20,18,.5)}
 .x{border:0;background:transparent;width:32px;height:32px;border-radius:var(--r);display:grid;place-items:center;color:var(--ink-2)}
 .x:hover{background:var(--surface-2)}
 
+/* settings */
+.set-row{display:flex;align-items:center;justify-content:space-between;gap:12px;padding:12px 0;border-bottom:1px solid var(--line)}
+.set-row:last-child{border-bottom:0}
+.set-row .l{display:flex;flex-direction:column;gap:2px;min-width:0}
+.set-row .l b{font-weight:500;font-size:14px}
+.set-row .l small{color:var(--ink-3);font-size:12px}
+.voices{display:grid;grid-template-columns:repeat(3,1fr);gap:6px;margin-top:8px}
+.voice{border:1px solid var(--line);background:var(--surface);border-radius:var(--r);padding:8px 10px;display:flex;flex-direction:column;align-items:flex-start;gap:1px;line-height:1.2;text-align:left}
+.voice b{font-family:var(--latin);font-weight:500;font-size:13.5px;text-transform:capitalize}
+.voice small{font-size:11px;color:var(--ink-3)}
+.voice[aria-pressed="true"]{background:var(--ink);border-color:var(--ink);color:var(--bg)}
+.voice[aria-pressed="true"] small{color:inherit;opacity:.7}
+.gear{border:0;background:transparent;width:36px;height:36px;border-radius:var(--r);display:grid;place-items:center;color:var(--ink-3);flex:none}
+.gear:hover{background:var(--surface-2);color:var(--ink)}
+.gear svg{width:19px;height:19px}
+@media (max-width:639px){.voices{grid-template-columns:repeat(2,1fr)}}
+
 /* ---------- controls ---------- */
 .btn{border:1px solid var(--line-2);background:var(--surface);border-radius:var(--r);padding:0 14px;font-size:13.5px;font-weight:500;line-height:1.2;display:inline-flex;align-items:center;justify-content:center;gap:6px;min-height:38px;box-shadow:var(--shadow)}
 .btn:hover:not(:disabled){border-color:var(--ink-3)}
@@ -353,7 +370,7 @@ dialog.sheet::backdrop{background:rgba(20,20,18,.5)}
     <div class="rail-days" id="railDays"></div>
   </div>
   <div class="sum">
-    <span class="eyebrow">현재 범위 진행도</span>
+    <div style="display:flex;justify-content:space-between;align-items:center"><span class="eyebrow">현재 범위 진행도</span><button class="gear" id="setBtnRail" aria-label="설정" aria-haspopup="dialog"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="3"/><path d="M19.4 15a1.7 1.7 0 00.3 1.8l.1.1a2 2 0 11-2.8 2.8l-.1-.1a1.7 1.7 0 00-1.8-.3 1.7 1.7 0 00-1 1.5V21a2 2 0 11-4 0v-.1a1.7 1.7 0 00-1.1-1.5 1.7 1.7 0 00-1.8.3l-.1.1a2 2 0 11-2.8-2.8l.1-.1a1.7 1.7 0 00.3-1.8 1.7 1.7 0 00-1.5-1H3a2 2 0 110-4h.1a1.7 1.7 0 001.5-1.1 1.7 1.7 0 00-.3-1.8l-.1-.1a2 2 0 112.8-2.8l.1.1a1.7 1.7 0 001.8.3H9a1.7 1.7 0 001-1.5V3a2 2 0 114 0v.1a1.7 1.7 0 001 1.5 1.7 1.7 0 001.8-.3l.1-.1a2 2 0 112.8 2.8l-.1.1a1.7 1.7 0 00-.3 1.8V9a1.7 1.7 0 001.5 1H21a2 2 0 110 4h-.1a1.7 1.7 0 00-1.5 1z"/></svg></button></div>
     <div class="big num" id="sumBig"></div>
     <div class="bar"><i id="sumBar"></i></div>
     <span class="meta num" id="sumText"></span>
@@ -373,6 +390,7 @@ dialog.sheet::backdrop{background:rgba(20,20,18,.5)}
     <span class="t" id="rangeText">Day 01</span><span class="c" id="rangeCount"></span>
     <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M6 9l6 6 6-6"/></svg>
   </button>
+  <button class="gear" id="setBtnTop" aria-label="설정" aria-haspopup="dialog"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="3"/><path d="M19.4 15a1.7 1.7 0 00.3 1.8l.1.1a2 2 0 11-2.8 2.8l-.1-.1a1.7 1.7 0 00-1.8-.3 1.7 1.7 0 00-1 1.5V21a2 2 0 11-4 0v-.1a1.7 1.7 0 00-1.1-1.5 1.7 1.7 0 00-1.8.3l-.1.1a2 2 0 11-2.8-2.8l.1-.1a1.7 1.7 0 00.3-1.8 1.7 1.7 0 00-1.5-1H3a2 2 0 110-4h.1a1.7 1.7 0 001.5-1.1 1.7 1.7 0 00-.3-1.8l-.1-.1a2 2 0 112.8-2.8l.1.1a1.7 1.7 0 001.8.3H9a1.7 1.7 0 001-1.5V3a2 2 0 114 0v.1a1.7 1.7 0 001 1.5 1.7 1.7 0 001.8-.3l.1-.1a2 2 0 112.8 2.8l-.1.1a1.7 1.7 0 00-.3 1.8V9a1.7 1.7 0 001.5 1H21a2 2 0 110 4h-.1a1.7 1.7 0 00-1.5 1z"/></svg></button>
 </div></div>
 
 <!-- ===== LIST ===== -->
@@ -482,6 +500,20 @@ dialog.sheet::backdrop{background:rgba(20,20,18,.5)}
   <button data-view="exam" aria-selected="false"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M8 3h8l4 4v14H4V3z"/><path d="M8 12h8M8 16h5"/></svg>기출</button>
 </div></nav>
 
+<dialog class="sheet" id="setDlg" aria-labelledby="setTitle">
+  <div class="hd"><h2 id="setTitle">설정</h2><button class="x" id="setClose" aria-label="닫기"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round"><path d="M6 6l12 12M18 6L6 18"/></svg></button></div>
+  <div class="bd">
+    <div class="set-row" style="flex-direction:column;align-items:stretch">
+      <div class="l"><b>영어 음성</b><small id="voiceHelp">단어와 예문을 읽는 목소리입니다. 누르면 바로 들어볼 수 있어요.</small></div>
+      <div class="voices" id="voiceGrid"></div>
+    </div>
+    <div class="set-row"><div class="l"><b>읽기 속도</b><small>발음 듣기·연속 듣기·퀴즈에 모두 적용</small></div>
+      <div class="seg" id="setRate"><button data-v="0.8">느리게</button><button data-v="1">보통</button><button data-v="1.2">빠르게</button></div></div>
+    <div class="set-row"><div class="l"><b>퀴즈 자동 읽기</b><small>문제가 바뀔 때 한 번 자동으로 읽어요</small></div>
+      <div class="seg" id="setAuto"><button data-v="1">켬</button><button data-v="0">끔</button></div></div>
+  </div>
+</dialog>
+
 <dialog class="sheet" id="rangeDlg" aria-labelledby="rangeTitle">
   <div class="hd"><h2 id="rangeTitle">학습 범위</h2><button class="x" id="rangeClose" aria-label="닫기"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round"><path d="M6 6l12 12M18 6L6 18"/></svg></button></div>
   <div class="bd">
@@ -548,7 +580,10 @@ function pickVoice(lang){
   for(const p of pref){const c=voices.filter(v=>L(v).startsWith(p));const v=c.find(good)||c[0];if(v)return v;}
   return null;
 }
-let ttsRate=1;
+let ttsRate=+load('voca.rate',1);
+let autoRead=load('voca.autoRead',true);
+const VOICES=[['luna','여성 · 차분함'],['asteria','여성 · 밝음'],['stella','여성 · 또렷함'],['athena','여성 · 낮음'],['hera','여성 · 안정감'],['orion','남성 · 부드러움'],['arcas','남성 · 자연스러움'],['perseus','남성 · 또렷함'],['angus','남성 · 낮음'],['orpheus','남성 · 따뜻함'],['helios','남성 · 힘 있음'],['zeus','남성 · 깊음']];
+let speaker=load('voca.speaker','luna');if(!VOICES.some(v=>v[0]===speaker))speaker='luna';
 // ---- neural TTS (Cloudflare Workers AI) for English, with Web Speech fallback
 const TTS_API='https://voca-halu.suhwanit.workers.dev/api/tts';
 const canNeural=/^https?:/.test(location.protocol);
@@ -556,9 +591,9 @@ let neuralOK=canNeural;                     // flips to false after a network/CS
 const audioCache=new Map();                 // text -> object URL
 let curAudio=null;
 function fetchAudio(text){
-  const k=text.toLowerCase();
+  const k=speaker+'|'+text.toLowerCase();
   if(audioCache.has(k))return audioCache.get(k);
-  const pr=fetch(TTS_API+'?t='+encodeURIComponent(text)).then(r=>{if(!r.ok)throw new Error(r.status);return r.blob();}).then(b=>URL.createObjectURL(b));
+  const pr=fetch(TTS_API+'?s='+speaker+'&t='+encodeURIComponent(text)).then(r=>{if(!r.ok)throw new Error(r.status);return r.blob();}).then(b=>URL.createObjectURL(b));
   audioCache.set(k,pr);pr.catch(()=>audioCache.delete(k));
   return pr;
 }
@@ -619,7 +654,21 @@ async function startPlay(){
 $('#ttsPlay').addEventListener('click',()=>playing?stopPlay():startPlay());
 $('#ttsStop').addEventListener('click',stopPlay);
 $('#ttsDone').addEventListener('change',()=>{if(playing){stopPlay();startPlay();}else if(!$('#ttsBar').hidden)startPlay();});
-$$('#ttsRate button').forEach(b=>b.addEventListener('click',()=>{ttsRate=+b.dataset.v;$$('#ttsRate button').forEach(x=>x.setAttribute('aria-pressed',x===b));}));
+function syncRate(){$$('#ttsRate button, #setRate button').forEach(x=>x.setAttribute('aria-pressed',+x.dataset.v===ttsRate));}
+$$('#ttsRate button, #setRate button').forEach(b=>b.addEventListener('click',()=>{ttsRate=+b.dataset.v;save('voca.rate',ttsRate);syncRate();}));
+syncRate();
+// ---------- settings ----------
+const setDlg=$('#setDlg');
+function renderVoices(){$('#voiceGrid').innerHTML=VOICES.map(([id,d])=>`<button type="button" class="voice" data-v="${id}" aria-pressed="${id===speaker}"><b>${id}</b><small>${d}</small></button>`).join('');
+  $$('#setAuto button').forEach(x=>x.setAttribute('aria-pressed',(+x.dataset.v===1)===autoRead));
+  $('#voiceHelp').textContent=canNeural&&neuralOK?'단어와 예문을 읽는 목소리입니다. 누르면 바로 들어볼 수 있어요.':'지금은 기기 내장 음성을 쓰고 있어요. 온라인 신경망 음성은 배포된 주소(workers.dev / github.io)에서 들을 수 있습니다.';}
+$$('#setBtnTop, #setBtnRail').forEach(b=>b.addEventListener('click',()=>{renderVoices();setDlg.showModal();}));
+$('#setClose').addEventListener('click',()=>setDlg.close());
+setDlg.addEventListener('click',e=>{
+  if(e.target===setDlg){setDlg.close();return;}
+  const v=e.target.closest('.voice');if(v){speaker=v.dataset.v;save('voca.speaker',speaker);$$('.voice').forEach(x=>x.setAttribute('aria-pressed',x===v));sayNow('The meeting will begin at nine o\'clock sharp.','en');return;}
+  const a=e.target.closest('#setAuto button');if(a){autoRead=a.dataset.v==='1';save('voca.autoRead',autoRead);$$('#setAuto button').forEach(x=>x.setAttribute('aria-pressed',x===a));}
+});
 document.addEventListener('visibilitychange',()=>{if(document.hidden&&playing)stopPlay();});
 
 // ---------- range ----------
@@ -832,7 +881,7 @@ function showQ(){
   }
   const nx=Q.items[Q.i+1];if(nx)prefetch(Q.mode==='fill'?nx.ex.replace(/[\[\]]/g,''):nx.w);
   if(fill)prefetch(w.ex.replace(/[\[\]]/g,''));
-  if(hasSpeech||canNeural){if(askEn)sayNow(w.w,'en');else if(fill)sayNow(w.ex.replace(/\[[^\]]+\]/,' ... '),'en');}
+  if(autoRead&&(hasSpeech||canNeural)){if(askEn)sayNow(w.w,'en');else if(fill)sayNow(w.ex.replace(/\[[^\]]+\]/,' ... '),'en');}
 }
 function answerMC(btn,x,w,opts){
   if(Q.answered)return;Q.answered=true;
@@ -862,7 +911,7 @@ $('#qSay').addEventListener('click',()=>{if(!Q)return;const w=Q.items[Q.i];sayNo
 $('#qCheck').addEventListener('click',answerSA);
 $('#qInput').addEventListener('keydown',e=>{if(e.key==='Enter'){e.preventDefault();Q.answered?next():answerSA();}});
 document.addEventListener('keydown',e=>{
-  if(!Q||$('#quizPlay').hidden||dlg.open)return;
+  if(!Q||$('#quizPlay').hidden||dlg.open||setDlg.open)return;
   if((Q.mode==='mc'||Q.mode==='fill')&&!Q.answered&&/^[1-4]$/.test(e.key)){const b=$$('#qChoices .choice')[+e.key-1];b&&b.click();}
   else if(Q.answered&&e.key==='Enter'&&document.activeElement.tagName!=='INPUT'){e.preventDefault();next();}
 });
