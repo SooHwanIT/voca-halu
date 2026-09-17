@@ -13,5 +13,6 @@ Cloudflare Workers(정적 에셋)로 배포합니다. `CLOUDFLARE_API_TOKEN`이 
 npx wrangler deploy
 ```
 
-- 배포 주소: https://voca-halu.suhwanit.workers.dev
+- Cloudflare: https://voca-halu.suhwanit.workers.dev
+- GitHub Pages: https://soohwanit.github.io/voca-halu/ (main에 push하면 Actions가 자동 배포)
 - `public/` 안의 파일이 그대로 서비스됩니다.
