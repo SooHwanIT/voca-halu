@@ -1,0 +1,13 @@
+{
+  "name": "비밀과외 VOCA 암기장",
+  "short_name": "VOCA",
+  "start_url": "./",
+  "display": "standalone",
+  "background_color": "#E6E4DF",
+  "theme_color": "#E4520B",
+  "icons": [
+    {"src": "icon.svg", "sizes": "any", "type": "image/svg+xml"},
+    {"src": "icon-512.png", "sizes": "512x512", "type": "image/png"},
+    {"src": "icon-180.png", "sizes": "180x180", "type": "image/png"}
+  ]
+}

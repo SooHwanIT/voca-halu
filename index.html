@@ -1,0 +1,855 @@
+<!doctype html><html lang="ko"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover"><meta name="theme-color" content="#E6E4DF" media="(prefers-color-scheme: light)"><meta name="theme-color" content="#151516" media="(prefers-color-scheme: dark)"><meta name="apple-mobile-web-app-capable" content="yes"><meta name="apple-mobile-web-app-status-bar-style" content="default"><meta name="apple-mobile-web-app-title" content="VOCA"><link rel="manifest" href="manifest.json"><link rel="icon" href="icon.svg" type="image/svg+xml"><link rel="apple-touch-icon" href="icon-180.png"><title>비밀과외 VOCA 암기장</title></head><body>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=IBM+Plex+Sans:wght@400;500;600&family=IBM+Plex+Mono:wght@400;500&family=Noto+Sans+KR:wght@400;500;700&display=swap">
+<style>
+/* =====================================================================
+   INSTRUMENT — a study instrument in the Braun / Rams idiom.
+   Weniger, aber besser: one chassis grey, one signal colour, hairlines,
+   every control shaped by its function. Nothing decorates; everything reads.
+   ===================================================================== */
+:root{
+  --bg:#E6E4DF; --surface:#F5F4F1; --surface-2:#ECEAE5; --surface-3:#DFDCD5; --line:#CFCBC3; --line-2:#B5B0A7;
+  --ink:#1E1E1C; --ink-2:#5B5A56; --ink-3:#8C8A84;
+  --signal:#E4520B; --signal-hover:#C9470A; --signal-soft:#F9E1D4; --on-signal:#FFFFFF;
+  --ok:#3C8A4E; --ok-soft:#DCEEDF; --no:#C4321C; --no-soft:#F6DCD6;
+  --shadow:0 1px 0 rgba(30,30,28,.06),0 1px 3px rgba(30,30,28,.08);
+  --shadow-lg:0 20px 50px rgba(30,30,28,.22);
+  --latin:"IBM Plex Sans","Helvetica Neue",Arial,sans-serif;
+  --sans:"IBM Plex Sans","Noto Sans KR","Apple SD Gothic Neo","Malgun Gothic",system-ui,sans-serif;
+  --mono:"IBM Plex Mono",Menlo,Consolas,monospace;
+  --r:6px; --r-lg:10px; --rail:264px; --nav-h:58px;
+}
+@media (prefers-color-scheme: dark){
+  :root:not([data-theme="light"]){
+    --bg:#151516; --surface:#1E1F20; --surface-2:#27282A; --surface-3:#313234; --line:#37383B; --line-2:#4C4D51;
+    --ink:#ECEBE7; --ink-2:#A9A8A3; --ink-3:#7A7975;
+    --signal:#FF6A2E; --signal-hover:#FF8552; --signal-soft:#3A2418; --on-signal:#161616;
+    --ok:#6CC282; --ok-soft:#1E3324; --no:#F27E6A; --no-soft:#3C201B;
+    --shadow:0 1px 0 rgba(0,0,0,.4),0 1px 3px rgba(0,0,0,.4);
+    --shadow-lg:0 20px 50px rgba(0,0,0,.6);
+  }
+}
+:root[data-theme="dark"]{
+  --bg:#151516; --surface:#1E1F20; --surface-2:#27282A; --surface-3:#313234; --line:#37383B; --line-2:#4C4D51;
+  --ink:#ECEBE7; --ink-2:#A9A8A3; --ink-3:#7A7975;
+  --signal:#FF6A2E; --signal-hover:#FF8552; --signal-soft:#3A2418; --on-signal:#161616;
+  --ok:#6CC282; --ok-soft:#1E3324; --no:#F27E6A; --no-soft:#3C201B;
+  --shadow:0 1px 0 rgba(0,0,0,.4),0 1px 3px rgba(0,0,0,.4);
+  --shadow-lg:0 20px 50px rgba(0,0,0,.6);
+}
+
+/* ---------- base ---------- */
+*{box-sizing:border-box}
+html{-webkit-text-size-adjust:100%}
+body{margin:0;background:var(--bg);color:var(--ink);font-family:var(--sans);font-size:15px;line-height:1.5;padding-inline:16px;padding-block:0 calc(var(--nav-h) + env(safe-area-inset-bottom) + 24px)}
+button,input,textarea{font:inherit;color:inherit}
+button{cursor:pointer;-webkit-tap-highlight-color:transparent}
+button:disabled{cursor:default}
+:focus-visible{outline:2px solid var(--signal);outline-offset:2px}
+p{text-wrap:pretty;margin:0}
+h1,h2,h3{text-wrap:balance;margin:0}
+.num{font-variant-numeric:tabular-nums}
+[hidden]{display:none!important}
+.eyebrow{font-family:var(--mono);font-size:11px;text-transform:uppercase;letter-spacing:.06em;color:var(--ink-3);font-weight:500}
+.meta{color:var(--ink-3);font-size:13px}
+.spacer{flex:1}
+@media (prefers-reduced-motion:no-preference){
+  .btn,.seg button,.choice,.ib,.row,.dchip,.rail-day{transition:background-color .12s ease-out,border-color .12s ease-out,color .12s ease-out,transform .08s ease-out}
+}
+
+/* ---------- frame ---------- */
+.frame{max-width:1160px;margin:0 auto}
+.rail{display:none}
+.main{min-width:0}
+
+/* top bar (< 1024) */
+.topbar{position:sticky;top:0;z-index:20;background:var(--bg);margin-inline:-16px;padding-inline:16px}
+.topbar .in{display:flex;align-items:center;gap:10px;height:56px;border-bottom:1px solid var(--line)}
+.brand{display:flex;align-items:center;gap:10px;min-width:0;color:inherit;text-decoration:none}
+.mark{width:26px;height:26px;border-radius:50%;background:var(--ink);position:relative;flex:none}
+.mark::after{content:"";position:absolute;inset:8px;border-radius:50%;background:var(--signal)}
+.brand .t{display:flex;flex-direction:column;line-height:1.1;min-width:0}
+.brand .t b{font-size:14px;font-weight:600;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.brand .t small{font-family:var(--mono);font-size:10.5px;color:var(--ink-3);text-transform:uppercase;letter-spacing:.06em}
+.tabs{display:none;gap:2px;margin-left:6px}
+.tabs button{border:0;background:transparent;padding:8px 12px;border-radius:var(--r);color:var(--ink-2);font-weight:500;font-size:14px;position:relative}
+.tabs button:hover{background:var(--surface-2);color:var(--ink)}
+.tabs button[aria-selected="true"]{color:var(--ink)}
+.tabs button[aria-selected="true"]::after{content:"";position:absolute;left:12px;right:12px;bottom:2px;height:2px;background:var(--signal);border-radius:1px}
+.range{display:flex;align-items:center;gap:8px;border:1px solid var(--line-2);background:var(--surface);border-radius:var(--r);padding:0 10px 0 12px;height:36px;font-size:13.5px;max-width:56vw;box-shadow:var(--shadow)}
+.range:hover{border-color:var(--ink-3)}
+.range .t{white-space:nowrap;overflow:hidden;text-overflow:ellipsis;font-weight:500}
+.range .c{color:var(--ink-3);white-space:nowrap;font-family:var(--mono);font-size:12px}
+.range svg{flex:none;color:var(--ink-3)}
+
+/* bottom nav (< 640) */
+.bottomnav{position:fixed;left:0;right:0;bottom:0;z-index:20;background:var(--surface);border-top:1px solid var(--line);display:block;padding-bottom:env(safe-area-inset-bottom)}
+.bottomnav .in{display:grid;grid-template-columns:repeat(3,1fr);height:var(--nav-h)}
+.bottomnav button{border:0;background:transparent;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:3px;color:var(--ink-3);font-size:11px;font-weight:500;position:relative}
+.bottomnav button[aria-selected="true"]{color:var(--ink)}
+.bottomnav button[aria-selected="true"]::before{content:"";position:absolute;top:0;left:28%;right:28%;height:2px;background:var(--signal)}
+.bottomnav svg{width:22px;height:22px}
+
+/* ---------- rail (≥ 1024) ---------- */
+.rail{position:sticky;top:0;height:100dvh;overflow:auto;padding:24px 20px 24px 0;border-right:1px solid var(--line);flex-direction:column;gap:22px}
+.rail .brand{padding-inline:6px}
+.rail nav{display:flex;flex-direction:column;gap:2px}
+.rail nav button{border:0;background:transparent;text-align:left;padding:9px 10px;border-radius:var(--r);font-size:14px;font-weight:500;color:var(--ink-2);display:flex;align-items:center;gap:10px}
+.rail nav button svg{width:18px;height:18px;flex:none}
+.rail nav button:hover{background:var(--surface-2);color:var(--ink)}
+.rail nav button[aria-selected="true"]{background:var(--surface);color:var(--ink);box-shadow:var(--shadow)}
+.rail nav button[aria-selected="true"] svg{color:var(--signal)}
+.rail .sec-h{display:flex;align-items:center;justify-content:space-between;padding-inline:10px 4px;margin-bottom:6px}
+.rail .sec-h .btn{min-height:28px;padding:0 8px;font-size:12px}
+.rail-days{display:flex;flex-direction:column;gap:1px}
+.rail-day{display:grid;grid-template-columns:22px 1fr auto;align-items:center;gap:8px;border-radius:var(--r);padding:0 8px 0 6px;min-height:36px;border:0;background:transparent;text-align:left;color:var(--ink-2);font-size:13.5px}
+.rail-day:hover{background:var(--surface-2);color:var(--ink)}
+.rail-day[aria-pressed="true"]{color:var(--ink)}
+.rail-day .box{width:14px;height:14px;border:1.5px solid var(--line-2);border-radius:3px;display:grid;place-items:center;background:var(--surface)}
+.rail-day[aria-pressed="true"] .box{background:var(--ink);border-color:var(--ink)}
+.rail-day .box svg{width:10px;height:10px;color:var(--bg);display:none}
+.rail-day[aria-pressed="true"] .box svg{display:block}
+.rail-day .nm{display:flex;flex-direction:column;line-height:1.15;min-width:0}
+.rail-day .nm b{font-weight:500;font-family:var(--latin)}
+.rail-day .bar{height:3px;background:var(--surface-3);border-radius:2px;margin-top:5px;overflow:hidden;width:100%}
+.rail-day .bar i{display:block;height:100%;background:var(--ok);width:0}
+.rail-day .ct{font-family:var(--mono);font-size:11px;color:var(--ink-3)}
+.rail-day.full .ct{color:var(--ok)}
+.rail .sum{margin-top:auto;padding:12px 10px 0;border-top:1px solid var(--line);display:flex;flex-direction:column;gap:6px}
+.rail .sum .big{font-family:var(--latin);font-size:24px;font-weight:600;line-height:1}
+.rail .sum .big small{font-size:13px;color:var(--ink-3);font-weight:500;margin-left:3px}
+.rail .sum .bar{height:4px;background:var(--surface-3);border-radius:2px;overflow:hidden}
+.rail .sum .bar i{display:block;height:100%;background:var(--signal);width:0}
+
+/* ---------- dialog ---------- */
+dialog.sheet{border:0;padding:0;background:var(--surface);color:var(--ink);border-radius:var(--r-lg);width:min(600px,calc(100vw - 32px));max-height:min(86dvh,760px);box-shadow:var(--shadow-lg)}
+dialog.sheet::backdrop{background:rgba(20,20,18,.5)}
+.sheet .hd{display:flex;align-items:center;justify-content:space-between;padding:14px 18px;border-bottom:1px solid var(--line);position:sticky;top:0;background:var(--surface);z-index:1}
+.sheet .hd h2{font-size:15px;font-weight:600}
+.sheet .bd{padding:16px 18px}
+.sheet .ft{display:flex;gap:8px;justify-content:flex-end;align-items:center;padding:12px 18px;border-top:1px solid var(--line);position:sticky;bottom:0;background:var(--surface)}
+.sheet .ft .meta{margin-right:auto}
+.quick{display:flex;flex-wrap:wrap;gap:6px;margin-bottom:16px}
+.quick button{border:1px solid var(--line);background:var(--surface);border-radius:999px;padding:0 11px;height:30px;font-size:12.5px;color:var(--ink-2)}
+.quick button:hover{border-color:var(--ink-3);color:var(--ink)}
+.grid-days{display:grid;grid-template-columns:repeat(5,1fr);gap:6px}
+.dchip{border:1px solid var(--line);background:var(--surface);border-radius:var(--r);padding:8px 6px 7px;display:flex;flex-direction:column;align-items:center;gap:3px;line-height:1.2}
+.dchip .d{font-weight:600;font-size:13.5px;font-family:var(--latin)}
+.dchip .s{font-family:var(--mono);font-size:10.5px;color:var(--ink-3)}
+.dchip[aria-pressed="true"]{background:var(--ink);border-color:var(--ink);color:var(--bg)}
+.dchip[aria-pressed="true"] .s{color:inherit;opacity:.7}
+.dchip.wide{grid-column:span 2}
+.sheet .eyebrow{margin:14px 0 8px}
+.x{border:0;background:transparent;width:32px;height:32px;border-radius:var(--r);display:grid;place-items:center;color:var(--ink-2)}
+.x:hover{background:var(--surface-2)}
+
+/* ---------- controls ---------- */
+.btn{border:1px solid var(--line-2);background:var(--surface);border-radius:var(--r);padding:0 14px;font-size:13.5px;font-weight:500;line-height:1.2;display:inline-flex;align-items:center;justify-content:center;gap:6px;min-height:38px;box-shadow:var(--shadow)}
+.btn:hover:not(:disabled){border-color:var(--ink-3)}
+.btn:active:not(:disabled){transform:translateY(1px);box-shadow:none}
+.btn.primary{background:var(--signal);color:var(--on-signal);border-color:var(--signal)}
+.btn.primary:hover:not(:disabled){background:var(--signal-hover);border-color:var(--signal-hover)}
+.btn.ghost{border-color:transparent;background:transparent;color:var(--ink-2);box-shadow:none}
+.btn.ghost:hover:not(:disabled){background:var(--surface-2);color:var(--ink)}
+.btn.ghost[aria-pressed="true"]{background:var(--surface-2);color:var(--ink);border-color:var(--line)}
+.btn:disabled{opacity:.4;box-shadow:none}
+.btn.lg{min-height:46px;padding-inline:22px;font-size:15px}
+.btn svg{width:16px;height:16px}
+.seg{display:inline-flex;background:var(--surface-3);border-radius:var(--r);padding:2px;gap:2px;border:1px solid var(--line)}
+.seg button{border:0;background:transparent;padding:0 12px;border-radius:4px;font-size:13px;color:var(--ink-2);font-weight:500;min-height:30px;white-space:nowrap}
+.seg button:hover{color:var(--ink)}
+.seg button[aria-pressed="true"]{background:var(--surface);color:var(--ink);box-shadow:var(--shadow)}
+.field{position:relative;flex:1;min-width:150px}
+.field input{width:100%;border:1px solid var(--line-2);background:var(--surface);border-radius:var(--r);padding:0 12px 0 34px;font-size:14px;height:38px}
+.field input:focus{border-color:var(--ink);outline:0}
+.field svg{position:absolute;left:11px;top:50%;transform:translateY(-50%);color:var(--ink-3);pointer-events:none;width:15px;height:15px}
+.toolbar{display:flex;align-items:center;gap:8px;flex-wrap:wrap;padding-block:14px 12px}
+.panel{background:var(--surface);border:1px solid var(--line);border-radius:var(--r-lg);overflow:hidden;box-shadow:var(--shadow)}
+.sec{display:flex;align-items:baseline;justify-content:space-between;margin:26px 0 8px;padding-inline:2px}
+.sec h2{font-size:13px;font-weight:600}
+.empty{padding:44px 20px;text-align:center;color:var(--ink-3);display:flex;flex-direction:column;align-items:center;gap:12px}
+.empty strong{color:var(--ink-2);font-weight:500}
+.page-h{display:flex;align-items:flex-end;justify-content:space-between;gap:12px;padding-top:26px;flex-wrap:wrap}
+.page-h h2{font-size:22px;font-weight:600;line-height:1.15}
+.page-h .sub{color:var(--ink-3);font-size:13px;margin-top:4px}
+.badge{display:inline-flex;align-items:center;border-radius:3px;padding:0 6px;font-family:var(--mono);font-size:10.5px;font-weight:500;line-height:18px;background:var(--no-soft);color:var(--no);margin-left:6px;vertical-align:2px}
+.badge.done{background:var(--ok-soft);color:var(--ok)}
+.pill{display:inline-flex;align-items:center;border-radius:3px;padding:0 7px;font-family:var(--mono);font-size:11px;font-weight:500;line-height:20px}
+.pill.good{background:var(--ok-soft);color:var(--ok)}
+.pill.bad{background:var(--no-soft);color:var(--no)}
+
+/* ---------- word list ---------- */
+.list{display:flex;flex-direction:column}
+.row{display:grid;grid-template-columns:48px minmax(0,1.05fr) minmax(0,1.5fr) auto;align-items:center;border-bottom:1px solid var(--line);min-height:54px;position:relative}
+.row:last-child{border-bottom:0}
+.row.playing{background:var(--signal-soft)}
+.row.playing::before{content:"";position:absolute;left:0;top:0;bottom:0;width:3px;background:var(--signal)}
+.row .n{font-family:var(--mono);color:var(--ink-3);font-size:12px;text-align:center}
+.row .w{padding:10px 12px 10px 0;min-width:0}
+.row .w .en{font-family:var(--latin);font-size:17px;font-weight:500;line-height:1.3;overflow-wrap:anywhere}
+.row .w .tag{display:block;font-family:var(--mono);font-size:10.5px;color:var(--ink-3);margin-top:2px}
+.row .m{padding:10px 12px 10px 0;min-width:0;font-size:14.5px;overflow-wrap:anywhere}
+.row .m .pos{color:var(--ink-3);margin-right:6px;font-size:12.5px}
+.row.done .w .en,.row.done .m{color:var(--ink-3)}
+.row .acts{display:flex;align-items:center;padding-right:8px;gap:2px}
+.row .ib{border:0;background:transparent;width:34px;height:36px;border-radius:var(--r);display:grid;place-items:center;color:var(--ink-3)}
+.row .ib:hover{background:var(--surface-2);color:var(--ink)}
+.row .ib svg{width:17px;height:17px}
+.row .ib.on{color:var(--ink)}
+.row .ib.done-btn.on{color:var(--ok)}
+.row .ib.star.on{color:var(--signal)}
+.row .en.say{cursor:pointer}
+.row .en.say:hover{color:var(--signal)}
+.row .memo{grid-column:2/5;padding:0 12px 12px 0;display:none}
+.row.memo-open .memo,.list.show-memos .row.has-memo .memo{display:block}
+.memo textarea{width:100%;border:1px solid var(--line);background:var(--surface-2);border-radius:var(--r);padding:8px 10px;font-size:13.5px;line-height:1.5;resize:none;min-height:38px;display:block}
+.memo textarea:focus{border-color:var(--ink);outline:0;background:var(--surface)}
+.memo textarea::placeholder{color:var(--ink-3)}
+.list[data-hide="ko"] .row .m,.list[data-hide="en"] .row .w{cursor:pointer}
+.list[data-hide="ko"] .row .m:not(.open) > *,.list[data-hide="en"] .row .w:not(.open) > *{visibility:hidden}
+.list[data-hide="ko"] .row .m:not(.open),.list[data-hide="en"] .row .w:not(.open){position:relative}
+.list[data-hide="ko"] .row .m:not(.open)::after,.list[data-hide="en"] .row .w:not(.open)::after{content:"탭해서 확인";position:absolute;inset:10px 12px 10px 0;background:var(--surface-3);border-radius:4px;display:flex;align-items:center;padding-left:12px;font-family:var(--mono);font-size:11px;color:var(--ink-3)}
+.list.colls .row{grid-template-columns:48px minmax(0,1.25fr) minmax(0,1.3fr) auto}
+.list.colls .row .w .en{font-size:15.5px}
+
+/* tts bar */
+.ttsbar{display:flex;align-items:center;gap:10px;flex-wrap:wrap;background:var(--ink);color:var(--bg);border-radius:var(--r-lg);padding:8px 10px 8px 12px;margin-bottom:10px}
+.ttsbar .btn{background:transparent;color:inherit;border-color:rgba(255,255,255,.28);box-shadow:none}
+.ttsbar .btn:hover:not(:disabled){border-color:rgba(255,255,255,.6)}
+.ttsbar .now{flex:1;min-width:140px;font-family:var(--latin);font-size:16px;font-weight:500;overflow:hidden;white-space:nowrap;text-overflow:ellipsis}
+.ttsbar .now small{font-family:var(--mono);opacity:.6;font-size:11.5px;margin-left:8px}
+.ttsbar label{display:inline-flex;align-items:center;gap:6px;font-size:12.5px;opacity:.85;white-space:nowrap}
+.ttsbar input[type=checkbox]{width:15px;height:15px;accent-color:var(--signal);margin:0}
+.ttsbar .seg{background:rgba(255,255,255,.1);border-color:rgba(255,255,255,.18)}
+.ttsbar .seg button{color:inherit;opacity:.7}
+.ttsbar .seg button[aria-pressed="true"]{background:var(--signal);color:var(--on-signal);opacity:1;box-shadow:none}
+.say-btn{border:0;background:transparent;color:var(--ink-3);width:38px;height:38px;border-radius:var(--r);display:inline-grid;place-items:center;vertical-align:middle}
+.say-btn:hover{background:var(--surface-2);color:var(--signal)}
+.say-btn svg{width:20px;height:20px}
+.nospeech{font-size:12.5px;color:var(--no);padding:6px 2px}
+
+/* ---------- quiz ---------- */
+.setup{display:grid;grid-template-columns:repeat(2,1fr);gap:10px;margin-top:14px}
+.opt{background:var(--surface);border:1px solid var(--line);border-radius:var(--r-lg);padding:14px 16px 12px;box-shadow:var(--shadow)}
+.opt .eyebrow{margin-bottom:10px}
+.opt .seg{display:flex;width:100%}
+.opt .seg button{flex:1}
+.opt p{margin-top:8px;font-size:12.5px;color:var(--ink-3)}
+.startbar{margin-top:16px;display:flex;align-items:center;gap:14px;flex-wrap:wrap}
+.q{background:var(--surface);border:1px solid var(--line);border-radius:var(--r-lg);padding:20px 22px 18px;margin-top:14px;box-shadow:var(--shadow)}
+.q .top{display:flex;justify-content:space-between;align-items:center;font-family:var(--mono);font-size:11.5px;color:var(--ink-3);margin-bottom:10px;text-transform:uppercase;letter-spacing:.04em}
+.prog{height:4px;background:var(--surface-3);border-radius:2px;overflow:hidden;margin-bottom:24px}
+.prog i{display:block;height:100%;background:var(--signal);width:0;transition:width .2s ease-out}
+@media (prefers-reduced-motion:reduce){.prog i{transition:none}}
+.prompt{font-family:var(--latin);font-size:34px;font-weight:600;line-height:1.15;margin:0 0 6px;overflow-wrap:anywhere}
+.prompt.ko{font-family:var(--sans);font-size:22px;font-weight:700;line-height:1.4}
+.hint{font-family:var(--mono);color:var(--ink-3);font-size:12px;margin-bottom:22px}
+.choices{display:grid;gap:8px}
+.choice{text-align:left;border:1px solid var(--line-2);background:var(--surface);border-radius:var(--r);padding:0 14px 0 8px;display:flex;gap:12px;align-items:center;font-size:15px;min-height:50px;line-height:1.4;box-shadow:var(--shadow)}
+.choice .k{font-family:var(--mono);font-size:12px;color:var(--ink-2);width:26px;height:26px;border-radius:4px;border:1px solid var(--line-2);display:grid;place-items:center;flex:none;background:var(--surface-2)}
+.choice.en{font-family:var(--latin);font-size:17px;font-weight:500}
+.choice:hover:not(:disabled){border-color:var(--ink)}
+.choice:active:not(:disabled){transform:translateY(1px);box-shadow:none}
+.choice.correct{background:var(--ok-soft);border-color:var(--ok);color:var(--ok)}
+.choice.wrong{background:var(--no-soft);border-color:var(--no);color:var(--no)}
+.choice.correct .k,.choice.wrong .k{color:inherit;border-color:currentColor;background:transparent}
+.choice:disabled{box-shadow:none}
+.answer-row{display:flex;gap:8px}
+.answer-row input{flex:1;min-width:0;border:1px solid var(--line-2);background:var(--surface);border-radius:var(--r);padding:0 14px;font-family:var(--latin);font-size:20px;font-weight:500;height:50px}
+.answer-row input:focus{border-color:var(--ink);outline:0}
+.answer-row input.ok{border-color:var(--ok);background:var(--ok-soft);color:var(--ok)}
+.answer-row input.no{border-color:var(--no);background:var(--no-soft);color:var(--no)}
+.feedback{margin-top:14px;padding:12px 14px;border-radius:var(--r);font-size:14px;line-height:1.5;border-left:3px solid currentColor}
+.feedback.good{background:var(--ok-soft);color:var(--ok)}
+.feedback.bad{background:var(--no-soft);color:var(--no)}
+.feedback b{font-family:var(--latin);font-size:17px;font-weight:600}
+.q .foot{display:flex;justify-content:space-between;align-items:center;margin-top:18px;gap:10px}
+.q .foot .r{display:flex;align-items:center;gap:8px}
+.result{background:var(--surface);border:1px solid var(--line);border-radius:var(--r-lg);padding:22px;margin-top:14px;box-shadow:var(--shadow)}
+.score{display:flex;gap:36px;flex-wrap:wrap;margin-bottom:10px}
+.score .big{font-family:var(--latin);font-size:48px;font-weight:600;line-height:1}
+.score .big small{font-size:18px;color:var(--ink-3);font-weight:500}
+.result .actions{display:flex;gap:8px;flex-wrap:wrap;margin-top:18px}
+.wrong-list .row{grid-template-columns:minmax(0,1fr) minmax(0,1.4fr) minmax(0,.9fr)}
+.wrong-list .row .w{padding-left:14px}
+.wrong-list .row .your{padding:10px 14px;color:var(--no);font-family:var(--latin);font-size:15px;overflow-wrap:anywhere}
+
+/* ---------- exam ---------- */
+.exam{background:var(--surface);border:1px solid var(--line);border-radius:var(--r-lg);padding:16px 18px;margin-bottom:10px;box-shadow:var(--shadow)}
+.exam .hd{display:flex;justify-content:space-between;align-items:center;font-family:var(--mono);font-size:11.5px;color:var(--ink-3);text-transform:uppercase;letter-spacing:.04em}
+.exam .sent{font-family:var(--latin);font-size:16.5px;margin:8px 0 12px;line-height:1.55}
+.exam .choices{grid-template-columns:repeat(2,1fr)}
+.exam .choice{min-height:44px;font-size:14.5px;font-family:var(--latin)}
+
+/* ---------- responsive ---------- */
+@media (min-width:640px){
+  .tabs{display:flex}
+  .bottomnav{display:none}
+  body{padding-block:0 48px}
+}
+@media (min-width:1024px){
+  body{padding-inline:24px}
+  .frame{display:grid;grid-template-columns:var(--rail) 1fr;gap:36px}
+  .rail{display:flex}
+  .topbar{display:none}
+  .main{padding-top:4px}
+}
+@media (max-width:639px){
+  .row{grid-template-columns:34px minmax(0,1fr) auto;grid-template-rows:auto auto auto;padding-block:8px;align-items:start}
+  .row .n{grid-row:1;padding-top:6px}
+  .row .w{grid-column:2;grid-row:1;padding:2px 6px 0 0}
+  .row .m{grid-column:2/4;grid-row:2;padding:2px 12px 0 0}
+  .row .acts{grid-column:3;grid-row:1;padding-right:4px;gap:0}
+  .row .ib{height:32px;width:32px}
+  .row .memo{grid-column:2/4;grid-row:3;padding:8px 12px 0 0}
+  .toolbar .field{flex-basis:100%}
+  .list[data-hide="ko"] .row .m:not(.open)::after,.list[data-hide="en"] .row .w:not(.open)::after{inset:0 8px 0 0}
+  .list[data-hide="ko"] .row .m:not(.open){min-height:28px}
+  .list.colls .row{grid-template-columns:34px minmax(0,1fr) auto}
+  .setup{grid-template-columns:1fr}
+  .q{padding:16px}
+  .prompt{font-size:27px}
+  .prompt.ko{font-size:19px}
+  .q .foot{flex-direction:column-reverse;align-items:stretch}
+  .q .foot .btn.primary{width:100%;min-height:48px}
+  .q .foot .r{justify-content:space-between}
+  .exam .choices{grid-template-columns:1fr}
+  .grid-days{grid-template-columns:repeat(4,1fr)}
+  .range .c{display:none}
+  .wrong-list .row{grid-template-columns:minmax(0,1fr) minmax(0,1fr);grid-template-rows:auto auto}
+  .wrong-list .row .m{grid-column:1/3;grid-row:2;padding:0 14px 10px}
+  .wrong-list .row .w{grid-column:1;grid-row:1}
+  .wrong-list .row .your{grid-column:2;grid-row:1;text-align:right}
+  .page-h h2{font-size:20px}
+}
+</style>
+
+<div class="frame">
+<aside class="rail" aria-label="사이드바">
+  <a class="brand" href="#"><span class="mark" aria-hidden="true"></span><span class="t"><b>비밀과외 VOCA</b><small>TOEIC · Instrument</small></span></a>
+  <nav aria-label="화면">
+    <button data-view="list" aria-selected="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M4 5.5A2.5 2.5 0 016.5 3H20v16H6.5A2.5 2.5 0 004 21.5z"/><path d="M4 19a2 2 0 012-2h14"/></svg>단어장</button>
+    <button data-view="quiz" aria-selected="false"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M9 11l3 3 8-8"/><path d="M20 12v6a2 2 0 01-2 2H6a2 2 0 01-2-2V6a2 2 0 012-2h9"/></svg>퀴즈</button>
+    <button data-view="exam" aria-selected="false"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M8 3h8l4 4v14H4V3z"/><path d="M8 12h8M8 16h5"/></svg>기출 문제</button>
+  </nav>
+  <div>
+    <div class="sec-h"><span class="eyebrow">학습 범위</span><button class="btn ghost" id="railEdit">편집</button></div>
+    <div class="rail-days" id="railDays"></div>
+  </div>
+  <div class="sum">
+    <span class="eyebrow">현재 범위 진행도</span>
+    <div class="big num" id="sumBig"></div>
+    <div class="bar"><i id="sumBar"></i></div>
+    <span class="meta num" id="sumText"></span>
+  </div>
+</aside>
+
+<div class="main">
+<div class="topbar"><div class="in">
+  <a class="brand" href="#"><span class="mark" aria-hidden="true"></span><span class="t"><b>비밀과외 VOCA</b><small>TOEIC</small></span></a>
+  <nav class="tabs" role="tablist" aria-label="화면">
+    <button role="tab" id="tab-list" aria-selected="true" data-view="list">단어장</button>
+    <button role="tab" id="tab-quiz" aria-selected="false" data-view="quiz">퀴즈</button>
+    <button role="tab" id="tab-exam" aria-selected="false" data-view="exam">기출 문제</button>
+  </nav>
+  <span class="spacer"></span>
+  <button class="range" id="rangeBtn" aria-haspopup="dialog" aria-label="학습 범위 선택">
+    <span class="t" id="rangeText">Day 01</span><span class="c" id="rangeCount"></span>
+    <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M6 9l6 6 6-6"/></svg>
+  </button>
+</div></div>
+
+<!-- ===== LIST ===== -->
+<section id="view-list" aria-labelledby="tab-list">
+  <div class="page-h"><div><h2 id="listTitle">단어장</h2><div class="sub num" id="listSub"></div></div></div>
+  <div class="toolbar">
+    <div class="seg" id="hideSeg" role="group" aria-label="가리기">
+      <button id="hd-none" aria-pressed="true" data-v="none">모두 보기</button>
+      <button id="hd-ko" aria-pressed="false" data-v="ko">뜻 가리기</button>
+      <button id="hd-en" aria-pressed="false" data-v="en">단어 가리기</button>
+    </div>
+    <div class="seg" id="filterSeg" role="group" aria-label="필터">
+      <button id="fl-all" aria-pressed="true" data-v="all">전체</button>
+      <button id="fl-star" aria-pressed="false" data-v="star">★ 표시</button>
+      <button id="fl-wrong" aria-pressed="false" data-v="wrong">틀린 단어</button>
+      <button id="fl-done" aria-pressed="false" data-v="done">암기 완료</button>
+    </div>
+    <div class="field"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round"><circle cx="11" cy="11" r="7"/><path d="M20 20l-3.5-3.5"/></svg><input id="search" type="search" placeholder="단어나 뜻으로 검색" autocomplete="off" aria-label="검색"></div>
+    <button class="btn ghost" id="wrongReset" hidden>틀린 횟수 초기화</button>
+    <button class="btn ghost" id="memoAll" aria-pressed="false">메모 보기</button>
+    <button class="btn" id="ttsPlay"><svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M7 4.5v15l12-7.5z"/></svg>연속 듣기</button>
+  </div>
+  <div class="ttsbar" id="ttsBar" hidden>
+    <button class="btn" id="ttsStop">■ 정지</button>
+    <span class="now" id="ttsNow"></span>
+    <label><input type="checkbox" id="ttsKo" checked>뜻도 읽기</label>
+    <div class="seg" id="ttsRate"><button data-v="0.8" aria-pressed="false">느리게</button><button data-v="1" aria-pressed="true">보통</button><button data-v="1.2" aria-pressed="false">빠르게</button></div>
+    <label><input type="checkbox" id="ttsLoop">반복</label>
+    <label><input type="checkbox" id="ttsDone">완료 단어 포함</label>
+  </div>
+  <div class="nospeech" id="noSpeech" hidden>이 브라우저에서는 음성 읽기를 지원하지 않아요. Chrome, Edge, Safari에서 열어 주세요.</div>
+  <div class="panel list" id="wordList" data-hide="none"></div>
+  <div class="sec"><h2>기출 Collocation</h2><span class="meta" id="collMeta"></span></div>
+  <div class="panel list colls" id="collList" data-hide="none"></div>
+</section>
+
+<!-- ===== QUIZ ===== -->
+<section id="view-quiz" aria-labelledby="tab-quiz" hidden>
+  <div id="quizSetup">
+    <div class="page-h"><div><h2>퀴즈</h2><div class="sub">3번 연속 맞히면 암기 완료로 표시됩니다.</div></div></div>
+    <div class="setup">
+      <div class="opt"><div class="eyebrow">문제 형식</div>
+        <div class="seg" id="optType"><button id="qt-mc" aria-pressed="true" data-v="mc">객관식</button><button id="qt-sa" aria-pressed="false" data-v="sa">주관식</button></div>
+        <p id="typeHelp">보기 4개 중 하나를 고릅니다. 숫자키 1~4로도 고를 수 있어요.</p></div>
+      <div class="opt" id="dirOpt"><div class="eyebrow">출제 방향</div>
+        <div class="seg" id="optDir"><button id="qd-en" aria-pressed="true" data-v="en">영어 → 뜻</button><button id="qd-ko" aria-pressed="false" data-v="ko">뜻 → 영어</button></div>
+        <p id="dirHelp">영어 단어를 보고 알맞은 뜻을 고릅니다.</p></div>
+      <div class="opt"><div class="eyebrow">문제 수</div>
+        <div class="seg" id="optCount"><button id="qc-10" aria-pressed="true" data-v="10">10</button><button id="qc-20" aria-pressed="false" data-v="20">20</button><button id="qc-all" aria-pressed="false" data-v="all">전체</button></div>
+        <p>선택한 범위에서 무작위로 뽑습니다.</p></div>
+      <div class="opt"><div class="eyebrow">출제 범위</div>
+        <div class="seg" id="optPool"><button id="qp-all" aria-pressed="false" data-v="all">전체</button><button id="qp-star" aria-pressed="false" data-v="star">★ 표시</button><button id="qp-wrong" aria-pressed="false" data-v="wrong">틀린 단어</button><button id="qp-todo" aria-pressed="true" data-v="todo">미완료</button></div>
+        <p id="poolHelp"></p></div>
+    </div>
+    <div class="startbar"><button class="btn primary lg" id="startQuiz">퀴즈 시작</button><span class="meta num" id="startMeta"></span></div>
+  </div>
+
+  <div id="quizPlay" hidden>
+    <div class="q">
+      <div class="top"><span class="num" id="qPos"></span><span id="qMode"></span></div>
+      <div class="prog"><i id="qProg"></i></div>
+      <p class="prompt"><span id="qPrompt"></span><button type="button" class="say-btn" id="qSay" aria-label="발음 듣기" hidden><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M11 5L6 9H2v6h4l5 4z"/><path d="M15.5 8.5a5 5 0 010 7"/><path d="M18.5 5.5a9 9 0 010 13"/></svg></button></p>
+      <div class="hint" id="qHint"></div>
+      <div class="choices" id="qChoices"></div>
+      <div class="answer-row" id="qAnswer" hidden>
+        <input id="qInput" type="text" autocomplete="off" autocapitalize="off" autocorrect="off" spellcheck="false" placeholder="영어 단어 입력" aria-label="답 입력">
+        <button class="btn" id="qCheck">확인</button>
+      </div>
+      <div class="feedback" id="qFeed" hidden aria-live="polite"></div>
+      <div class="foot">
+        <div class="r"><span class="meta num" id="qScore"></span><button class="btn ghost" id="qQuit">그만두기</button></div>
+        <button class="btn primary" id="qNext" disabled>다음</button>
+      </div>
+    </div>
+  </div>
+
+  <div id="quizResult" hidden>
+    <div class="page-h"><div><h2>결과</h2></div></div>
+    <div class="result">
+      <div class="score">
+        <div><div class="eyebrow">정답률</div><div class="big num" id="rPct"></div></div>
+        <div><div class="eyebrow">맞힌 문제</div><div class="big num" id="rCount"></div></div>
+      </div>
+      <p class="meta" id="rMsg"></p>
+      <div class="actions"><button class="btn primary" id="rRetryWrong">틀린 단어만 다시</button><button class="btn" id="rStarWrong">틀린 단어 모두 ★ 표시</button><button class="btn" id="rAgain">같은 설정으로 다시</button><button class="btn ghost" id="rBack">설정으로</button></div>
+    </div>
+    <div id="rWrongWrap">
+      <div class="sec"><h2>틀린 단어</h2><span class="meta" id="rWrongN"></span></div>
+      <div class="panel list wrong-list" id="rWrong"></div>
+    </div>
+  </div>
+</section>
+
+<!-- ===== EXAM ===== -->
+<section id="view-exam" aria-labelledby="tab-exam" hidden>
+  <div class="page-h"><div><h2>기출 변형 문제</h2><div class="sub num" id="examMeta"></div></div><button class="btn ghost" id="examReset">푼 기록 지우기</button></div>
+  <div id="examList" style="margin-top:14px"></div>
+</section>
+</div><!-- /main -->
+</div><!-- /frame -->
+
+<nav class="bottomnav" aria-label="화면"><div class="in">
+  <button data-view="list" aria-selected="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M4 5.5A2.5 2.5 0 016.5 3H20v16H6.5A2.5 2.5 0 004 21.5z"/><path d="M4 19a2 2 0 012-2h14"/></svg>단어장</button>
+  <button data-view="quiz" aria-selected="false"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M9 11l3 3 8-8"/><path d="M20 12v6a2 2 0 01-2 2H6a2 2 0 01-2-2V6a2 2 0 012-2h9"/></svg>퀴즈</button>
+  <button data-view="exam" aria-selected="false"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M8 3h8l4 4v14H4V3z"/><path d="M8 12h8M8 16h5"/></svg>기출</button>
+</div></nav>
+
+<dialog class="sheet" id="rangeDlg" aria-labelledby="rangeTitle">
+  <div class="hd"><h2 id="rangeTitle">학습 범위</h2><button class="x" id="rangeClose" aria-label="닫기"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round"><path d="M6 6l12 12M18 6L6 18"/></svg></button></div>
+  <div class="bd">
+    <div class="quick">
+      <button data-q="all">전체</button><button data-q="1-10">Day 1–10</button><button data-q="11-20">Day 11–20</button><button data-q="21-30">Day 21–30</button><button data-q="extra">기출만</button><button data-q="none">모두 해제</button>
+    </div>
+    <div class="eyebrow">비밀과외 VOCA</div>
+    <div class="grid-days" id="dayGrid"></div>
+    <div class="eyebrow">토익 기출</div>
+    <div class="grid-days" id="extraGrid"></div>
+  </div>
+  <div class="ft"><span class="meta num" id="rangeMeta"></span><button class="btn primary" id="rangeApply">적용</button></div>
+</dialog>
+
+<script id="data" type="application/json">{"words": [{"d": "Day 01", "n": 1, "w": "various", "p": "형.", "m": "여러 가지의, 각양 각색의"}, {"d": "Day 01", "n": 2, "w": "shift", "p": "동. / 명.", "m": "동. 옮기다, 이동하다 / 명. 교대 근무(시간), 교대조"}, {"d": "Day 01", "n": 3, "w": "facility", "p": "명.", "m": "시설[기관]"}, {"d": "Day 01", "n": 4, "w": "revise", "p": "동.", "m": "변경[수정]하다, 개정하다"}, {"d": "Day 01", "n": 5, "w": "flexible", "p": "형.", "m": "신축성[융통성] 있는, 유연한"}, {"d": "Day 01", "n": 6, "w": "leak", "p": "동. / 명.", "m": "동. 새다 / 명. 새는 곳, 틈"}, {"d": "Day 01", "n": 7, "w": "within", "p": "전.", "m": "(특정한 기간/거리) 이내에[안에]"}, {"d": "Day 01", "n": 8, "w": "refurbish", "p": "동.", "m": "새로 꾸미다, 재단장하다"}, {"d": "Day 01", "n": 9, "w": "representative", "p": "명. / 형.", "m": "명. 대표(자), 대리인 / 형. 대표하는"}, {"d": "Day 01", "n": 10, "w": "notice", "p": "동. / 명.", "m": "동. 주목하다, 관심을 기울이다 / 명. 주목, 알아챔, 공고문"}, {"d": "Day 01", "n": 11, "w": "distinguished", "p": "형.", "m": "유명한, 성공한, 기품 있는"}, {"d": "Day 01", "n": 12, "w": "resident", "p": "명.", "m": "거주자, 주민"}, {"d": "Day 01", "n": 13, "w": "apprentice", "p": "명. / 동.", "m": "명. 수습생, 도제 / 동. 수습생으로 삼다"}, {"d": "Day 01", "n": 14, "w": "significant", "p": "형.", "m": "중요한, 의미 있는"}, {"d": "Day 01", "n": 15, "w": "punctual", "p": "형.", "m": "시간을 지키는, 엄수하는"}, {"d": "Day 01", "n": 16, "w": "consecutive", "p": "형.", "m": "연이은, 연속적인"}, {"d": "Day 01", "n": 17, "w": "merger", "p": "명.", "m": "합병"}, {"d": "Day 01", "n": 18, "w": "terminate", "p": "동.", "m": "끝나다, 종료되다, 종점애 닿다"}, {"d": "Day 01", "n": 19, "w": "laboratory", "p": "명.", "m": "실험실"}, {"d": "Day 01", "n": 20, "w": "blueprint", "p": "명.", "m": "청사진, 계획"}, {"d": "Day 01", "n": 21, "w": "innovative", "p": "형.", "m": "획기적인, 혁신적인"}, {"d": "Day 01", "n": 22, "w": "prop", "p": "명. / 동.", "m": "명. 지주, 버팀목, 받침대 / 동. (받침대 등으로) 받치다"}, {"d": "Day 01", "n": 23, "w": "duplicate", "p": "동. / 형.", "m": "동. 복사[복제]하다, 사본을 만들다 / 형. 똑같은, 꼭 닮은, 사본의"}, {"d": "Day 01", "n": 24, "w": "verify", "p": "동.", "m": "확인하다, 입증하다"}, {"d": "Day 01", "n": 25, "w": "ensure", "p": "동.", "m": "보장하다, 반드시 ~하게 하다"}, {"d": "Day 02", "n": 1, "w": "hesitate", "p": "동.", "m": "망설이다, 주저하다"}, {"d": "Day 02", "n": 2, "w": "attach", "p": "동.", "m": "붙이다, 첨부하다"}, {"d": "Day 02", "n": 3, "w": "applause", "p": "명.", "m": "박수, 갈채"}, {"d": "Day 02", "n": 4, "w": "issue", "p": "명. / 동.", "m": "명. 주제, 쟁점/문제/호/발행 / 동. 발부[발행]하다, 발표[공표]하다"}, {"d": "Day 02", "n": 5, "w": "domestic", "p": "형.", "m": "국내의, 가정(용)의"}, {"d": "Day 02", "n": 6, "w": "acquaintance", "p": "명.", "m": "지인 / 친분 / 지식"}, {"d": "Day 02", "n": 7, "w": "inclement weather", "p": "phr.", "m": "나쁜 날씨, 악천후"}, {"d": "Day 02", "n": 8, "w": "renowned", "p": "형.", "m": "유명한, 명성 있는"}, {"d": "Day 02", "n": 9, "w": "fragile", "p": "형.", "m": "부서지기 쉬운, 취약한"}, {"d": "Day 02", "n": 10, "w": "versatile", "p": "형.", "m": "다재다능한, 다용도의"}, {"d": "Day 02", "n": 11, "w": "disregard", "p": "동. / 명.", "m": "동. 무시[묵살]하다 / 명. 무시, 묵살"}, {"d": "Day 02", "n": 12, "w": "relinquish", "p": "동.", "m": "포기하다, 내주다"}, {"d": "Day 02", "n": 13, "w": "thrive", "p": "동.", "m": "번창하다"}, {"d": "Day 02", "n": 14, "w": "bankrupt", "p": "형. / 명.", "m": "형. 파산한 / 명. 파산자, 파산 선고를 받은 사람"}, {"d": "Day 02", "n": 15, "w": "comply", "p": "동.", "m": "따르다, 준수하다"}, {"d": "Day 02", "n": 16, "w": "readership", "p": "명.", "m": "독자 수[층]"}, {"d": "Day 02", "n": 17, "w": "decade", "p": "명.", "m": "10년"}, {"d": "Day 02", "n": 18, "w": "occasion", "p": "명. / 동.", "m": "명. 때, 기회. 경우 / 동. ~의 원인이 되다"}, {"d": "Day 02", "n": 19, "w": "occupation", "p": "명.", "m": "직업 / 사용, 거주"}, {"d": "Day 02", "n": 20, "w": "delegate", "p": "명. / 동.", "m": "명. 대표(자) / 동. 위임하다"}, {"d": "Day 02", "n": 21, "w": "correspondence", "p": "명.", "m": "서신, 편지"}, {"d": "Day 02", "n": 22, "w": "entrepreneur", "p": "명.", "m": "사업가, 기업가"}, {"d": "Day 02", "n": 23, "w": "minutes", "p": "명.", "m": "회의록"}, {"d": "Day 02", "n": 24, "w": "shortage", "p": "명.", "m": "부족"}, {"d": "Day 02", "n": 25, "w": "flourish", "p": "동. / 명.", "m": "동. 번창하다(=thrive) / 명. 과장된 동작"}, {"d": "Day 03", "n": 1, "w": "durable", "p": "형.", "m": "내구성이 좋은, 오래가는"}, {"d": "Day 03", "n": 2, "w": "nomination", "p": "명.", "m": "지명, 추천, 임명"}, {"d": "Day 03", "n": 3, "w": "steady", "p": "형. / 동.", "m": "형. 꾸준한 / 동. 균형을 잡다, 흔들리지 않다"}, {"d": "Day 03", "n": 4, "w": "leading", "p": "형.", "m": "가장 중요한, 선두하는"}, {"d": "Day 03", "n": 5, "w": "qualified", "p": "형.", "m": "자격이 잇는"}, {"d": "Day 03", "n": 6, "w": "imperative", "p": "형.", "m": "반드시 해야 하는, 긴요한"}, {"d": "Day 03", "n": 7, "w": "outreach", "p": "명.", "m": "봉사[원조/지원] 활동"}, {"d": "Day 03", "n": 8, "w": "assemble", "p": "동.", "m": "모이다, 집합시키다 / 조립하다"}, {"d": "Day 03", "n": 9, "w": "endorse", "p": "동.", "m": "지지하다, 보증[홍보]하다"}, {"d": "Day 03", "n": 10, "w": "disclose", "p": "동.", "m": "밝히다, 폭로하다, 드러내다"}, {"d": "Day 03", "n": 11, "w": "commemorate", "p": "동.", "m": "(중요 인물 사건을) 기념하다"}, {"d": "Day 03", "n": 12, "w": "terminate", "p": "동.", "m": "끝나다, 종점에 달하다"}, {"d": "Day 03", "n": 13, "w": "account", "p": "명. / 동.", "m": "명. 계좌/장부/계정/설명 / 동. 설명하다(for), 차지하다(for)"}, {"d": "Day 03", "n": 14, "w": "extension", "p": "명.", "m": "확대 / 증축(된) 건물"}, {"d": "Day 03", "n": 15, "w": "congestion", "p": "명.", "m": "혼잡"}, {"d": "Day 03", "n": 16, "w": "substantially", "p": "부.", "m": "상당히, 많이"}, {"d": "Day 03", "n": 17, "w": "mainly", "p": "부.", "m": "주로, 대부분, 대개"}, {"d": "Day 03", "n": 18, "w": "accurate", "p": "형.", "m": "정확한, 정밀한"}, {"d": "Day 03", "n": 19, "w": "complete", "p": "형. / 동.", "m": "형. 완벽한, 완전한 / 동. 완료하다, 끝마치다 / 기입하다"}, {"d": "Day 03", "n": 20, "w": "separate", "p": "형. / 동.", "m": "형. 분리된, 독립된 / 동. 분리하다, 갈라지다"}, {"d": "Day 03", "n": 21, "w": "patron", "p": "명.", "m": "후원자, 고객"}, {"d": "Day 03", "n": 22, "w": "testimonial", "p": "명.", "m": "추천서, 추천의 글"}, {"d": "Day 03", "n": 23, "w": "extend", "p": "동.", "m": "더 길게 만들다, 연장하다"}, {"d": "Day 03", "n": 24, "w": "power outage", "p": "명.", "m": "정전"}, {"d": "Day 03", "n": 25, "w": "avid", "p": "형.", "m": "열심인, 열렬한, 열망하는"}, {"d": "Day 04", "n": 1, "w": "culinary", "p": "형.", "m": "요리의, 음식의"}, {"d": "Day 04", "n": 2, "w": "sweep", "p": "동.", "m": "쓸다, 청소하다"}, {"d": "Day 04", "n": 3, "w": "pedestrian", "p": "명.", "m": "보행자"}, {"d": "Day 04", "n": 4, "w": "dig", "p": "동.", "m": "파다, 파내다, 캐다"}, {"d": "Day 04", "n": 5, "w": "pavement", "p": "명.", "m": "인도, 보도, 포장면"}, {"d": "Day 04", "n": 6, "w": "alternative", "p": "명. / 형.", "m": "명. 대안, 선택 가능한 것 / 형. 대체 가능한, 대안이 되는"}, {"d": "Day 04", "n": 7, "w": "beverage", "p": "명.", "m": "음료"}, {"d": "Day 04", "n": 8, "w": "refreshment", "p": "명.", "m": "다과, 가벼운 식사"}, {"d": "Day 04", "n": 9, "w": "accelerate", "p": "동.", "m": "가속화되다, 가속화하다"}, {"d": "Day 04", "n": 10, "w": "through", "p": "전. / 부.", "m": "전. ~을 통해 / 지나[거쳐/통과하여] / 부. 통과하여"}, {"d": "Day 04", "n": 11, "w": "mention", "p": "동. / 명.", "m": "동. 언급하다, 말하다 / 명. 언급[거론]"}, {"d": "Day 04", "n": 12, "w": "year-end", "p": "명. / 형.", "m": "명. 연말 / 형. 연말의"}, {"d": "Day 04", "n": 13, "w": "appointment", "p": "명.", "m": "약속 / 임명, 지명"}, {"d": "Day 04", "n": 14, "w": "misplace", "p": "동.", "m": "제자리에 두지 않다"}, {"d": "Day 04", "n": 15, "w": "schedule conflic", "p": "t 명.", "m": "일정 충돌"}, {"d": "Day 04", "n": 16, "w": "accommodation", "p": "명.", "m": "거처, 숙소, 시설"}, {"d": "Day 04", "n": 17, "w": "demonstration", "p": "명.", "m": "시위, 데모, 시연"}, {"d": "Day 04", "n": 18, "w": "regard", "p": "동. / 명.", "m": "동. ~을 …으로 여기다 / 명. 관심 / 존경"}, {"d": "Day 04", "n": 19, "w": "highly", "p": "부.", "m": "크게, 대단히, 매우"}, {"d": "Day 04", "n": 20, "w": "promptly", "p": "부.", "m": "지체 없이, 즉시"}, {"d": "Day 04", "n": 21, "w": "mow", "p": "동.", "m": "깎다, 베다"}, {"d": "Day 04", "n": 22, "w": "exhibition", "p": "명.", "m": "전시회, 전시"}, {"d": "Day 04", "n": 23, "w": "branch", "p": "명.", "m": "지사, 분점"}, {"d": "Day 04", "n": 24, "w": "flagship store", "p": "명.", "m": "본점, 주력 상점"}, {"d": "Day 04", "n": 25, "w": "win", "p": "동.", "m": "이기다, 따다[쟁취하다]"}, {"d": "Day 05", "n": 1, "w": "retirement", "p": "명.", "m": "은퇴, 퇴직"}, {"d": "Day 05", "n": 2, "w": "inaugurate", "p": "동.", "m": "취임하게 하다"}, {"d": "Day 05", "n": 3, "w": "probation", "p": "명.", "m": "보호 관찰, 수습(기간)"}, {"d": "Day 05", "n": 4, "w": "consequently", "p": "부.", "m": "그 결과, 따라서"}, {"d": "Day 05", "n": 5, "w": "relocate", "p": "동.", "m": "이전[이동]하다[시키다]"}, {"d": "Day 05", "n": 6, "w": "replacement", "p": "명.", "m": "교체, 대체 / 후임자"}, {"d": "Day 05", "n": 7, "w": "broaden", "p": "동.", "m": "넓어지다, 퍼지다"}, {"d": "Day 05", "n": 8, "w": "immediately", "p": "부.", "m": "즉시, 즉각, 곧바로"}, {"d": "Day 05", "n": 9, "w": "appraise", "p": "동.", "m": "살피다 / (업무를) 평가하다"}, {"d": "Day 05", "n": 10, "w": "enforce", "p": "동.", "m": "강요하다 / (법률 등을) 집행하다"}, {"d": "Day 05", "n": 11, "w": "abruptly", "p": "부.", "m": "갑자기, 불쑥, 뜻밖에"}, {"d": "Day 05", "n": 12, "w": "severe", "p": "형.", "m": "극심한, 심각한"}, {"d": "Day 05", "n": 13, "w": "mutually", "p": "부.", "m": "서로, 상호간에"}, {"d": "Day 05", "n": 14, "w": "implement", "p": "동. / 명.", "m": "동. 시행하다 / 명. 도구, 기구"}, {"d": "Day 05", "n": 15, "w": "sanitize", "p": "동.", "m": "위생 처리하다, 살균하다"}, {"d": "Day 05", "n": 16, "w": "cease", "p": "동.", "m": "중단되다, 그치다, 중단시키다"}, {"d": "Day 05", "n": 17, "w": "evaluate", "p": "동.", "m": "평가하다, 감정하다"}, {"d": "Day 05", "n": 18, "w": "monthly", "p": "형. / 부.", "m": "형. 한 달에 한 번의 / 부. 매월, 다달이"}, {"d": "Day 05", "n": 19, "w": "attainable", "p": "형.", "m": "이룰 수 있는, 달성할 수 있는"}, {"d": "Day 05", "n": 20, "w": "currency", "p": "명.", "m": "통화"}, {"d": "Day 05", "n": 21, "w": "interest rate", "p": "명.", "m": "금리, 이율"}, {"d": "Day 05", "n": 22, "w": "in advance", "p": "phr.", "m": "미리"}, {"d": "Day 05", "n": 23, "w": "apparently", "p": "부.", "m": "듣자 하니, 보아 하니"}, {"d": "Day 05", "n": 24, "w": "tend", "p": "동.", "m": "경향이 있다 / 돌보다, 보살피다"}, {"d": "Day 05", "n": 25, "w": "modification", "p": "명.", "m": "수정, 변경"}, {"d": "Day 06", "n": 1, "w": "procedure", "p": "명.", "m": "절차, 방법"}, {"d": "Day 06", "n": 2, "w": "capacity", "p": "명.", "m": "용량, 수용력"}, {"d": "Day 06", "n": 3, "w": "lightweight", "p": "형. / 명.", "m": "형. 가벼운 / 명. 라이트급 선수"}, {"d": "Day 06", "n": 4, "w": "eventually", "p": "부.", "m": "결국, 종내"}, {"d": "Day 06", "n": 5, "w": "complex", "p": "형. / 명.", "m": "형. 복잡한 / 명. 복합 건물"}, {"d": "Day 06", "n": 6, "w": "timely", "p": "형.", "m": "시기적절한, 때맞춘"}, {"d": "Day 06", "n": 7, "w": "stringent", "p": "형.", "m": "엄중한, 긴박한, 절박한"}, {"d": "Day 06", "n": 8, "w": "emphasis", "p": "명.", "m": "강조"}, {"d": "Day 06", "n": 9, "w": "operation", "p": "명.", "m": "수술, 작전 / 기업"}, {"d": "Day 06", "n": 10, "w": "available", "p": "형.", "m": "구할 수 있는, 이용할 수 있는"}, {"d": "Day 06", "n": 11, "w": "factor", "p": "명.", "m": "요소, 요인"}, {"d": "Day 06", "n": 12, "w": "feasible", "p": "형.", "m": "실현 가능한"}, {"d": "Day 06", "n": 13, "w": "impeccable", "p": "형.", "m": "흠 잡을 데 없는"}, {"d": "Day 06", "n": 14, "w": "redeemable", "p": "형.", "m": "(현금 상품과) 교환할 수 있는"}, {"d": "Day 06", "n": 15, "w": "findings", "p": "명.", "m": "조사 결과물"}, {"d": "Day 06", "n": 16, "w": "garment", "p": "명.", "m": "의복, 옷"}, {"d": "Day 06", "n": 17, "w": "property", "p": "명.", "m": "재산, 소유물, 부동산"}, {"d": "Day 06", "n": 18, "w": "catering", "p": "명.", "m": "음식 공급, 출장뷔페업체 서비스"}, {"d": "Day 06", "n": 19, "w": "conglomerate", "p": "명.", "m": "복합 기업, 대기업"}, {"d": "Day 06", "n": 20, "w": "vendor", "p": "명.", "m": "상인"}, {"d": "Day 06", "n": 21, "w": "doubt", "p": "명. / 동.", "m": "명. 의심, 의문 / 동. 의심하다, 확신하지 못하다"}, {"d": "Day 06", "n": 22, "w": "malicious", "p": "형.", "m": "악의적인, 적의 있는"}, {"d": "Day 06", "n": 23, "w": "complimentary", "p": "형.", "m": "무료의, 칭찬하는"}, {"d": "Day 06", "n": 24, "w": "inquiry", "p": "명.", "m": "질문, 문의 / 연구, 탐구"}, {"d": "Day 06", "n": 25, "w": "deliberation", "p": "명.", "m": "숙고 / 신중함"}, {"d": "Day 07", "n": 1, "w": "willing", "p": "형.", "m": "기꺼이 하는, 자발적인, 꺼리지 않는"}, {"d": "Day 07", "n": 2, "w": "noteworthy", "p": "형.", "m": "주목할 만한"}, {"d": "Day 07", "n": 3, "w": "supplementary", "p": "형.", "m": "보충의, 추가의"}, {"d": "Day 07", "n": 4, "w": "dispute", "p": "명. / 동.", "m": "명. 분쟁, 분규, 논란 / 동. 반박하다, 이의를 제기하다"}, {"d": "Day 07", "n": 5, "w": "eager", "p": "형.", "m": "열렬한, 간절히 바라는, 열심인"}, {"d": "Day 07", "n": 6, "w": "utility fee", "p": "phr.", "m": "공공요금"}, {"d": "Day 07", "n": 7, "w": "venue", "p": "명.", "m": "장소"}, {"d": "Day 07", "n": 8, "w": "undergo", "p": "동.", "m": "(변화나 안 좋은 일 등을) 겪다"}, {"d": "Day 07", "n": 9, "w": "specialize", "p": "동.", "m": "~을 전공하다, 전문적으로 하다"}, {"d": "Day 07", "n": 10, "w": "compile", "p": "동.", "m": "엮다, 편집[편찬]하다"}, {"d": "Day 07", "n": 11, "w": "apron", "p": "명.", "m": "앞치마"}, {"d": "Day 07", "n": 12, "w": "conventional", "p": "형.", "m": "관습적인, 관례적인"}, {"d": "Day 07", "n": 13, "w": "robust", "p": "형.", "m": "원기 왕성한, 팔팔한, 튼튼한, 강력한"}, {"d": "Day 07", "n": 14, "w": "secondhand", "p": "형.", "m": "간접의, 중고의"}, {"d": "Day 07", "n": 15, "w": "cautious", "p": "형.", "m": "조심스러운, 신중한"}, {"d": "Day 07", "n": 16, "w": "crack", "p": "동. / 명.", "m": "동. 갈라지다, 금이 가다, 깨지다 / 명. 금, 틈"}, {"d": "Day 07", "n": 17, "w": "tremendous", "p": "형.", "m": "엄청난, 굉장한, 대단한"}, {"d": "Day 07", "n": 18, "w": "simplify", "p": "동.", "m": "간소화하다, 단순화하다"}, {"d": "Day 07", "n": 19, "w": "double-book", "p": "동", "m": "이중으로 예약을 받다"}, {"d": "Day 07", "n": 20, "w": "remote control", "p": "명.", "m": "원격 조종, 리모콘"}, {"d": "Day 07", "n": 21, "w": "breach", "p": "명. / 동.", "m": "명. 위반 / 동. 위반하다, 어기다"}, {"d": "Day 07", "n": 22, "w": "portable", "p": "형. / 명.", "m": "형. 휴대가 쉬운, 휴대용의 / 명. 휴대용 제품"}, {"d": "Day 07", "n": 23, "w": "seasoned", "p": "형.", "m": "경험 많은, 노련한 / 양념을 한"}, {"d": "Day 07", "n": 24, "w": "receipt", "p": "명.", "m": "영수증, 수령"}, {"d": "Day 07", "n": 25, "w": "fountain", "p": "명.", "m": "분수"}, {"d": "Day 08", "n": 1, "w": "tidy", "p": "형. / 동.", "m": "형. 깔끔한, 잘 정돈된 / 동. 정돈하다, 정리하다"}, {"d": "Day 08", "n": 2, "w": "flyer", "p": "명.", "m": "전단지(print -), 비행기 승객"}, {"d": "Day 08", "n": 3, "w": "slightly", "p": "부.", "m": "약간, 조금"}, {"d": "Day 08", "n": 4, "w": "excursion", "p": "명.", "m": "여행, 외도"}, {"d": "Day 08", "n": 5, "w": "lodging", "p": "명.", "m": "임시 숙소, 하숙"}, {"d": "Day 08", "n": 6, "w": "gifted", "p": "형.", "m": "재능이 있는"}, {"d": "Day 08", "n": 7, "w": "transparent", "p": "형.", "m": "투명한, 명백한"}, {"d": "Day 08", "n": 8, "w": "sheer", "p": "형.", "m": "순전한, 순수한"}, {"d": "Day 08", "n": 9, "w": "thoroughly", "p": "부.", "m": "대단히, 완전히, 철저히"}, {"d": "Day 08", "n": 10, "w": "unanimously", "p": "부.", "m": "만장일치로"}, {"d": "Day 08", "n": 11, "w": "meticulous", "p": "형.", "m": "꼼꼼한, 세심한"}, {"d": "Day 08", "n": 12, "w": "itinerary", "p": "명.", "m": "여행 일정표"}, {"d": "Day 08", "n": 13, "w": "keen", "p": "형.", "m": "간절히 하고 싶은, 열망하는"}, {"d": "Day 08", "n": 14, "w": "cast", "p": "동. / 명.", "m": "동. (그림자를) 드리우다 / 명. (연극이나 영화의) 출연자들"}, {"d": "Day 08", "n": 15, "w": "voucher", "p": "명.", "m": "상품권, 할인권, 쿠폰"}, {"d": "Day 08", "n": 16, "w": "expenditure", "p": "명.", "m": "지출, 비용, 경비"}, {"d": "Day 08", "n": 17, "w": "reimbursement", "p": "명.", "m": "상환, 변제"}, {"d": "Day 08", "n": 18, "w": "remnant", "p": "명.", "m": "남은 부분, 나머지"}, {"d": "Day 08", "n": 19, "w": "collaborate", "p": "동.", "m": "협력하다, 공동으로 작업하다"}, {"d": "Day 08", "n": 20, "w": "wing", "p": "명. / 동.", "m": "명. 날개, 부속 건물, 동 / 동. 날아가다, 신속히 보내지다"}, {"d": "Day 08", "n": 21, "w": "alert", "p": "형. / 동.", "m": "형. 기민한, 경계하는 / 동. 알리다, 경보를 발하다"}, {"d": "Day 08", "n": 22, "w": "relevant", "p": "형.", "m": "관련 있는, 적절한"}, {"d": "Day 08", "n": 23, "w": "decline", "p": "명. / 동.", "m": "명. 감소, 하락, 축소 / 동. 줄어들다, 감소하다 / 거절하다"}, {"d": "Day 08", "n": 24, "w": "excavation", "p": "명.", "m": "발굴, 발굴지"}, {"d": "Day 08", "n": 25, "w": "urgent", "p": "형.", "m": "긴급한, 시급한"}, {"d": "Day 09", "n": 1, "w": "genuine", "p": "형.", "m": "진짜의, 진품의"}, {"d": "Day 09", "n": 2, "w": "inevitable", "p": "형.", "m": "불가피한, 필연적인"}, {"d": "Day 09", "n": 3, "w": "postpone", "p": "동.", "m": "연기하다, 미루다"}, {"d": "Day 09", "n": 4, "w": "ingredient", "p": "명.", "m": "재료, 성분"}, {"d": "Day 09", "n": 5, "w": "vessel", "p": "명.", "m": "선박, 배 / 그릇, 용기 / (동물의) 혈관"}, {"d": "Day 09", "n": 6, "w": "budget", "p": "명. / 동.", "m": "명. 예산, 비용 / 동. 예산을 세우다"}, {"d": "Day 09", "n": 7, "w": "vacant", "p": "형.", "m": "비어 있는, 사람이 없는, 결원의"}, {"d": "Day 09", "n": 8, "w": "dense", "p": "형.", "m": "빽빽한, 밀집한, 짙은"}, {"d": "Day 09", "n": 9, "w": "notable", "p": "형.", "m": "주목할 만한, 눈에 띄는"}, {"d": "Day 09", "n": 10, "w": "roughly", "p": "부.", "m": "대략, 거의, 거칠게"}, {"d": "Day 09", "n": 11, "w": "emerging", "p": "형.", "m": "최근 생겨난, 최근에 만들어진"}, {"d": "Day 09", "n": 12, "w": "demolish", "p": "동.", "m": "(건물을) 철거하다 / (사상이나 이론을) 뒤집다"}, {"d": "Day 09", "n": 13, "w": "intimate", "p": "형.", "m": "친밀한, 사적인"}, {"d": "Day 09", "n": 14, "w": "workload", "p": "명.", "m": "업무량, 작업량"}, {"d": "Day 09", "n": 15, "w": "last-minute", "p": "형.", "m": "마지막 순간의, 막바지의"}, {"d": "Day 09", "n": 16, "w": "fundamental", "p": "형. / 명.", "m": "형. 근본적인, 핵심적인 / 명. 기본 원칙, 핵심"}, {"d": "Day 09", "n": 17, "w": "considerate", "p": "형.", "m": "사려 깊은, 배려하는"}, {"d": "Day 09", "n": 18, "w": "hospitality", "p": "명.", "m": "환대, 후대"}, {"d": "Day 09", "n": 19, "w": "destination", "p": "명.", "m": "목적지, 도착지"}, {"d": "Day 09", "n": 20, "w": "withdraw", "p": "동.", "m": "철수하다, (계좌에서 돈을) 인출하다"}, {"d": "Day 09", "n": 21, "w": "in person", "p": "phr.", "m": "직접, 몸소"}, {"d": "Day 09", "n": 22, "w": "route", "p": "명. / 동.", "m": "명. 길, 경로, 노선 / 동. (특정 루트를 따라)보내다, 전송하다"}, {"d": "Day 09", "n": 23, "w": "detour", "p": "명. / 동.", "m": "명. 우회로 / 동. 둘러 가다, 우회하다"}, {"d": "Day 09", "n": 24, "w": "demand", "p": "명. / 동.", "m": "명. 요구 사항 / 동. 요구하다, 필요로 하다"}, {"d": "Day 09", "n": 25, "w": "secure", "p": "형. / 동.", "m": "형. 안심하는, 안전한 / 동. 획득[확보]하다 / 고정시키다"}, {"d": "Day 10", "n": 1, "w": "advanced", "p": "형.", "m": "선진의, 고급의"}, {"d": "Day 10", "n": 2, "w": "permanent", "p": "형.", "m": "영구적인, 영속적인"}, {"d": "Day 10", "n": 3, "w": "original", "p": "형. / 명.", "m": "형. 원래의, 본래의, 독창적인 / 명. 원본"}, {"d": "Day 10", "n": 4, "w": "intricate", "p": "형.", "m": "복잡한"}, {"d": "Day 10", "n": 5, "w": "obsolete", "p": "형.", "m": "더 이상 쓸모가 없는, 한물간, 구식의"}, {"d": "Day 10", "n": 6, "w": "state-of-the-art", "p": "형.", "m": "최첨단의, 최신식의"}, {"d": "Day 10", "n": 7, "w": "stunning", "p": "형.", "m": "굉장히 아름다운[멋진], 깜짝 놀랄"}, {"d": "Day 10", "n": 8, "w": "profound", "p": "형.", "m": "엄청난, 깊은, 심오한"}, {"d": "Day 10", "n": 9, "w": "rubbish", "p": "명.", "m": "쓰레기"}, {"d": "Day 10", "n": 10, "w": "dwindle", "p": "동.", "m": "줄어들다"}, {"d": "Day 10", "n": 11, "w": "appeal", "p": "명. / 동.", "m": "명. 항소, 매력 / 동. 항고하다, 관심을 끌다, 매력적이다"}, {"d": "Day 10", "n": 12, "w": "vertical", "p": "형. / 명.", "m": "형. 수직의, 세로의 / 명. 수직(선면)"}, {"d": "Day 10", "n": 13, "w": "horizon", "p": "명.", "m": "수평선, 지평선, 시야, 전망"}, {"d": "Day 10", "n": 14, "w": "ergonomic", "p": "형.", "m": "인체 공학의"}, {"d": "Day 10", "n": 15, "w": "keynote", "p": "명.", "m": "(책이나 연설 등의) 주안점[기조]"}, {"d": "Day 10", "n": 16, "w": "resign", "p": "동.", "m": "사직하다, 물러나다"}, {"d": "Day 10", "n": 17, "w": "refrain", "p": "동.", "m": "삼가다"}, {"d": "Day 10", "n": 18, "w": "reflect", "p": "동.", "m": "(상을) 비추다, 반사하다 / 반영하다"}, {"d": "Day 10", "n": 19, "w": "deteriorate", "p": "동.", "m": "악화되다, 더 나빠지다"}, {"d": "Day 10", "n": 20, "w": "rigorous", "p": "형.", "m": "철저한, 엄격한"}, {"d": "Day 10", "n": 21, "w": "diploma", "p": "명.", "m": "졸업장, 수료증"}, {"d": "Day 10", "n": 22, "w": "qualification", "p": "명.", "m": "자격[자격증], 자질, 능력"}, {"d": "Day 10", "n": 23, "w": "pharmacy", "p": "명.", "m": "약국, 조제실"}, {"d": "Day 10", "n": 24, "w": "outskirt", "p": "명.", "m": "변두리, 교외 / 한계, 빠듯함"}, {"d": "Day 10", "n": 25, "w": "waive", "p": "동.", "m": "(권리 등을) 포기하다"}, {"d": "Day 11", "n": 1, "w": "throughout", "p": "전.", "m": "도처에, 쭉, 내내"}, {"d": "Day 11", "n": 2, "w": "quickly", "p": "부.", "m": "빨리, 빠르게"}, {"d": "Day 11", "n": 3, "w": "publicize", "p": "동.", "m": "알리다, 광고[홍보]하다"}, {"d": "Day 11", "n": 4, "w": "affect", "p": "동.", "m": "영향을 미치다"}, {"d": "Day 11", "n": 5, "w": "party", "p": "명. / 동.", "m": "명. 정당, 단체 / 동. 파티하다"}, {"d": "Day 11", "n": 6, "w": "initial", "p": "형. / 명.", "m": "형. 처음의, 초기의 / 명. 첫 글자"}, {"d": "Day 11", "n": 7, "w": "guarantee", "p": "명. / 동.", "m": "명. 품질 보증서 / 동. 보장하다, 품질 보증을 하다"}, {"d": "Day 11", "n": 8, "w": "pharmaceutical", "p": "형. / 명.", "m": "형. 제약의, 약학의 / 명. 약, 제약"}, {"d": "Day 11", "n": 9, "w": "medicine", "p": "명.", "m": "의학, 의술, 약, 약물"}, {"d": "Day 11", "n": 10, "w": "investigate", "p": "동.", "m": "조사하다"}, {"d": "Day 11", "n": 11, "w": "reasonably", "p": "부.", "m": "상당히, 꽤, 합리적으로"}, {"d": "Day 11", "n": 12, "w": "portion", "p": "명.", "m": "부분, 일부, 1인분"}, {"d": "Day 11", "n": 13, "w": "bid", "p": "동. / 명.", "m": "동. 값을 부르다, 입찰에 응하다 / 명. 가격 제시, 호가, 응찰"}, {"d": "Day 11", "n": 14, "w": "forbid", "p": "동.", "m": "금지하다"}, {"d": "Day 11", "n": 15, "w": "struggle", "p": "동. / 명.", "m": "동. 투쟁하다, 몸부림치다 / 명. 투쟁, 분투"}, {"d": "Day 11", "n": 16, "w": "scented", "p": "형.", "m": "강한 향기가 나는, 향기로운"}, {"d": "Day 11", "n": 17, "w": "assistant", "p": "명.", "m": "조수, 보조원"}, {"d": "Day 11", "n": 18, "w": "troubleshooting", "p": "명.", "m": "고장의 수리"}, {"d": "Day 11", "n": 19, "w": "exceed", "p": "동.", "m": "넘다, 초과하다, 초월하다"}, {"d": "Day 11", "n": 20, "w": "via", "p": "전.", "m": "통하여"}, {"d": "Day 11", "n": 21, "w": "ownership", "p": "명.", "m": "소유(권)"}, {"d": "Day 11", "n": 22, "w": "indefinitely", "p": "부.", "m": "무기한으로"}, {"d": "Day 11", "n": 23, "w": "absolute", "p": "형. / 명.", "m": "형. 완전한, 완벽한 / 명. 절대적인 것"}, {"d": "Day 11", "n": 24, "w": "complicated", "p": "형.", "m": "복잡한"}, {"d": "Day 11", "n": 25, "w": "distinctive", "p": "형.", "m": "독특한"}, {"d": "Day 12", "n": 1, "w": "chronic", "p": "형.", "m": "만성적인, 만성 질환을 앓고 있는"}, {"d": "Day 12", "n": 2, "w": "accountant", "p": "명.", "m": "회계사"}, {"d": "Day 12", "n": 3, "w": "shortlist", "p": "명.", "m": "최종 후보자 명단"}, {"d": "Day 12", "n": 4, "w": "heritage", "p": "명.", "m": "유산"}, {"d": "Day 12", "n": 5, "w": "fuel", "p": "명. / 동", "m": "명. 연료 / 동 연료를 공급하다, 기름을 넣다"}, {"d": "Day 12", "n": 6, "w": "renewable", "p": "형.", "m": "재생 가능한"}, {"d": "Day 12", "n": 7, "w": "customized", "p": "형.", "m": "개개인의 요구에 맞춘"}, {"d": "Day 12", "n": 8, "w": "ongoing", "p": "형.", "m": "계속 진행 중인"}, {"d": "Day 12", "n": 9, "w": "rare", "p": "형.", "m": "드문, 희귀한, 진귀한"}, {"d": "Day 12", "n": 10, "w": "resume", "p": "동.", "m": "재개하다, 다시 시작하다"}, {"d": "Day 12", "n": 11, "w": "allegation", "p": "명.", "m": "혐의, 주장"}, {"d": "Day 12", "n": 12, "w": "inclination", "p": "명.", "m": "의향, 성향"}, {"d": "Day 12", "n": 13, "w": "persistence", "p": "명.", "m": "고집, 지속됨"}, {"d": "Day 12", "n": 14, "w": "valid", "p": "형.", "m": "유효한, 정당한, 타당한"}, {"d": "Day 12", "n": 15, "w": "safety gear", "p": "명.", "m": "안전 장치"}, {"d": "Day 12", "n": 16, "w": "forklift", "p": "명.", "m": "지게차"}, {"d": "Day 12", "n": 17, "w": "criteria", "p": "명.", "m": "표준, 기준"}, {"d": "Day 12", "n": 18, "w": "impact", "p": "명. / 동.", "m": "명. 영향, 충격 / 동. 영향을 주다"}, {"d": "Day 12", "n": 19, "w": "obtain", "p": "동.", "m": "얻다, 입수하다"}, {"d": "Day 12", "n": 20, "w": "ignore", "p": "동.", "m": "무시하다"}, {"d": "Day 12", "n": 21, "w": "affordable", "p": "형.", "m": "감당할 수 있는, 적절한"}, {"d": "Day 12", "n": 22, "w": "tolerate", "p": "동.", "m": "용인하다, 참다, 견디다"}, {"d": "Day 12", "n": 23, "w": "designated", "p": "형.", "m": "지정된"}, {"d": "Day 12", "n": 24, "w": "grateful", "p": "형.", "m": "고마워하는, 감사하는"}, {"d": "Day 12", "n": 25, "w": "skilled", "p": "형.", "m": "숙련된, 노련한"}, {"d": "Day 13", "n": 1, "w": "pace", "p": "명. / 동.", "m": "명. 속도 / 동. 속도를 유지하다, 자기에게 맞는 속도를 찾다"}, {"d": "Day 13", "n": 2, "w": "dwell", "p": "동.", "m": "살다, 거주하다"}, {"d": "Day 13", "n": 3, "w": "threaten", "p": "동.", "m": "협박하다, 위태롭게 하다"}, {"d": "Day 13", "n": 4, "w": "tight", "p": "형. / 부.", "m": "형. 단단한, 꽉 조여 있는 / 부. 단단히, 꽉"}, {"d": "Day 13", "n": 5, "w": "quote", "p": "동.", "m": "인용하다, 전달하다"}, {"d": "Day 13", "n": 6, "w": "ideal", "p": "형. / 명.", "m": "형. 이상적인, 가장 알맞은 / 명. 이상적인 것[사람]"}, {"d": "Day 13", "n": 7, "w": "certificate", "p": "명.", "m": "증서, 증명서"}, {"d": "Day 13", "n": 8, "w": "outline", "p": "동. / 명.", "m": "동. 개요를 서술하다, 윤곽을 보여주다 / 명. 개요, 윤곽"}, {"d": "Day 13", "n": 9, "w": "distribute", "p": "동.", "m": "나누어 주다, 분배하다, 유통시키다"}, {"d": "Day 13", "n": 10, "w": "mortgage", "p": "명. / 동.", "m": "명. 대출(금) / 동. 저당 잡히다"}, {"d": "Day 13", "n": 11, "w": "excessive", "p": "형.", "m": "지나친, 과도한"}, {"d": "Day 13", "n": 12, "w": "organization", "p": "명.", "m": "조직, 단체"}, {"d": "Day 13", "n": 13, "w": "outgrow", "p": "동.", "m": "보다 더 커지다, 많아지다"}, {"d": "Day 13", "n": 14, "w": "inhibit", "p": "동.", "m": "억제하다, 저해하다"}, {"d": "Day 13", "n": 15, "w": "improvise", "p": "동.", "m": "즉흥적으로 하다"}, {"d": "Day 13", "n": 16, "w": "remedy", "p": "명. / 동.", "m": "명. 처리 방안, 해결책, 치료약 / 동. 개선하다, 교정하다"}, {"d": "Day 13", "n": 17, "w": "diabetes", "p": "명.", "m": "당뇨병"}, {"d": "Day 13", "n": 18, "w": "high-profile", "p": "형.", "m": "세간의 이목을 끄는"}, {"d": "Day 13", "n": 19, "w": "lingering", "p": "형.", "m": "오래 끄는, 오래 가는"}, {"d": "Day 13", "n": 20, "w": "fair", "p": "형.", "m": "타당한, 공정한, 공평한"}, {"d": "Day 13", "n": 21, "w": "injury", "p": "명.", "m": "부상, 상처, 피해"}, {"d": "Day 13", "n": 22, "w": "bistro", "p": "명.", "m": "작은 식당"}, {"d": "Day 13", "n": 23, "w": "celebrity", "p": "명.", "m": "유명 인사"}, {"d": "Day 13", "n": 24, "w": "hinder", "p": "동.", "m": "저해하다, 방해하다"}, {"d": "Day 13", "n": 25, "w": "impose", "p": "동.", "m": "도입하다, 시행하다, 부과하다"}, {"d": "Day 14", "n": 1, "w": "regulation", "p": "명.", "m": "규정, 규제"}, {"d": "Day 14", "n": 2, "w": "shorten", "p": "동.", "m": "짧게 하다, 단축하다, 짧아지다"}, {"d": "Day 14", "n": 3, "w": "sort", "p": "명. / 동.", "m": "명. 종류, 부류, 유형 / 동. 분류하다, 구분하다, 해결하다"}, {"d": "Day 14", "n": 4, "w": "insurance", "p": "명.", "m": "보험"}, {"d": "Day 14", "n": 5, "w": "intermediate", "p": "형. / 명.", "m": "형. 중간의, 중급의 / 명. 중급자"}, {"d": "Day 14", "n": 6, "w": "exotic", "p": "형.", "m": "외국의, 이국적인"}, {"d": "Day 14", "n": 7, "w": "flood", "p": "명. / 동.", "m": "명. 홍수, 쇄도, 폭주 / 동. 침수되다, 물에 잠기다"}, {"d": "Day 14", "n": 8, "w": "declaration", "p": "명.", "m": "선언, 공표"}, {"d": "Day 14", "n": 9, "w": "withdraw", "p": "동.", "m": "철수하다, 철회하다, 인출하다"}, {"d": "Day 14", "n": 10, "w": "administrative", "p": "형.", "m": "행정상의, 관리상의"}, {"d": "Day 14", "n": 11, "w": "amicable", "p": "형.", "m": "우호적인, 원만한"}, {"d": "Day 14", "n": 12, "w": "recurring", "p": "형.", "m": "되풀이하여 발생하는"}, {"d": "Day 14", "n": 13, "w": "cosmetic", "p": "명. / 형.", "m": "명. 화장품 / 형. 성형의"}, {"d": "Day 14", "n": 14, "w": "prominent", "p": "형.", "m": "중요한, 유명한, 눈에 잘 띄는"}, {"d": "Day 14", "n": 15, "w": "trigger", "p": "명. / 동.", "m": "명. 방아쇠, 도화선 / 동. 촉발시키다, 작동시키다"}, {"d": "Day 14", "n": 16, "w": "souvenir", "p": "명.", "m": "기념품"}, {"d": "Day 14", "n": 17, "w": "wire", "p": "명. / 동.", "m": "명. 철사, 전선 / 동. 연결하다, 송금하다"}, {"d": "Day 14", "n": 18, "w": "enclosed", "p": "형.", "m": "동봉된, 에워싸인"}, {"d": "Day 14", "n": 19, "w": "amenity", "p": "명.", "m": "생활 편의 시설"}, {"d": "Day 14", "n": 20, "w": "sip", "p": "동.", "m": "홀짝이다, 조금씩 마시다"}, {"d": "Day 14", "n": 21, "w": "wind turbine", "p": "명.", "m": "풍력 발전용 터빈"}, {"d": "Day 14", "n": 22, "w": "boast", "p": "동. / 명.", "m": "동. 뽐내다, 자랑하다 / 명. 자랑"}, {"d": "Day 14", "n": 23, "w": "retail", "p": "명. / 동.", "m": "명. 소매 / 동. 소매하다"}, {"d": "Day 14", "n": 24, "w": "payroll", "p": "명.", "m": "급여 대상자 명단, 급여 지불 총액"}, {"d": "Day 14", "n": 25, "w": "immaculate", "p": "형.", "m": "티 하나 없이 깔끔한, 오류가 전혀 없는"}, {"d": "Day 15", "n": 1, "w": "activate", "p": "동.", "m": "작동시키다, 활성화 시키다"}, {"d": "Day 15", "n": 2, "w": "archive", "p": "명. / 동.", "m": "명. 기록 보관소 / 동. 기록 보관소에 보관하다"}, {"d": "Day 15", "n": 3, "w": "generous", "p": "형.", "m": "후한, 너그러운"}, {"d": "Day 15", "n": 4, "w": "compensation", "p": "명.", "m": "보상(금), 이득"}, {"d": "Day 15", "n": 5, "w": "expedite", "p": "동.", "m": "더 신속히 처리하다"}, {"d": "Day 15", "n": 6, "w": "solicit", "p": "동.", "m": "간청하다, 요청하다"}, {"d": "Day 15", "n": 7, "w": "prestigious", "p": "형.", "m": "명망 있는, 일류의"}, {"d": "Day 15", "n": 8, "w": "prolific", "p": "형.", "m": "다작하는, 열매를 많이 맺는"}, {"d": "Day 15", "n": 9, "w": "eligible", "p": "형.", "m": "~을 가질 수 있는, 적격의, 적임의, 바람직한"}, {"d": "Day 15", "n": 10, "w": "attraction", "p": "명.", "m": "끌림, 명소, 명물, 매력"}, {"d": "Day 15", "n": 11, "w": "intermittently", "p": "부.", "m": "간헐적으로"}, {"d": "Day 15", "n": 12, "w": "furnishing", "p": "명.", "m": "가구, 비품"}, {"d": "Day 15", "n": 13, "w": "courtesy", "p": "명. / 형.", "m": "명. 공손함, 정중함 / 형. 무료의, 서비스의"}, {"d": "Day 15", "n": 14, "w": "carousel", "p": "명.", "m": "수하물 컨베이어 벨트"}, {"d": "Day 15", "n": 15, "w": "opposite", "p": "형. / 명.", "m": "형. 건너 편의, 다른 쪽의 / 명. 반대, 반의어"}, {"d": "Day 15", "n": 16, "w": "launch", "p": "동. / 명.", "m": "동. 시작하다, 개시하다, 착수하다, 출시하다 / 명. 개시, 출시, 발사"}, {"d": "Day 15", "n": 17, "w": "trim", "p": "동. / 명.", "m": "동. 다듬다, 손질하다 / 명. 다듬기, 장식"}, {"d": "Day 15", "n": 18, "w": "objective", "p": "명. / 형.", "m": "명. 목표, 목적 / 형. 객관적인, 실재하는"}, {"d": "Day 15", "n": 19, "w": "assorted", "p": "형.", "m": "여러 가지의, 갖은"}, {"d": "Day 15", "n": 20, "w": "knowledgeable", "p": "형.", "m": "아는 것이 많은, 지식 있는, 총명한"}, {"d": "Day 15", "n": 21, "w": "restriction", "p": "명.", "m": "제한, 규제, 제약, 구속"}, {"d": "Day 15", "n": 22, "w": "authentic", "p": "형.", "m": "진짜의, 진품인"}, {"d": "Day 15", "n": 23, "w": "prepaid", "p": "형.", "m": "선불된, 선납된"}, {"d": "Day 15", "n": 24, "w": "acceptable", "p": "형.", "m": "용인되는, 받아들일 수 있는"}, {"d": "Day 15", "n": 25, "w": "scope", "p": "명. / 동.", "m": "명. 범위, 기회 / 동. 자세히 살피다"}, {"d": "Day 16", "n": 1, "w": "rapidly", "p": "부.", "m": "빠르게"}, {"d": "Day 16", "n": 2, "w": "decorative", "p": "형.", "m": "장식이 된, 장식용의"}, {"d": "Day 16", "n": 3, "w": "briefly", "p": "부.", "m": "잠시, 간단히"}, {"d": "Day 16", "n": 4, "w": "talented", "p": "형.", "m": "재능이 있는, 재주가 있는"}, {"d": "Day 16", "n": 5, "w": "perk", "p": "명.", "m": "(급료 이외의) 특전"}, {"d": "Day 16", "n": 6, "w": "thermometer", "p": "명.", "m": "온도계, 체온계"}, {"d": "Day 16", "n": 7, "w": "appliance", "p": "명.", "m": "기기"}, {"d": "Day 16", "n": 8, "w": "suit", "p": "명. / 동.", "m": "명. 정장, 한 세트 / 동. 어울리다, 맞다"}, {"d": "Day 16", "n": 9, "w": "apologize", "p": "동.", "m": "사과하다"}, {"d": "Day 16", "n": 10, "w": "associated", "p": "형.", "m": "관련된"}, {"d": "Day 16", "n": 11, "w": "enormous", "p": "형.", "m": "막대한, 거대한"}, {"d": "Day 16", "n": 12, "w": "obvious", "p": "형.", "m": "분명한, 명백한"}, {"d": "Day 16", "n": 13, "w": "conceal", "p": "동.", "m": "감추다, 숨기다"}, {"d": "Day 16", "n": 14, "w": "dietary", "p": "형. / 명.", "m": "형. 규정식의, 식이 요법의 / 명. 규정량"}, {"d": "Day 16", "n": 15, "w": "preference", "p": "명.", "m": "선호, 애호"}, {"d": "Day 16", "n": 16, "w": "ornament", "p": "명.", "m": "장신구, 장식품"}, {"d": "Day 16", "n": 17, "w": "down payment", "p": "명.", "m": "(할부금의) 착수금, 계약금"}, {"d": "Day 16", "n": 18, "w": "devastate", "p": "동.", "m": "완전히 파괴하다, 엄청난 충격을 주다"}, {"d": "Day 16", "n": 19, "w": "enactment", "p": "명.", "m": "법률 제정, 입법"}, {"d": "Day 16", "n": 20, "w": "convene", "p": "동.", "m": "소집하다, 회합하다"}, {"d": "Day 16", "n": 21, "w": "clearance", "p": "명.", "m": "(불필요한 것) 없애기, 정리"}, {"d": "Day 16", "n": 22, "w": "retreat", "p": "동. / 명.", "m": "동. 후퇴하다, 철수하다 / 명. 후퇴, 철수, 퇴각"}, {"d": "Day 16", "n": 23, "w": "expense", "p": "명.", "m": "돈, 비용"}, {"d": "Day 16", "n": 24, "w": "closely", "p": "부.", "m": "밀접하게, 면밀히"}, {"d": "Day 16", "n": 25, "w": "handle", "p": "동. / 명.", "m": "동. 다루다, 처리하다 / 명. 손잡이"}, {"d": "Day 17", "n": 1, "w": "crate", "p": "명.", "m": "(물품 운송용 대형 나무) 상자"}, {"d": "Day 17", "n": 2, "w": "vegetarian", "p": "명.", "m": "채식주의자"}, {"d": "Day 17", "n": 3, "w": "majority", "p": "명.", "m": "다수, 가장 많은 수"}, {"d": "Day 17", "n": 4, "w": "faithful", "p": "형.", "m": "충실한, 충직한"}, {"d": "Day 17", "n": 5, "w": "negotiate", "p": "동.", "m": "협상하다, 교섭하다, 타결하다"}, {"d": "Day 17", "n": 6, "w": "exactly", "p": "부.", "m": "정확히, 꼭, 틀림없이"}, {"d": "Day 17", "n": 7, "w": "heavily", "p": "부.", "m": "(양이나 정도가) 심하게, 아주 많이"}, {"d": "Day 17", "n": 8, "w": "symbolize", "p": "동.", "m": "상징하다"}, {"d": "Day 17", "n": 9, "w": "strictly", "p": "부.", "m": "엄격히, 엄하게, 절대적으로"}, {"d": "Day 17", "n": 10, "w": "functional", "p": "형.", "m": "기능 위주의, 실용적인"}, {"d": "Day 17", "n": 11, "w": "inventory", "p": "명. / 동.", "m": "명. 물품 목록, 재고(품) / 동. ~의 목록을 만들다"}, {"d": "Day 17", "n": 12, "w": "productivity", "p": "명.", "m": "생산성"}, {"d": "Day 17", "n": 13, "w": "restore", "p": "동.", "m": "회복시키다, 복원[복구]하다"}, {"d": "Day 17", "n": 14, "w": "sacrifice", "p": "명.", "m": "희생, 희생물, 제물"}, {"d": "Day 17", "n": 15, "w": "exclusive", "p": "형. / 명.", "m": "형. 독점적인, 전용의 / 명. 독점 기사"}, {"d": "Day 17", "n": 16, "w": "approval", "p": "명.", "m": "인정, 찬성, 승인"}, {"d": "Day 17", "n": 17, "w": "identify", "p": "동.", "m": "확인하다, 찾다, 알아보게 하다"}, {"d": "Day 17", "n": 18, "w": "recognition", "p": "명.", "m": "인식, 인정, 승인, 표창"}, {"d": "Day 17", "n": 19, "w": "friendly", "p": "형.", "m": "친절한, 우호적인, 상냥한"}, {"d": "Day 17", "n": 20, "w": "risk", "p": "명. / 동.", "m": "명. 위험, 위험 요소 / 동. 위태롭게 하다"}, {"d": "Day 17", "n": 21, "w": "authorization", "p": "명.", "m": "허가, 인가, 허가(증)"}, {"d": "Day 17", "n": 22, "w": "patient", "p": "명. / 형.", "m": "명. 환자 / 형. 참을성 있는, 인내심 있는"}, {"d": "Day 17", "n": 23, "w": "intend", "p": "동.", "m": "의도하다, 작정하다"}, {"d": "Day 17", "n": 24, "w": "include", "p": "동.", "m": "포함하다"}, {"d": "Day 17", "n": 25, "w": "previous", "p": "형.", "m": "이전의, 바로 앞의"}, {"d": "Day 18", "n": 1, "w": "release", "p": "동. / 명.", "m": "동. 풀어 주다, 석방[해방]하다 / 명. 석방, 발표[공개], 개봉"}, {"d": "Day 18", "n": 2, "w": "circulate", "p": "동.", "m": "순환하다, 유포하다"}, {"d": "Day 18", "n": 3, "w": "drawing", "p": "명.", "m": "그림, 스케치, 제비뽑기, 추첨"}, {"d": "Day 18", "n": 4, "w": "controversy", "p": "명.", "m": "논란"}, {"d": "Day 18", "n": 5, "w": "evidence", "p": "명.", "m": "증거, 흔적"}, {"d": "Day 18", "n": 6, "w": "biodegradable", "p": "형.", "m": "생분해성의"}, {"d": "Day 18", "n": 7, "w": "asset", "p": "명.", "m": "자산, 재산"}, {"d": "Day 18", "n": 8, "w": "specific", "p": "형.", "m": "구체적인, 명확한, 특정한"}, {"d": "Day 18", "n": 9, "w": "relative", "p": "형. / 명.", "m": "형. 비교상의, 상대적인 / 명. 친척, 동족"}, {"d": "Day 18", "n": 10, "w": "garage", "p": "명. / 동.", "m": "명. 차고, 주차장 / 동. 차고에 넣다"}, {"d": "Day 18", "n": 11, "w": "cabin", "p": "명.", "m": "(배의) 객실, 선실, (항공기의) 선실, 오두막집"}, {"d": "Day 18", "n": 12, "w": "selection", "p": "명.", "m": "선발, 선정, 선택"}, {"d": "Day 18", "n": 13, "w": "install", "p": "동.", "m": "설비하다, 설치하다"}, {"d": "Day 18", "n": 14, "w": "reduction", "p": "명.", "m": "축소, 삭감, 감소, 인하"}, {"d": "Day 18", "n": 15, "w": "range", "p": "명. / 동.", "m": "명. 범위, 다양성 / 동. A에서 B까지 다양하다, 포괄하다"}, {"d": "Day 18", "n": 16, "w": "despite", "p": "전.", "m": "~에도 불구하고"}, {"d": "Day 18", "n": 17, "w": "among", "p": "전.", "m": "~에 둘러싸인, ~의 가운데, 사이에"}, {"d": "Day 18", "n": 18, "w": "proudly", "p": "부.", "m": "자랑스럽게"}, {"d": "Day 18", "n": 19, "w": "near", "p": "형. / 부. / 전.", "m": "형. 가까운 / 부. 가까이 / 전. (거리상, 시간상) 에서 가까이"}, {"d": "Day 18", "n": 20, "w": "solid", "p": "형. / 명.", "m": "형. 단단한, 고체의, 견고한 / 명. 고체"}, {"d": "Day 18", "n": 21, "w": "statue", "p": "명.", "m": "조각상"}, {"d": "Day 18", "n": 22, "w": "transmit", "p": "동.", "m": "전송하다, 전도하다"}, {"d": "Day 18", "n": 23, "w": "prolong", "p": "동.", "m": "연장시키다, 연장하다"}, {"d": "Day 18", "n": 24, "w": "abolish", "p": "동.", "m": "(법률, 제도, 조직 등을) 폐지하다"}, {"d": "Day 18", "n": 25, "w": "committed", "p": "형.", "m": "헌신적인, 열성적인"}, {"d": "Day 19", "n": 1, "w": "entitle", "p": "동.", "m": "자격을 주다, 권리를 주다"}, {"d": "Day 19", "n": 2, "w": "fierce", "p": "형.", "m": "격렬한, 맹렬한, 극심한"}, {"d": "Day 19", "n": 3, "w": "mark", "p": "동. / 명.", "m": "동. 표시하다, 기념[축하]하다 / 명. 자국[흔적], 표시"}, {"d": "Day 19", "n": 4, "w": "solidify", "p": "동.", "m": "굳어지다, 확고해지다"}, {"d": "Day 19", "n": 5, "w": "inspection", "p": "명.", "m": "점검, 검사, 검토"}, {"d": "Day 19", "n": 6, "w": "interfere", "p": "동.", "m": "간섭하다, 개입하다, 참견하다"}, {"d": "Day 19", "n": 7, "w": "proceed", "p": "동.", "m": "진행하다, 계속해서 ~을 하다"}, {"d": "Day 19", "n": 8, "w": "prohibit", "p": "동.", "m": "금지하다, 하지 못하게 하다"}, {"d": "Day 19", "n": 9, "w": "offering", "p": "명.", "m": "제공된 것, 제물"}, {"d": "Day 19", "n": 10, "w": "arguably", "p": "부.", "m": "주장하건대, 거의 틀림없이"}, {"d": "Day 19", "n": 11, "w": "distribution", "p": "명.", "m": "분배, 분포, 배부, 배급"}, {"d": "Day 19", "n": 12, "w": "scenic", "p": "형.", "m": "경치가 좋은"}, {"d": "Day 19", "n": 13, "w": "reluctant", "p": "형.", "m": "꺼리는, 마지못한, 주저하는"}, {"d": "Day 19", "n": 14, "w": "skeptical", "p": "형.", "m": "회의적인, 의심 많은"}, {"d": "Day 19", "n": 15, "w": "subtle", "p": "형.", "m": "미묘한, 교묘한, 절묘한"}, {"d": "Day 19", "n": 16, "w": "intensity", "p": "명.", "m": "강렬함, 격렬함, 강도"}, {"d": "Day 19", "n": 17, "w": "duration", "p": "명.", "m": "지속, (지속되는) 기간"}, {"d": "Day 19", "n": 18, "w": "interval", "p": "명.", "m": "간격, 중간 휴식 시간"}, {"d": "Day 19", "n": 19, "w": "frequency", "p": "명.", "m": "빈도, 잦음, 주파수"}, {"d": "Day 19", "n": 20, "w": "primary", "p": "형.", "m": "주된, 주요한, 최초의"}, {"d": "Day 19", "n": 21, "w": "prior", "p": "형.", "m": "사전의, 우선하는"}, {"d": "Day 19", "n": 22, "w": "acquire", "p": "동.", "m": "습득하다, 얻다, 획득하다"}, {"d": "Day 19", "n": 23, "w": "potential", "p": "형. / 명.", "m": "형. 가능성이 있는, 잠재적인 / 명. 가능성, 잠재력"}, {"d": "Day 19", "n": 24, "w": "estimate", "p": "명. / 동.", "m": "명. 추정, 견적서 / 동. 추산[추정]하다"}, {"d": "Day 19", "n": 25, "w": "circumstance", "p": "명.", "m": "환경, 상황, 형편[사정]"}, {"d": "Day 20", "n": 1, "w": "generate", "p": "동.", "m": "발생시키다, 만들어 내다"}, {"d": "Day 20", "n": 2, "w": "anticipate", "p": "동.", "m": "예상하다, 예측하다, 기대하다"}, {"d": "Day 20", "n": 3, "w": "adequate", "p": "형.", "m": "충분한, 적절한"}, {"d": "Day 20", "n": 4, "w": "predict", "p": "동.", "m": "예측[예견]하다"}, {"d": "Day 20", "n": 5, "w": "arbitrary", "p": "형.", "m": "임의적인, 제멋대로인, 독단적인"}, {"d": "Day 20", "n": 6, "w": "advocate", "p": "동. / 명.", "m": "동. 지지하다, 옹호하다 / 명. 옹호자, 지지자, 변호사"}, {"d": "Day 20", "n": 7, "w": "mandatory", "p": "형.", "m": "법에 정해진, 의무적인"}, {"d": "Day 20", "n": 8, "w": "mute", "p": "형.", "m": "무언의, 말없는"}, {"d": "Day 20", "n": 9, "w": "ample", "p": "형.", "m": "충분한, 풍만한"}, {"d": "Day 20", "n": 10, "w": "assess", "p": "동.", "m": "재다, 평가하다"}, {"d": "Day 20", "n": 11, "w": "judge", "p": "명. / 동.", "m": "명. 판사, 심판, 심사위원 / 동. 판단하다, 추정하다"}, {"d": "Day 20", "n": 12, "w": "appearance", "p": "명.", "m": "(겉)모습, 외모, 출현"}, {"d": "Day 20", "n": 13, "w": "ordinary", "p": "형.", "m": "보통의, 일상적인, 평범한"}, {"d": "Day 20", "n": 14, "w": "physical", "p": "형. / 명.", "m": "형. 육체[신체]의, 물질의 / 명. 신체검사, 건강 진단"}, {"d": "Day 20", "n": 15, "w": "lengthy", "p": "형.", "m": "너무 긴, 장황한, 지루한"}, {"d": "Day 20", "n": 16, "w": "essential", "p": "형. / 명.", "m": "형. 필수적인, 본질[근본]적인 / 명. 필수적인 것, 핵심 사항, 요점"}, {"d": "Day 20", "n": 17, "w": "disease", "p": "명.", "m": "질병, 질환"}, {"d": "Day 20", "n": 18, "w": "agriculture", "p": "명.", "m": "농업"}, {"d": "Day 20", "n": 19, "w": "confusion", "p": "명.", "m": "혼란, 혼동, 당혹"}, {"d": "Day 20", "n": 20, "w": "rash", "p": "명. / 형.", "m": "명. 발진, 다발, 빈발 / 형. 경솔한, 성급한"}, {"d": "Day 20", "n": 21, "w": "registration", "p": "명.", "m": "등록"}, {"d": "Day 20", "n": 22, "w": "strategy", "p": "명.", "m": "계획, 전략"}, {"d": "Day 20", "n": 23, "w": "enhance", "p": "동.", "m": "강화하다, 향상시키다"}, {"d": "Day 20", "n": 24, "w": "constant", "p": "형.", "m": "끊임없는, 거듭되는, 변함없는"}, {"d": "Day 20", "n": 25, "w": "encounter", "p": "동. / 명.", "m": "동. 맞닥뜨리다 / 명. 만남, 조우, 접촉"}, {"d": "Day 21", "n": 1, "w": "manipulate", "p": "동.", "m": "조종하다, 다루다, 조작하다"}, {"d": "Day 21", "n": 2, "w": "foster", "p": "동.", "m": "조성하다, 발전시키다, 위탁 양육하다"}, {"d": "Day 21", "n": 3, "w": "eliminate", "p": "동.", "m": "제거하다, 삭제하다"}, {"d": "Day 21", "n": 4, "w": "eradicate", "p": "동.", "m": "근절하다, 뿌리뽑다"}, {"d": "Day 21", "n": 5, "w": "extensive", "p": "형.", "m": "광범위한, 아주 넓은"}, {"d": "Day 21", "n": 6, "w": "diner", "p": "명.", "m": "식사하는 손님"}, {"d": "Day 21", "n": 7, "w": "turnout", "p": "명.", "m": "참가자의 수, 투표자의 수"}, {"d": "Day 21", "n": 8, "w": "adjourn", "p": "동.", "m": "휴정하다, 휴회하다"}, {"d": "Day 21", "n": 9, "w": "entire", "p": "형.", "m": "전체의, 온"}, {"d": "Day 21", "n": 10, "w": "narrow", "p": "형.", "m": "좁은, 아슬아슬하게"}, {"d": "Day 21", "n": 11, "w": "broad", "p": "형.", "m": "넓은"}, {"d": "Day 21", "n": 12, "w": "apprehensive", "p": "형.", "m": "걱정되는, 불안한"}, {"d": "Day 21", "n": 13, "w": "commensurate", "p": "형.", "m": "어울리는, 상응하는"}, {"d": "Day 21", "n": 14, "w": "prevalent", "p": "형.", "m": "일반적인, 널리 퍼져 있는"}, {"d": "Day 21", "n": 15, "w": "contemporary", "p": "형. / 명.", "m": "형. 동시대의, 당대의, 현대의 / 명. 동년배"}, {"d": "Day 21", "n": 16, "w": "dull", "p": "형. / 명.", "m": "형. 따분한, 흐릿한, 칙칙한 / 명. 둔해지다, 약해지다"}, {"d": "Day 21", "n": 17, "w": "alleviate", "p": "동.", "m": "완화하다"}, {"d": "Day 21", "n": 18, "w": "tedious", "p": "형.", "m": "지루한, 싫증나는"}, {"d": "Day 21", "n": 19, "w": "outdated", "p": "형.", "m": "구식인"}, {"d": "Day 21", "n": 20, "w": "sharp", "p": "형. / 부.", "m": "형. 날카로운, 급격한 / 부. (특정 시간 표현 뒤)정각"}, {"d": "Day 21", "n": 21, "w": "reinforce", "p": "동.", "m": "강화하다, 보강하다"}, {"d": "Day 21", "n": 22, "w": "ramp", "p": "명.", "m": "경사로"}, {"d": "Day 21", "n": 23, "w": "employ", "p": "동.", "m": "고용하다, 쓰다"}, {"d": "Day 21", "n": 24, "w": "correctly", "p": "부.", "m": "똑바로, 바르게"}, {"d": "Day 21", "n": 25, "w": "engagement", "p": "명.", "m": "약혼, 업무"}, {"d": "Day 22", "n": 1, "w": "identical", "p": "형.", "m": "동일한, 똑같은"}, {"d": "Day 22", "n": 2, "w": "definitely", "p": "부.", "m": "확실히, 분명히"}, {"d": "Day 22", "n": 3, "w": "historically", "p": "부.", "m": "역사적으로"}, {"d": "Day 22", "n": 4, "w": "periodically", "p": "부.", "m": "주기적으로"}, {"d": "Day 22", "n": 5, "w": "missing", "p": "형.", "m": "없어진, 분실된"}, {"d": "Day 22", "n": 6, "w": "scaffolding", "p": "명.", "m": "(건축 공사장의) 비계"}, {"d": "Day 22", "n": 7, "w": "respectfully", "p": "부.", "m": "정중하게"}, {"d": "Day 22", "n": 8, "w": "policy", "p": "명.", "m": "정책, 방침"}, {"d": "Day 22", "n": 9, "w": "contact", "p": "명.", "m": "연락, 접촉"}, {"d": "Day 22", "n": 10, "w": "remain", "p": "동.", "m": "계속 ~이다, 남다"}, {"d": "Day 22", "n": 11, "w": "sustain", "p": "동.", "m": "계속시키다, 지속시키다"}, {"d": "Day 22", "n": 12, "w": "weekday", "p": "명.", "m": "평일"}, {"d": "Day 22", "n": 13, "w": "follow", "p": "동.", "m": "준수하다, 따라가다"}, {"d": "Day 22", "n": 14, "w": "portrait", "p": "명.", "m": "초상화, 묘사"}, {"d": "Day 22", "n": 15, "w": "accountable", "p": "형.", "m": "책임이 있는"}, {"d": "Day 22", "n": 16, "w": "vegetable", "p": "명.", "m": "채소, 야채"}, {"d": "Day 22", "n": 17, "w": "harbor", "p": "명.", "m": "항구, 항만, 피난처"}, {"d": "Day 22", "n": 18, "w": "coordinate", "p": "동. / 명.", "m": "동. 조직화하다, 조정하다 / 명. 좌표, 함께 잘 어울리는 옷들"}, {"d": "Day 22", "n": 19, "w": "motivate", "p": "동.", "m": "동기를 부여하다"}, {"d": "Day 22", "n": 20, "w": "found", "p": "동.", "m": "설립하다, 세우다"}, {"d": "Day 22", "n": 21, "w": "amend", "p": "동.", "m": "개정하다, 수정하다"}, {"d": "Day 22", "n": 22, "w": "validate", "p": "동.", "m": "입증하다, 승인[인정]하다"}, {"d": "Day 22", "n": 23, "w": "ventilation", "p": "명.", "m": "환기, 통풍"}, {"d": "Day 22", "n": 24, "w": "contaminate", "p": "동.", "m": "오염시키다"}, {"d": "Day 22", "n": 25, "w": "deplete", "p": "동.", "m": "대폭 감소시키다, 격감시키다"}, {"d": "Day 23", "n": 1, "w": "pesticide", "p": "명.", "m": "살충제, 농약"}, {"d": "Day 23", "n": 2, "w": "emission", "p": "명.", "m": "배출, 배기가스"}, {"d": "Day 23", "n": 3, "w": "synthetic", "p": "형. / 명.", "m": "형. 합성한, 인조의 / 명. 합성 물질"}, {"d": "Day 23", "n": 4, "w": "artificial", "p": "형.", "m": "인공의, 인위적인"}, {"d": "Day 23", "n": 5, "w": "adopt", "p": "동.", "m": "입양하다, 채택하다"}, {"d": "Day 23", "n": 6, "w": "anonymous", "p": "형.", "m": "익명인, 익명으로 된"}, {"d": "Day 23", "n": 7, "w": "ambiguous", "p": "형.", "m": "애매모호한, 애매한"}, {"d": "Day 23", "n": 8, "w": "allocation", "p": "명.", "m": "할당량, 할당"}, {"d": "Day 23", "n": 9, "w": "acknowledge", "p": "동.", "m": "인정하다, 받았음을 알리다"}, {"d": "Day 23", "n": 10, "w": "deep", "p": "형.", "m": "깊은, (삭감/할인 등) 대폭적인"}, {"d": "Day 23", "n": 11, "w": "responsible", "p": "형.", "m": "책임이 있는"}, {"d": "Day 23", "n": 12, "w": "transaction", "p": "명.", "m": "거래, 매매, 처리 (과정)"}, {"d": "Day 23", "n": 13, "w": "gladly", "p": "부.", "m": "기꺼이, 기쁘게"}, {"d": "Day 23", "n": 14, "w": "draft", "p": "명.", "m": "원고, 초안"}, {"d": "Day 23", "n": 15, "w": "finalize", "p": "동.", "m": "마무리짓다, 완결하다"}, {"d": "Day 23", "n": 16, "w": "tenant", "p": "명. / 동.", "m": "명. 세입자, 임차인 / 동. 임차해서[세 들어] 살다"}, {"d": "Day 23", "n": 17, "w": "raise", "p": "동.", "m": "들어올리다, (자금/사람 등) 모으다"}, {"d": "Day 23", "n": 18, "w": "adapt", "p": "동.", "m": "맞추다, 조정하다, 적응하다, 각색하다"}, {"d": "Day 23", "n": 19, "w": "following", "p": "형. / 전. / 명.", "m": "형. 그 다음의 / 전. ~후에, ~에 따라 / 명. 추종자[팬]들"}, {"d": "Day 23", "n": 20, "w": "cathedral", "p": "명.", "m": "대성당"}, {"d": "Day 23", "n": 21, "w": "ambitious", "p": "형.", "m": "야심 있는, 어마어마한"}, {"d": "Day 23", "n": 22, "w": "outlet", "p": "명.", "m": "직판점, 할인점, 콘센트"}, {"d": "Day 23", "n": 23, "w": "investment", "p": "명.", "m": "투자, 투자액"}, {"d": "Day 23", "n": 24, "w": "banquet", "p": "명.", "m": "연회, 만찬"}, {"d": "Day 23", "n": 25, "w": "outstanding", "p": "형.", "m": "뛰어난, 걸출한, 두드러진, 미지불된"}, {"d": "Day 24", "n": 1, "w": "weigh", "p": "동.", "m": "무게를 달다, 저울질하다"}, {"d": "Day 24", "n": 2, "w": "scale", "p": "명. / 동.", "m": "명. 규모, 범위, 등급 / 동. 오르다"}, {"d": "Day 24", "n": 3, "w": "terms", "p": "명.", "m": "(합의/계약 등의) 조건"}, {"d": "Day 24", "n": 4, "w": "regarding", "p": "전.", "m": "~에 관하여, 대하여"}, {"d": "Day 24", "n": 5, "w": "including", "p": "전.", "m": "~을 포함하여"}, {"d": "Day 24", "n": 6, "w": "integrate", "p": "동.", "m": "통합시키다"}, {"d": "Day 24", "n": 7, "w": "seating", "p": "명.", "m": "좌석, 자리"}, {"d": "Day 24", "n": 8, "w": "faulty", "p": "형.", "m": "결함이 있는, 잘못된"}, {"d": "Day 24", "n": 9, "w": "possibly", "p": "부.", "m": "아마"}, {"d": "Day 24", "n": 10, "w": "await", "p": "동.", "m": "기다리다"}, {"d": "Day 24", "n": 11, "w": "advisable", "p": "형.", "m": "바람직한, 권할 만한"}, {"d": "Day 24", "n": 12, "w": "sophisticated", "p": "형.", "m": "세련된, 교양 있는, 정교한"}, {"d": "Day 24", "n": 13, "w": "instant", "p": "형. / 명.", "m": "형. 즉각적인 / 명. 순간, 아주 짧은 동안"}, {"d": "Day 24", "n": 14, "w": "appreciate", "p": "동.", "m": "진가를 알아보다, 인정하다, 인식하다"}, {"d": "Day 24", "n": 15, "w": "describe", "p": "동.", "m": "말하다, 묘사하다"}, {"d": "Day 24", "n": 16, "w": "superfluous", "p": "형.", "m": "필요치 않은, 불필요한"}, {"d": "Day 24", "n": 17, "w": "shred", "p": "동. / 명.", "m": "동. 자르다, 찢다, 채를 썰다 / 명. 조각, 티끌"}, {"d": "Day 24", "n": 18, "w": "nominee", "p": "명.", "m": "지명된 사람, 후보"}, {"d": "Day 24", "n": 19, "w": "spare", "p": "형. / 동.", "m": "형. 남는, 여분의 / 동. 할애하다"}, {"d": "Day 24", "n": 20, "w": "aim", "p": "명. / 동.", "m": "명. 목적, 목표 / 동. 목표하다"}, {"d": "Day 24", "n": 21, "w": "hustle", "p": "동.", "m": "떠밀다, 재촉하다"}, {"d": "Day 24", "n": 22, "w": "contributor", "p": "명.", "m": "기고자, 토론자, 기부자, 기여자"}, {"d": "Day 24", "n": 23, "w": "deal", "p": "동. / 명.", "m": "동. 처리하다(with) / 명. 거래, 정책"}, {"d": "Day 24", "n": 24, "w": "behalf", "p": "명.", "m": "이익, 원조, 자기편, 지지"}, {"d": "Day 24", "n": 25, "w": "lack", "p": "명. / 동.", "m": "명. 부족, 결핍 / 동. ~이 없다, 부족하다"}, {"d": "Day 25", "n": 1, "w": "description", "p": "명.", "m": "서술, 기술, 묘사"}, {"d": "Day 25", "n": 2, "w": "statement", "p": "명.", "m": "성명(서), 진술(서)"}, {"d": "Day 25", "n": 3, "w": "compliance", "p": "명.", "m": "준수, 따름"}, {"d": "Day 25", "n": 4, "w": "detailed", "p": "형.", "m": "상세한"}, {"d": "Day 25", "n": 5, "w": "recent", "p": "형.", "m": "최근의"}, {"d": "Day 25", "n": 6, "w": "expertise", "p": "명.", "m": "전문 지식"}, {"d": "Day 25", "n": 7, "w": "reputation", "p": "명.", "m": "평판, 명성"}, {"d": "Day 25", "n": 8, "w": "value", "p": "명. / 동.", "m": "명. 가치 / 동. 소중하게 생각하다, 평가하다"}, {"d": "Day 25", "n": 9, "w": "loyalty", "p": "명.", "m": "충실, 충성"}, {"d": "Day 25", "n": 10, "w": "reference", "p": "명.", "m": "말하기, 언급, 참고"}, {"d": "Day 25", "n": 11, "w": "arrange", "p": "동.", "m": "마련하다, 정리하다, 배열하다"}, {"d": "Day 25", "n": 12, "w": "warranty", "p": "명.", "m": "품질 보증서"}, {"d": "Day 25", "n": 13, "w": "independent", "p": "형.", "m": "독립된, 독립적인"}, {"d": "Day 25", "n": 14, "w": "surplus", "p": "명. / 형.", "m": "명. 과잉, 흑자 / 형. 과잉의, 잉여의"}, {"d": "Day 25", "n": 15, "w": "obstruct", "p": "동.", "m": "막다, 방해하다"}, {"d": "Day 25", "n": 16, "w": "assign", "p": "동.", "m": "맡기다, 배정하다, 부과하다"}, {"d": "Day 25", "n": 17, "w": "assure", "p": "동.", "m": "장담하다, 확언하다"}, {"d": "Day 25", "n": 18, "w": "address", "p": "명. / 동.", "m": "명. 주소 / 동. 주소를 쓰다, 연설하다, 해결하다"}, {"d": "Day 25", "n": 19, "w": "effort", "p": "명.", "m": "수고, 노력"}, {"d": "Day 25", "n": 20, "w": "questionnaire", "p": "명.", "m": "설문지"}, {"d": "Day 25", "n": 21, "w": "regain", "p": "동.", "m": "되찾다, 회복하다"}, {"d": "Day 25", "n": 22, "w": "fulfill", "p": "동.", "m": "성취하다, 실현하다, 이행하다"}, {"d": "Day 25", "n": 23, "w": "subscription", "p": "명.", "m": "구독료, 구독, 기부(금)"}, {"d": "Day 25", "n": 24, "w": "process", "p": "명.", "m": "과정, 절차"}, {"d": "Day 25", "n": 25, "w": "coverage", "p": "명.", "m": "보도, 범위"}, {"d": "Day 26", "n": 1, "w": "remind", "p": "동.", "m": "상기시키다, 다시 한 번 알려주다"}, {"d": "Day 26", "n": 2, "w": "obligation", "p": "명.", "m": "의무"}, {"d": "Day 26", "n": 3, "w": "revoke", "p": "동.", "m": "폐지하다, 철회/취소하다"}, {"d": "Day 26", "n": 4, "w": "sensitive", "p": "형.", "m": "세심한, 예민한"}, {"d": "Day 26", "n": 5, "w": "perceive", "p": "동.", "m": "감지하다, 인지하다"}, {"d": "Day 26", "n": 6, "w": "descend", "p": "동.", "m": "내려오다, 경사지다, 내리막이 되다"}, {"d": "Day 26", "n": 7, "w": "modest", "p": "형.", "m": "(크기/가격/중요성 등이) 보통의, 겸손한, 수수한"}, {"d": "Day 26", "n": 8, "w": "adjust", "p": "동.", "m": "조정하다, 바로잡다"}, {"d": "Day 26", "n": 9, "w": "appealing", "p": "형.", "m": "매력적인, 호소하는, 애원하는"}, {"d": "Day 26", "n": 10, "w": "sizable", "p": "형.", "m": "상당한 크기의, 꽤 큰"}, {"d": "Day 26", "n": 11, "w": "tie", "p": "동. / 명.", "m": "동. 묶다, 달다 / 명. 넥타이, 끈"}, {"d": "Day 26", "n": 12, "w": "steep", "p": "형.", "m": "가파른, 급격한, 너무 비싼"}, {"d": "Day 26", "n": 13, "w": "subsequent", "p": "형.", "m": "그 다음의, 차후의"}, {"d": "Day 26", "n": 14, "w": "numerous", "p": "형.", "m": "많은"}, {"d": "Day 26", "n": 15, "w": "conserve", "p": "동.", "m": "아끼다, 보존하다"}, {"d": "Day 26", "n": 16, "w": "outgoing", "p": "형.", "m": "외향적인, 사교적인"}, {"d": "Day 26", "n": 17, "w": "status", "p": "명.", "m": "신분, 지위"}, {"d": "Day 26", "n": 18, "w": "profitable", "p": "형.", "m": "수익성이 있는, 이득이 되는, 유익한"}, {"d": "Day 26", "n": 19, "w": "expect", "p": "동.", "m": "예상하다, 기대하다"}, {"d": "Day 26", "n": 20, "w": "different", "p": "형.", "m": "다른, 차이가 나는"}, {"d": "Day 26", "n": 21, "w": "temperature", "p": "명.", "m": "온도, 기온, 체온"}, {"d": "Day 26", "n": 22, "w": "orderly", "p": "형.", "m": "정돈된, 정연한, 질서 있는"}, {"d": "Day 26", "n": 23, "w": "leisurely", "p": "형.", "m": "한가한, 여유로운, 느긋한"}, {"d": "Day 26", "n": 24, "w": "delicate", "p": "형.", "m": "연약한, 여린, 다치기 쉬운, 섬세한"}, {"d": "Day 26", "n": 25, "w": "growth", "p": "명.", "m": "성장, 증가"}, {"d": "Day 27", "n": 1, "w": "intentional", "p": "형.", "m": "의도적인, 고의로 한"}, {"d": "Day 27", "n": 2, "w": "enlist", "p": "동.", "m": "요청하다, 징집하다"}, {"d": "Day 27", "n": 3, "w": "articulate", "p": "동. / 형.", "m": "동. 분명히 표현하다, 설명하다 / 형. 또렷한, 분명히 표현하는"}, {"d": "Day 27", "n": 4, "w": "unprecedented", "p": "형.", "m": "전례 없는"}, {"d": "Day 27", "n": 5, "w": "patronage", "p": "명.", "m": "후원, 지원"}, {"d": "Day 27", "n": 6, "w": "establish", "p": "동.", "m": "설립하다, 수립하다, 확고히 하다"}, {"d": "Day 27", "n": 7, "w": "affluent", "p": "형.", "m": "부유한"}, {"d": "Day 27", "n": 8, "w": "automatically", "p": "부.", "m": "자동으로"}, {"d": "Day 27", "n": 9, "w": "populate", "p": "동.", "m": "살다, 거주하다, 이주시키다"}, {"d": "Day 27", "n": 10, "w": "adverse", "p": "형.", "m": "부정적인, 불리한"}, {"d": "Day 27", "n": 11, "w": "understaffed", "p": "형.", "m": "인원이 부족한"}, {"d": "Day 27", "n": 12, "w": "halt", "p": "동. / 명.", "m": "동. 멈추다, 세우다 / 명. 멈춤, 중단"}, {"d": "Day 27", "n": 13, "w": "routine", "p": "명. / 형.", "m": "명. 루틴, 일상 / 형. 일상적인, 보통의"}, {"d": "Day 27", "n": 14, "w": "approach", "p": "동. / 명.", "m": "동. 다가가다, 접촉하다 / 명. 접근법, 다가감"}, {"d": "Day 27", "n": 15, "w": "rather", "p": "부.", "m": "꽤, 약간, 상당히"}, {"d": "Day 27", "n": 16, "w": "elect", "p": "동. / 형.", "m": "동. 선출하다, 선택하다 / 형. 당선된"}, {"d": "Day 27", "n": 17, "w": "broadcast", "p": "동. / 명.", "m": "동. 방송하다, 널리 알리다 / 명. 방송"}, {"d": "Day 27", "n": 18, "w": "ahead", "p": "부.", "m": "앞으로, 앞에, 미리"}, {"d": "Day 27", "n": 19, "w": "otherwise", "p": "부.", "m": "그렇지 않으면"}, {"d": "Day 27", "n": 20, "w": "allege", "p": "동.", "m": "혐의를 제기하다, 주장하다"}, {"d": "Day 27", "n": 21, "w": "fluent", "p": "형.", "m": "유창한, 능숙한"}, {"d": "Day 27", "n": 22, "w": "consume", "p": "동.", "m": "소모하다, 소비하다"}, {"d": "Day 27", "n": 23, "w": "marginal", "p": "형.", "m": "미미한, 중요하지 않은, 주변부의"}, {"d": "Day 27", "n": 24, "w": "industrial", "p": "형.", "m": "산업의, 공업의"}, {"d": "Day 27", "n": 25, "w": "comparable", "p": "형.", "m": "비슷한, 비교할 만한"}, {"d": "Day 28", "n": 1, "w": "successive", "p": "형.", "m": "연속적인, 연이은, 잇따른"}, {"d": "Day 28", "n": 2, "w": "responsive", "p": "형.", "m": "즉각 반응하는, 호응하는"}, {"d": "Day 28", "n": 3, "w": "entry", "p": "명.", "m": "입장, 출입, 가입"}, {"d": "Day 28", "n": 4, "w": "produce", "p": "동. / 명.", "m": "동. 생산하다 / 명. 농작물, 농산물"}, {"d": "Day 28", "n": 5, "w": "grant", "p": "동. / 명.", "m": "동. 승인하다, 인정하다 / 명. 보조금"}, {"d": "Day 28", "n": 6, "w": "retain", "p": "동.", "m": "유지하다, 간직하다"}, {"d": "Day 28", "n": 7, "w": "mature", "p": "형. / 동.", "m": "형. 어른스러운, 분별 있는 / 동. 어른스러워지다, 성숙해지다"}, {"d": "Day 28", "n": 8, "w": "delete", "p": "동.", "m": "삭제하다"}, {"d": "Day 28", "n": 9, "w": "remark", "p": "명.", "m": "발언, 언급, 주목"}, {"d": "Day 28", "n": 10, "w": "overstate", "p": "동.", "m": "과장하다"}, {"d": "Day 28", "n": 11, "w": "impulsive", "p": "형.", "m": "충동적인"}, {"d": "Day 28", "n": 12, "w": "impartial", "p": "형.", "m": "공정한"}, {"d": "Day 28", "n": 13, "w": "scheme", "p": "명. / 동.", "m": "명. 계획, 제도 / 동. 책략을 꾸미다"}, {"d": "Day 28", "n": 14, "w": "ethic", "p": "명.", "m": "윤리, 도덕"}, {"d": "Day 28", "n": 15, "w": "instrumental", "p": "형. / 명.", "m": "형. 중요한, 악기에 의한 / 명. 기악곡"}, {"d": "Day 28", "n": 16, "w": "harsh", "p": "형.", "m": "가혹한, 냉혹한, 혹독한"}, {"d": "Day 28", "n": 17, "w": "costly", "p": "형.", "m": "많은 돈이 드는"}, {"d": "Day 28", "n": 18, "w": "merchant", "p": "명.", "m": "상인"}, {"d": "Day 28", "n": 19, "w": "audiovisual", "p": "형.", "m": "시청각의"}, {"d": "Day 28", "n": 20, "w": "edible", "p": "형.", "m": "먹을 수 있는, 식용의"}, {"d": "Day 28", "n": 21, "w": "risky", "p": "형.", "m": "위험한"}, {"d": "Day 28", "n": 22, "w": "discard", "p": "동. / 명.", "m": "동. 버리다, 폐기하다 / 명. 버린 패"}, {"d": "Day 28", "n": 23, "w": "rigid", "p": "형.", "m": "엄격한, 융통성 없는"}, {"d": "Day 28", "n": 24, "w": "enroll", "p": "동.", "m": "등록하다, 입학하다"}, {"d": "Day 28", "n": 25, "w": "rewarding", "p": "형.", "m": "보람 있는, 돈을 많이 버는"}, {"d": "Day 29", "n": 1, "w": "debate", "p": "명. / 동.", "m": "명. 토론, 논쟁 / 동. 논의하다, 숙고하다"}, {"d": "Day 29", "n": 2, "w": "surpass", "p": "동.", "m": "능가하다, 뛰어넘다"}, {"d": "Day 29", "n": 3, "w": "insert", "p": "동. / 명.", "m": "동. 끼우다, 삽입하다 / 명. 삽입 광고, 부속품"}, {"d": "Day 29", "n": 4, "w": "tricky", "p": "형.", "m": "힘든, 까다로운, 교묘한"}, {"d": "Day 29", "n": 5, "w": "dozen", "p": "명.", "m": "12개 짜리 한 묶음, 다스"}, {"d": "Day 29", "n": 6, "w": "march", "p": "동. / 명.", "m": "동. 행진하다 / 명. 행군, 행진"}, {"d": "Day 29", "n": 7, "w": "withstand", "p": "동.", "m": "견뎌 내다, 이겨 내다"}, {"d": "Day 29", "n": 8, "w": "offset", "p": "동.", "m": "상쇄하다, 벌충하다"}, {"d": "Day 29", "n": 9, "w": "revenue", "p": "명.", "m": "수익, 수입"}, {"d": "Day 29", "n": 10, "w": "retention", "p": "명.", "m": "보유, 유지, 정체, 잔류"}, {"d": "Day 29", "n": 11, "w": "consolidate", "p": "동.", "m": "굳히다, 강화하다, 통합하다"}, {"d": "Day 29", "n": 12, "w": "diagnosis", "p": "명.", "m": "진단"}, {"d": "Day 29", "n": 13, "w": "punish", "p": "동.", "m": "처벌하다, 벌주다"}, {"d": "Day 29", "n": 14, "w": "culminate", "p": "동.", "m": "막을 내리다, 끝이 나다"}, {"d": "Day 29", "n": 15, "w": "attorney", "p": "명.", "m": "변호사"}, {"d": "Day 29", "n": 16, "w": "fabric", "p": "명.", "m": "직물, 천"}, {"d": "Day 29", "n": 17, "w": "savvy", "p": "명.", "m": "지식, 상식, 요령"}, {"d": "Day 29", "n": 18, "w": "barter", "p": "동.", "m": "물물교환하다"}, {"d": "Day 29", "n": 19, "w": "catastrophe", "p": "명.", "m": "참사, 재앙"}, {"d": "Day 29", "n": 20, "w": "abandon", "p": "동.", "m": "버리다, 유기하다"}, {"d": "Day 29", "n": 21, "w": "decompose", "p": "동.", "m": "분해되다, 부패되다"}, {"d": "Day 29", "n": 22, "w": "resource", "p": "명. / 동.", "m": "명. 자원, 재원 / 동. 자원을 제공하다"}, {"d": "Day 29", "n": 23, "w": "means", "p": "명.", "m": "수단, 방법, 돈, 재력"}, {"d": "Day 29", "n": 24, "w": "persuade", "p": "동.", "m": "설득하다"}, {"d": "Day 29", "n": 25, "w": "solely", "p": "부.", "m": "오로지, 단지, 단독으로"}, {"d": "Day 30", "n": 1, "w": "flair", "p": "명.", "m": "재능, 재주, 솜씨"}, {"d": "Day 30", "n": 2, "w": "reap", "p": "동.", "m": "거두다, 수확하다, 거둬들이다"}, {"d": "Day 30", "n": 3, "w": "accumulate", "p": "동.", "m": "모으다, 축적하다"}, {"d": "Day 30", "n": 4, "w": "fleet", "p": "명.", "m": "함대"}, {"d": "Day 30", "n": 5, "w": "obscure", "p": "형. / 동.", "m": "형. 무명의, 이해하기 힘든, 모호한 / 동. 이해하기 어렵게 하다"}, {"d": "Day 30", "n": 6, "w": "manifest", "p": "동. / 형.", "m": "동. 나타내다, 분명해지다 / 형. 분명한"}, {"d": "Day 30", "n": 7, "w": "entail", "p": "동.", "m": "수반하다"}, {"d": "Day 30", "n": 8, "w": "staple", "p": "형.", "m": "주된, 주요한"}, {"d": "Day 30", "n": 9, "w": "furnished", "p": "형.", "m": "가구가 비치된"}, {"d": "Day 30", "n": 10, "w": "serving", "p": "명.", "m": "(음식의) 1인분"}, {"d": "Day 30", "n": 11, "w": "scarcity", "p": "명.", "m": "부족, 결핍"}, {"d": "Day 30", "n": 12, "w": "transferable", "p": "형.", "m": "이동 가능한, 양도 가능한"}, {"d": "Day 30", "n": 13, "w": "mundane", "p": "형.", "m": "재미 없는, 일상적인"}, {"d": "Day 30", "n": 14, "w": "elaborate", "p": "형. / 동.", "m": "형. 정교한, 정성을 들인 / 동. 자세히 말하다, 정교하게 만들어 내다"}, {"d": "Day 30", "n": 15, "w": "conceive", "p": "동.", "m": "마음속으로 하다, 상상하다"}, {"d": "Day 30", "n": 16, "w": "deficit", "p": "명.", "m": "적자, 부족액, 결손"}, {"d": "Day 30", "n": 17, "w": "monetary", "p": "형.", "m": "통화의, 화폐의"}, {"d": "Day 30", "n": 18, "w": "energetic", "p": "형.", "m": "활동적인"}, {"d": "Day 30", "n": 19, "w": "vibrant", "p": "형.", "m": "활기찬, 강렬한, 힘찬"}, {"d": "Day 30", "n": 20, "w": "proliferation", "p": "명.", "m": "급증, 확산"}, {"d": "Day 30", "n": 21, "w": "savory", "p": "형.", "m": "맛 좋은, 향긋한, 즐거운"}, {"d": "Day 30", "n": 22, "w": "fluctuate", "p": "동.", "m": "등락을 거듭하다"}, {"d": "Day 30", "n": 23, "w": "probable", "p": "형.", "m": "있을 것 같은, 개연성 있는"}, {"d": "Day 30", "n": 24, "w": "breakthrough", "p": "명.", "m": "돌파구"}, {"d": "Day 30", "n": 25, "w": "surge", "p": "동. / 명.", "m": "동. 급등하다, 급증하다 / 명. 급증, 급등, 솟아오름"}, {"d": "5/14 기출", "n": 1, "w": "podium", "p": "명.", "m": "단, 지휘대"}, {"d": "5/14 기출", "n": 2, "w": "attract", "p": "동.", "m": "끌어 모으다, 끌다"}, {"d": "5/14 기출", "n": 3, "w": "amusement park", "p": "명.", "m": "놀이공원"}, {"d": "5/14 기출", "n": 4, "w": "special rate", "p": "명.", "m": "특별 할인 요금"}, {"d": "5/14 기출", "n": 5, "w": "relocate", "p": "동.", "m": "이전하다"}, {"d": "5/14 기출", "n": 6, "w": "lay over", "p": "동.", "m": "연기하다"}, {"d": "5/14 기출", "n": 7, "w": "corridor", "p": "명.", "m": "복도, 통로"}, {"d": "5/14 기출", "n": 8, "w": "cracked", "p": "형.", "m": "금이 간, 갈라진"}, {"d": "5/14 기출", "n": 9, "w": "secure", "p": "형. / 동.", "m": "형. 안심하는 / 동. 고정시키다"}, {"d": "5/14 기출", "n": 10, "w": "quick resolution", "p": "phr.", "m": "신속한 해결"}, {"d": "5/14 기출", "n": 11, "w": "baked goods", "p": "phr.", "m": "빵, 제과류"}, {"d": "5/14 기출", "n": 12, "w": "artisan", "p": "명.", "m": "장인, 기능 보유자"}, {"d": "5/14 기출", "n": 13, "w": "alleviate", "p": "동.", "m": "완화하다"}, {"d": "5/14 기출", "n": 14, "w": "compensate", "p": "동.", "m": "보상하다, 보상금을 주다"}, {"d": "5/14 기출", "n": 15, "w": "archaeology", "p": "명.", "m": "고고학"}, {"d": "5/14 기출", "n": 16, "w": "extended warranty", "p": "phr.", "m": "연장된 보증"}, {"d": "5/14 기출", "n": 17, "w": "patron", "p": "명.", "m": "고객, 후원자"}, {"d": "5/14 기출", "n": 18, "w": "impose", "p": "동.", "m": "부과하다, 도입하다"}, {"d": "5/14 기출", "n": 19, "w": "demolish", "p": "동.", "m": "(건물을) 철거하다"}, {"d": "5/14 기출", "n": 20, "w": "via", "p": "전.", "m": "~을 통하여"}, {"d": "5/14 기출", "n": 21, "w": "erosion", "p": "명.", "m": "부식, 침식"}, {"d": "5/14 기출", "n": 22, "w": "party", "p": "명.", "m": "정당 / 단체 / 파티"}, {"d": "5/14 기출", "n": 23, "w": "archive", "p": "명. / 동.", "m": "명. 기록보관소 / 동. 보관하다"}, {"d": "5/14 기출", "n": 24, "w": "culinary degree", "p": "phr.", "m": "요리 학위"}, {"d": "5/28 기출", "n": 1, "w": "pour", "p": "동.", "m": "붓다, 따르다"}, {"d": "5/28 기출", "n": 2, "w": "pedestrian", "p": "명. / 형.", "m": "명. 보행자 / 형. 보행자용의"}, {"d": "5/28 기출", "n": 3, "w": "reserve", "p": "동.", "m": "예약하다"}, {"d": "5/28 기출", "n": 4, "w": "quarter", "p": "명.", "m": "4분의 1, 사분기"}, {"d": "5/28 기출", "n": 5, "w": "degree", "p": "명.", "m": "학위, 학부, 도"}, {"d": "5/28 기출", "n": 6, "w": "state-of-the-art", "p": "형.", "m": "최신의, 최신기술의"}, {"d": "5/28 기출", "n": 7, "w": "wing", "p": "명.", "m": "날개, [부속 건물] 동"}, {"d": "5/28 기출", "n": 8, "w": "retrieve", "p": "동.", "m": "되찾아오다, 회수하다"}, {"d": "5/28 기출", "n": 9, "w": "stop by", "p": "phr.", "m": "가는 길에 들르다"}, {"d": "5/28 기출", "n": 10, "w": "refreshment", "p": "명.", "m": "다과, 간식"}, {"d": "5/28 기출", "n": 11, "w": "inspiration", "p": "명.", "m": "영감"}, {"d": "5/28 기출", "n": 12, "w": "Porcelain pottery", "p": "명.", "m": "자기 도자기"}, {"d": "5/28 기출", "n": 13, "w": "insulation", "p": "명.", "m": "절연[단열/방음] 처리"}, {"d": "5/28 기출", "n": 14, "w": "secure", "p": "형. / 동.", "m": "형. 안전한, 확실한 / 동. 고정시키다"}, {"d": "5/28 기출", "n": 15, "w": "acclaimed", "p": "형.", "m": "칭찬을 받고 있는"}, {"d": "5/28 기출", "n": 16, "w": "commute", "p": "동. / 명.", "m": "동. 통근하다 / 명. 통근(거리)"}, {"d": "5/28 기출", "n": 17, "w": "low-cost", "p": "형.", "m": "저렴한, 저가의"}, {"d": "5/28 기출", "n": 18, "w": "extraordinary", "p": "형.", "m": "기이한, 놀라운, 비범한"}, {"d": "5/28 기출", "n": 19, "w": "hospitality industry", "p": "명.", "m": "서비스업"}, {"d": "5/28 기출", "n": 20, "w": "steep", "p": "형.", "m": "가파른, 급격한"}, {"d": "5/28 기출", "n": 21, "w": "vigorous", "p": "형.", "m": "활발한, 격렬한, 활기찬"}, {"d": "5/28 기출", "n": 22, "w": "void", "p": "형.", "m": "무효의, 법적 효력이 없는"}, {"d": "5/28 기출", "n": 23, "w": "measure", "p": "명. / 동.", "m": "명. 조치 / 동. 측정하다, 재다"}, {"d": "5/28 기출", "n": 24, "w": "skeptical", "p": "형.", "m": "의심 많은, 회의적인"}, {"d": "5/28 기출", "n": 25, "w": "recipient", "p": "명.", "m": "수령인, 수취인"}, {"d": "5/28 기출", "n": 26, "w": "ergonomic", "p": "형.", "m": "인체 공학의"}], "colls": [{"d": "Day 01", "n": 1, "c": "place an order", "m": "주문하다"}, {"d": "Day 01", "n": 2, "c": "address problems/issues", "m": "문제를 해결하다"}, {"d": "Day 01", "n": 3, "c": "meet a deadline", "m": "마감기한을 맞추다"}, {"d": "Day 01", "n": 4, "c": "be known for (이유)", "m": "~로 알려져 있다"}, {"d": "Day 01", "n": 5, "c": "take measures", "m": "조치를 취하다, 대책을 강구하다"}, {"d": "Day 02", "n": 1, "c": "take advantage of", "m": "~을 이용하다, ~을 기회로 활용하다"}, {"d": "Day 02", "n": 2, "c": "make sure that", "m": "that이하를 확실하게 하다"}, {"d": "Day 02", "n": 3, "c": "be based in", "m": "~에 기반을 두다"}, {"d": "Day 02", "n": 4, "c": "give details about", "m": "~에 대해 상세히 설명하다"}, {"d": "Day 02", "n": 5, "c": "be required to do", "m": "~하도록 요구되다"}, {"d": "Day 03", "n": 1, "c": "make a mistake", "m": "실수하다, 잘못 생각하다"}, {"d": "Day 03", "n": 2, "c": "respond to", "m": "~에 응답/대응하다"}, {"d": "Day 03", "n": 3, "c": "conveniently located", "m": "편리한 위치에 있는"}, {"d": "Day 03", "n": 4, "c": "highly regard", "m": "~을 중시하다"}, {"d": "Day 03", "n": 5, "c": "on duty", "m": "근무 중"}, {"d": "Day 04", "n": 1, "c": "in bulk", "m": "대량으로"}, {"d": "Day 04", "n": 2, "c": "in accordance with", "m": "~에 따라서, ~에 부합되게"}, {"d": "Day 04", "n": 3, "c": "adhere to", "m": "~을 고수하다, 지키다"}, {"d": "Day 04", "n": 4, "c": "reserve the right to do", "m": "~할 권리가 있다"}, {"d": "Day 04", "n": 5, "c": "come up with", "m": "제시[제안]하다, 떠올리다"}, {"d": "Day 05", "n": 1, "c": "take measures", "m": "조치를 취하다, 대책을 강구하다"}, {"d": "Day 05", "n": 2, "c": "conduct a survey", "m": "설문조사를 하다"}, {"d": "Day 05", "n": 3, "c": "be responsible for", "m": "~에 책임이 있다"}, {"d": "Day 05", "n": 4, "c": "reach an agreement", "m": "합의에 도달하다"}, {"d": "Day 05", "n": 5, "c": "refrain from", "m": "~을 삼가다"}, {"d": "Day 06", "n": 1, "c": "put off", "m": "연기하다, 미루다"}, {"d": "Day 06", "n": 2, "c": "look for", "m": "찾다"}, {"d": "Day 06", "n": 3, "c": "volunteer for", "m": "에 지원하다"}, {"d": "Day 06", "n": 4, "c": "be willing to do", "m": "기꺼이 ~ 하다, 흔쾌히 ~하다"}, {"d": "Day 06", "n": 5, "c": "file a complaint", "m": "항의를 제기하다"}, {"d": "Day 07", "n": 1, "c": "at a reasonable price", "m": "합당한 가격으로"}, {"d": "Day 07", "n": 2, "c": "come with", "m": "~이 딸려 있다"}, {"d": "Day 07", "n": 3, "c": "out of order", "m": "고장난"}, {"d": "Day 07", "n": 4, "c": "be vulnerable to", "m": "~에 영향을 받기 쉽다, 취약하다"}, {"d": "Day 07", "n": 5, "c": "in light of", "m": "~을 고려하여, ~에 비추어"}, {"d": "Day 08", "n": 1, "c": "on behalf of", "m": "~을 대신하여, ~을 대표하여"}, {"d": "Day 08", "n": 2, "c": "make up for", "m": "(손실 따위를) 보상하다, 보전하다"}, {"d": "Day 08", "n": 3, "c": "go over", "m": "조사하다, 검토하다"}, {"d": "Day 08", "n": 4, "c": "participate in", "m": "~에 참가하다, 참여하다"}, {"d": "Day 08", "n": 5, "c": "take into account", "m": "~을 고려하다"}, {"d": "Day 09", "n": 1, "c": "replace A with B", "m": "A를 B로 치환하다"}, {"d": "Day 09", "n": 2, "c": "let A know B", "m": "A에게 B를 알게 하다"}, {"d": "Day 09", "n": 3, "c": "unless otherwise noted", "m": "달리 언급이 없으면"}, {"d": "Day 09", "n": 4, "c": "as for", "m": "~에 관해 말하면"}, {"d": "Day 09", "n": 5, "c": "run behind schedule", "m": "일정에 뒤처지다"}, {"d": "Day 10", "n": 1, "c": "within walking distance", "m": "도보로 갈 수 있는 거리 이내에"}, {"d": "Day 10", "n": 2, "c": "under construction", "m": "공사 중인, 건설 중인"}, {"d": "Day 10", "n": 3, "c": "on time", "m": "정각에, 시간을 어기지 않고"}, {"d": "Day 10", "n": 4, "c": "newly hired", "m": "신규로 채용된"}, {"d": "Day 10", "n": 5, "c": "thoroughly examine", "m": "면밀하게 검사하다"}, {"d": "Day 11", "n": 1, "c": "temporarily out of stock", "m": "일시적 재고 품절"}, {"d": "Day 11", "n": 2, "c": "cope with", "m": "~에 대처하다, 대응하다"}, {"d": "Day 11", "n": 3, "c": "stop by", "m": "가는 길에 들르다"}, {"d": "Day 11", "n": 4, "c": "concentrate on", "m": "~에 집중하다"}, {"d": "Day 11", "n": 5, "c": "mutually benificial", "m": "상호 이익이 되는"}, {"d": "Day 12", "n": 1, "c": "confirm one's reservation", "m": "예약을 확인하다"}, {"d": "Day 12", "n": 2, "c": "conduct a poll", "m": "여론조사를 하다"}, {"d": "Day 12", "n": 3, "c": "be valid for", "m": "~에 유효하다, 타당하다"}, {"d": "Day 12", "n": 4, "c": "be similar to+명사", "m": "~와 비슷하다"}, {"d": "Day 12", "n": 5, "c": "be aware that", "m": "~라는 것을 알다"}, {"d": "Day 13", "n": 1, "c": "be eligible for", "m": "~에 대한 자격이 있다"}, {"d": "Day 13", "n": 2, "c": "run short of", "m": "~가 부족하다"}, {"d": "Day 13", "n": 3, "c": "be equipped with", "m": "~을 갖추다"}, {"d": "Day 13", "n": 4, "c": "in observance of", "m": "~을 준수하여"}, {"d": "Day 13", "n": 5, "c": "on purpose", "m": "고의로"}, {"d": "Day 14", "n": 1, "c": "for your convenience", "m": "편의를 위해서"}, {"d": "Day 14", "n": 2, "c": "under pressure", "m": "압력 하에, 부담을 가지고"}, {"d": "Day 14", "n": 3, "c": "with ease", "m": "쉽게"}, {"d": "Day 14", "n": 4, "c": "apologize for 이유", "m": "~에 대해 사과하다"}, {"d": "Day 14", "n": 5, "c": "lay off", "m": "해고하다"}, {"d": "Day 15", "n": 1, "c": "in response to", "m": "~에 응하여"}, {"d": "Day 15", "n": 2, "c": "proximity to", "m": "~에의 근접성"}, {"d": "Day 15", "n": 3, "c": "in duplicate", "m": "2통으로"}, {"d": "Day 15", "n": 4, "c": "account for", "m": "설명하다, 처리하다"}, {"d": "Day 15", "n": 5, "c": "be aware of", "m": "~을 알다, 인지하다"}, {"d": "Day 16", "n": 1, "c": "put emphasis on", "m": "~을 강조하다"}, {"d": "Day 16", "n": 2, "c": "be sufficient in supply", "m": "공급 물량이 넉넉하다"}, {"d": "Day 16", "n": 3, "c": "pending decision", "m": "미결 문제"}, {"d": "Day 16", "n": 4, "c": "dramatically increase", "m": "극적으로 증가하다"}, {"d": "Day 16", "n": 5, "c": "gradually decline", "m": "점차로 저하하다, 하락하다"}, {"d": "Day 17", "n": 1, "c": "collaborate on", "m": "~에 대해 협동하다"}, {"d": "Day 17", "n": 2, "c": "depend on", "m": "~에 의존하다"}, {"d": "Day 17", "n": 3, "c": "lead to", "m": "~로 이어지다"}, {"d": "Day 17", "n": 4, "c": "inform/notify/remind A of B", "m": "A에게 B에 대해서 알리다"}, {"d": "Day 17", "n": 5, "c": "name A to B", "m": "A를 B로 임명하다"}, {"d": "Day 18", "n": 1, "c": "take A into consideration", "m": "A를 고려하다"}, {"d": "Day 18", "n": 2, "c": "be aimed at", "m": "~을 목표로 삼다"}, {"d": "Day 18", "n": 3, "c": "last-minute change", "m": "막바지 변경"}, {"d": "Day 18", "n": 4, "c": "extensive knowledge", "m": "해박한 지식"}, {"d": "Day 18", "n": 5, "c": "confidential document", "m": "기밀 서류"}, {"d": "Day 19", "n": 1, "c": "distinguished professor", "m": "저명한 교수"}, {"d": "Day 19", "n": 2, "c": "demanding supervisor", "m": "까다로운 상사"}, {"d": "Day 19", "n": 3, "c": "have technical problems", "m": "기술적인 문제가 있다"}, {"d": "Day 19", "n": 4, "c": "as mentioned earlier", "m": "앞서 말한 바와 같이"}, {"d": "Day 19", "n": 5, "c": "be filled with", "m": "~로 가득차다"}, {"d": "Day 20", "n": 1, "c": "close a deal", "m": "계약을 체결하다, 거래를 매듭짓다"}, {"d": "Day 20", "n": 2, "c": "miss a deadline", "m": "기한을 놓치다"}, {"d": "Day 20", "n": 3, "c": "attract qualified applicants", "m": "자격을 갖춘 지원자를 유치하다"}, {"d": "Day 20", "n": 4, "c": "for a limited time only", "m": "한정된 기간 동안만"}, {"d": "Day 20", "n": 5, "c": "on installment", "m": "할부로"}, {"d": "Day 21", "n": 1, "c": "boost sales", "m": "매출을 증대시키다"}, {"d": "Day 21", "n": 2, "c": "establish a partnership", "m": "파트너쉽을 구축하다"}, {"d": "Day 21", "n": 3, "c": "allocate budget", "m": "예산을 할당하다"}, {"d": "Day 21", "n": 4, "c": "monitor financial performance", "m": "재무 성과를 모니터링하다"}, {"d": "Day 21", "n": 5, "c": "resolve conflicts", "m": "갈등을 해결하다"}, {"d": "Day 22", "n": 1, "c": "sustainable practices", "m": "지속가능한 관행"}, {"d": "Day 22", "n": 2, "c": "expand product lines", "m": "제품 라인을 확장하다"}, {"d": "Day 22", "n": 3, "c": "maximize profits", "m": "수익을 극대화하다"}, {"d": "Day 22", "n": 4, "c": "target specific demographics", "m": "특정 인구 통계를 타겟으로 하다"}, {"d": "Day 22", "n": 5, "c": "reliable service", "m": "신뢰할 만한 서비스"}, {"d": "Day 23", "n": 1, "c": "valuable feedback", "m": "귀중한 피드백"}, {"d": "Day 23", "n": 2, "c": "comply with industry standards", "m": "업계 표준을 준수하다"}, {"d": "Day 23", "n": 3, "c": "call off a meeting", "m": "회의를 취소하다"}, {"d": "Day 23", "n": 4, "c": "run a company", "m": "회사를 운영하다"}, {"d": "Day 23", "n": 5, "c": "set up a business", "m": "사업을 시작하다"}, {"d": "Day 24", "n": 1, "c": "accurately measure", "m": "정확하게 측정하다"}, {"d": "Day 24", "n": 2, "c": "regularly updated", "m": "정기적으로 업데이트하다"}, {"d": "Day 24", "n": 3, "c": "precisely calculate", "m": "정밀하게 계산하다"}, {"d": "Day 24", "n": 4, "c": "easily accessible", "m": "쉽게 접근 가능한"}, {"d": "Day 24", "n": 5, "c": "widely recognized", "m": "널리 인정받는"}, {"d": "Day 25", "n": 1, "c": "incredibly versatile", "m": "놀라울 정도로 다재다능한"}, {"d": "Day 25", "n": 2, "c": "unanimously agree", "m": "만장일치로 동의하다"}, {"d": "Day 25", "n": 3, "c": "adjust accordingly", "m": "그에 따라 조정하다"}, {"d": "Day 25", "n": 4, "c": "actively participate in", "m": "적극적으로 참여하다"}, {"d": "Day 25", "n": 5, "c": "professionally develop", "m": "전문적으로 개발하다"}, {"d": "Day 26", "n": 1, "c": "immediately after", "m": "곧, 곧 뒤따라"}, {"d": "Day 26", "n": 2, "c": "receive a discount on", "m": "에 할인을 받다"}, {"d": "Day 26", "n": 3, "c": "heavy rain/snow", "m": "폭우/폭설"}, {"d": "Day 26", "n": 4, "c": "additional fees/costs", "m": "추가 요금/비용"}, {"d": "Day 26", "n": 5, "c": "be closely related to", "m": "와 밀접하게 관련이 있다"}, {"d": "Day 27", "n": 1, "c": "widely available", "m": "널리 이용되는"}, {"d": "Day 27", "n": 2, "c": "tight regulations/rules", "m": "강경한 규제/규칙"}, {"d": "Day 27", "n": 3, "c": "specialize in", "m": "~을 전문으로 하다"}, {"d": "Day 27", "n": 4, "c": "be designed for", "m": "을 위해 고안되다"}, {"d": "Day 27", "n": 5, "c": "be on vacation", "m": "휴가 중이다"}, {"d": "Day 28", "n": 1, "c": "in a minute", "m": "즉각, 당장"}, {"d": "Day 28", "n": 2, "c": "in particular", "m": "특히, 특별히"}, {"d": "Day 28", "n": 3, "c": "under control", "m": "통제되는, 지배되는"}, {"d": "Day 28", "n": 4, "c": "raise awareness of", "m": "~에 대한 인식을 고취하다"}, {"d": "Day 28", "n": 5, "c": "take the opportunity", "m": "기회를 잡다"}, {"d": "Day 29", "n": 1, "c": "follow up on", "m": "~에 대해 후속 조치를 취하다"}, {"d": "Day 29", "n": 2, "c": "have yet to do", "m": "아직 ~하지 않았다"}, {"d": "Day 29", "n": 3, "c": "by the way", "m": "그런데, 한편"}, {"d": "Day 29", "n": 4, "c": "hold a festival", "m": "축제를 개최하다"}, {"d": "Day 29", "n": 5, "c": "take place", "m": "발생하다"}, {"d": "Day 30", "n": 1, "c": "rise through the roof", "m": "치솟다"}, {"d": "Day 30", "n": 2, "c": "figure out", "m": "이해하다"}, {"d": "Day 30", "n": 3, "c": "give it a thought", "m": "생각해보다"}, {"d": "Day 30", "n": 4, "c": "up and running", "m": "작동중인"}, {"d": "Day 30", "n": 5, "c": "cut down on", "m": "~을 줄이다"}], "quiz": [{"d": "Day 01", "n": 1, "s": "Due to the concerns over the safety of its products, Lexington Toys has experienced a ------ drop in revenue.", "o": ["significant", "significantly", "signify", "significance"], "a": "(A) significant"}, {"d": "Day 01", "n": 2, "s": "Please stay on the line if you wish to speak with a sales ------ directly.", "o": ["represent", "representative", "to represent", "representatives"], "a": "(B) representative"}, {"d": "Day 01", "n": 3, "s": "The mobile app developer announced the launch of several new projects following its ------ with a competitor.", "o": ["merger", "merge", "merged", "merging"], "a": "(A) merger"}, {"d": "Day 02", "n": 1, "s": "Grady Software recently ------ Looper Digital Design for $50 million in an effort to position itself as the leading app developer in Canada.", "o": ["delegated", "estimated", "contacted", "acquired"], "a": "(D) acquired"}, {"d": "Day 02", "n": 2, "s": "Singer Jack Butler will meet with several fan club members ------ following this afternoon's concert.", "o": ["shortly", "short", "shortage", "shorter"], "a": "(A) shortly"}, {"d": "Day 02", "n": 3, "s": "Ms. Niven developed from an office intern into a financially successful ------ .", "o": ["entrepreneur", "acquaintance", "apprentice", "novice"], "a": "(A) entrepreneur"}, {"d": "Day 03", "n": 1, "s": "Little Mexico diners can purchase tacos and nachos ------ or as part of a set menu.", "o": ["separate", "separately", "separated", "separating"], "a": "(B) separately"}, {"d": "Day 03", "n": 2, "s": "Even though sales of our Apricot 7 mobile phone have been lower than expected, our overall profits increased ------ this year.", "o": ["substance", "substances", "substantial", "substantially"], "a": "(D) substantially"}, {"d": "Day 03", "n": 3, "s": "While the food is noteworthy, ------ at Seaside Bistro are more impressed by the restaurant's cleanliness and service.", "o": ["patrons", "patronize", "patronage", "patron"], "a": "(A) patrons"}, {"d": "Day 04", "n": 1, "s": "To attract new investors in the educational toy company, Ms. Biggs gave over thirty product ------ last month.", "o": ["demonstration", "demonstrate", "to demonstrate", "demonstrated"], "a": "(A) demonstration"}, {"d": "Day 04", "n": 2, "s": "The proofreader identified some repetitious vocabulary and suggested some ------ words that could be used instead.", "o": ["alternatively", "alternative", "alternatives", "alternate"], "a": "(B) alternative"}, {"d": "Day 04", "n": 3, "s": "Any delay resulting from the overbooking of a light will be announced ------ by the airline.", "o": ["prompt", "prompted", "to prompt", "promptly"], "a": "(D) promptly"}, {"d": "Day 05", "n": 1, "s": "More than two thousand jobs will be eliminated if Renly Textiles decides to ------ its manufacturing facility to Mexico.", "o": ["relocation", "relocate", "relocated", "relocating"], "a": "(B) relocate"}, {"d": "Day 05", "n": 2, "s": "For maximum taste and freshness, consume the drink ------ after opening the bottle.", "o": ["immediately", "originally", "significantly", "approximately"], "a": "(A) immediately"}, {"d": "Day 05", "n": 3, "s": "Employees will receive a 5 percent raise once the new salary policy is ------ .", "o": ["implementing", "implemented", "implements", "will implement"], "a": "(B) implemented"}, {"d": "Day 06", "n": 1, "s": "While renovation work is underway, Carver Furniture's manufacturing plant is only partially ------ .", "o": ["operation", "operational", "operate", "operates"], "a": "(B) operational"}, {"d": "Day 06", "n": 2, "s": "The proposed design of the waterfront area is ------ to view online on the City Gall Web site.", "o": ["available", "frequent", "considerable", "helpful"], "a": "(A) available"}, {"d": "Day 06", "n": 3, "s": "------ from the safety inspection of the manufacturing plant are currently being evaluated.", "o": ["Find", "Findings", "To find", "Found"], "a": "(B) Findings"}, {"d": "Day 07", "n": 1, "s": "Scientists at BioGenesis ------ in various fields, thus ensuring that they can adequately meet the needs of most clients.", "o": ["special", "specialize", "to specialize", "specializing"], "a": "(B) specialize"}, {"d": "Day 07", "n": 2, "s": "The recent Web site security ------ show how important it is to keep anti-virus software updated regularly.", "o": ["breach", "breaches", "breached", "breaching"], "a": "(B) breaches"}, {"d": "Day 07", "n": 3, "s": "The turbines constructed by Westfield Energy Inc. generate electricity by ------ wind power.", "o": ["utilize", "utilized", "utility", "utilizing"], "a": "(D) utilizing"}, {"d": "Day 08", "n": 1, "s": "A safety inspector must ------ investigate all potential causes for accidents that occur in the factory.", "o": ["possibly", "hopefully", "creatively", "thoroughly"], "a": "(D) thoroughly"}, {"d": "Day 08", "n": 2, "s": "Mayford Energy Inc. is currently recruiting a marketing consultant to ------ consumer survey results.", "o": ["decline", "analyze", "advise", "conduct"], "a": "(B) analyze"}, {"d": "Day 08", "n": 3, "s": "Mr. Hong informed his tenants that he wanted them to keep the apartment clean and ------ .", "o": ["tidy", "tidier", "tidiest", "tidies"], "a": "(A) tidy"}, {"d": "Day 09", "n": 1, "s": "As a result of a problem with the event site, the 12th Annual Bridgefoot Film Festival was ------ until August 17.", "o": ["announced", "arranged", "postponed", "proposed"], "a": "(C) postponed"}, {"d": "Day 09", "n": 2, "s": "The units at Camberley Self Storage can ------ store a wide range of large items.", "o": ["secure", "security", "securely", "secured"], "a": "(C) securely"}, {"d": "Day 09", "n": 3, "s": "One of the top benefits of working for Hearst Marketing is the large travel ------ provided to its employees.", "o": ["budget", "generosity", "customs", "collections"], "a": "(A) budget"}, {"d": "Day 10", "n": 1, "s": "All drivers employed by Bearford Shipping have ------ driving qualifications.", "o": ["late", "developed", "advanced", "affordable"], "a": "(C) advanced"}, {"d": "Day 10", "n": 2, "s": "Ms. Gibson ------ Sinex Media Corporation as the director of the human resources department.", "o": ["attached", "reimbursed", "joined", "combined"], "a": "(C) joined"}, {"d": "Day 10", "n": 3, "s": "------ designed to be a live music venue, Sheraton Hall is now more often used to host lectures and seminars.", "o": ["Original", "Originally", "Origin", "Originate"], "a": "(B) Originally"}, {"d": "Day 11", "n": 1, "s": "Mentors provide valuable advice and support ------ the training of our employees.", "o": ["among", "beneath", "inside", "throughout"], "a": "(D) throughout"}, {"d": "Day 11", "n": 2, "s": "The guest in room 201 was able to locate his misplaced passport with ------ from the housekeeping staff.", "o": ["assist", "assistance", "assistant", "assisted"], "a": "(B) assistance"}, {"d": "Day 11", "n": 3, "s": "The outdoor concert in Finsbury Park was forced to end early due to ------ loud music.", "o": ["excess", "excessively", "exceeded", "exceeding"], "a": "(B) excessively"}, {"d": "Day 12", "n": 1, "s": "Astrid Appliances' compact air fryers are ------ than the largest models.", "o": ["afford", "affordable", "more affordable", "affordability"], "a": "(C) more affordable"}, {"d": "Day 12", "n": 2, "s": "Astro Gym members can ------ padlocks for their lockers by speaking with a front desk employee.", "o": ["obtain", "apply", "develop", "trade"], "a": "(A) obtain"}, {"d": "Day 12", "n": 3, "s": "Globelink Corporation's PR team will optimize the social media ------ of our marketing campaign.", "o": ["impacted", "impactful", "impact", "impacting"], "a": "(C) impact"}, {"d": "Day 13", "n": 1, "s": "Poor weather along the coast ------ repair work on Interstate 98.", "o": ["hinder", "hindering", "has hindered", "will have hindered"], "a": "(C) has hindered"}, {"d": "Day 13", "n": 2, "s": "Interviews will be held all week for the assembly line supervisor ------ at Reilly Manufacturing.", "o": ["participation", "outline", "arrangement", "position"], "a": "(D) position"}, {"d": "Day 13", "n": 3, "s": "With ten years of experience in event management, Ms. Epps would be perfectly suited to the role of seminar ------ .", "o": ["organized", "organizer", "organizes", "organizational"], "a": "(B) organizer"}, {"d": "Day 14", "n": 1, "s": "------ after arriving at our company headquarters, you will be introduced to members of our management team.", "o": ["Short", "Shorten", "Shortly", "Shorter"], "a": "(C) Shortly"}, {"d": "Day 14", "n": 2, "s": "Once the new ------ were implemented, workers were no longer allowed to work for more than 8 hours per day.", "o": ["regulating", "regulator", "regulations", "regulates"], "a": "(C) regulations"}, {"d": "Day 14", "n": 3, "s": "Because of his ------ knowledge of computers, Mr. Dillon's coworkers often ask him for technical assistance.", "o": ["amicable", "hospitable", "recurring", "extensive"], "a": "(D) extensive"}, {"d": "Day 15", "n": 1, "s": "As the accounts manager of TTC Advertising, Ms. Browne has ------ pursued nationally recognized brands as new clients.", "o": ["active", "activate", "actively", "activated"], "a": "(C) actively"}, {"d": "Day 15", "n": 2, "s": "Elizabeth Barker was presented with a ------ literary award for her critically-acclaimed novel, A Summer affair.", "o": ["prestigious", "repetitive", "prolific", "laborious"], "a": "(A) prestigious"}, {"d": "Day 15", "n": 3, "s": "In his spare time, Professor Hodge writes an online blog, posting ------ information related to recent scientific developments.", "o": ["main", "experienced", "objective", "inner"], "a": "(C) objective"}, {"d": "Day 16", "n": 1, "s": "Mr. Jackson requested that all employees attending the technology expo write a ------ report about their experience.", "o": ["brief", "briefly", "briefs", "briefing"], "a": "(A) brief"}, {"d": "Day 16", "n": 2, "s": "Grimsby City Council members have requested an increased budget for costs ------ with the annual street parade.", "o": ["associated", "association", "associate", "associates"], "a": "(A) associated"}, {"d": "Day 16", "n": 3, "s": "The ideal vacation destination for families, Kipper Beach offers ------ entertainment for children of all ages.", "o": ["suits", "suitable", "suited", "suitably"], "a": "(B) suitable"}, {"d": "Day 17", "n": 1, "s": "Advances in green energy technology have enabled developing nations to overcome problems that ------ were insurmountable.", "o": ["calmly", "eagerly", "finally", "previously"], "a": "(D) previously"}, {"d": "Day 17", "n": 2, "s": "A photography portfolio is ------ required, so do not forget to include on with your application.", "o": ["strictly", "hungrily", "punctually", "bravely"], "a": "(A) strictly"}, {"d": "Day 17", "n": 3, "s": "Subscribers to the magazine get ------ access to discounted event tickets, such live performances at Eastley Music Hall.", "o": ["exclusive", "unknown", "creative", "previous"], "a": "(A) exclusive"}, {"d": "Day 18", "n": 1, "s": "Some businesses offer incentives to employees who meet specific targets, ------ it boosts productivity in the workplace.", "o": ["because", "instead", "despite", "moreover"], "a": "(A) because"}, {"d": "Day 18", "n": 2, "s": "Rick Barnes builds custom computers that satisfy all the ------ requested by customers.", "o": ["specific", "specifically", "specifies", "specifications"], "a": "(D) specifications"}, {"d": "Day 18", "n": 3, "s": "Because of the noise from the construction crew, some guests received a significant rate ------ on their rooms.", "o": ["reducing", "reduce", "reduced", "reduction"], "a": "(D) reduction"}, {"d": "Day 19", "n": 1, "s": "The assembly line machines in our new factory are so advanced that we need to explain our manufacturing process to ------ investors.", "o": ["potential", "vacant", "complex", "limited"], "a": "(A) potential"}, {"d": "Day 19", "n": 2, "s": "The Luke's supermarket offers generous prizes to shoppers who ------ one thousand reward points through transactions.", "o": ["install", "realize", "acquire", "perform"], "a": "(C) acquire"}, {"d": "Day 19", "n": 3, "s": "The city council's parks department has the right to ------ cycling in local parks.", "o": ["prohibit", "ride", "bother", "avoid"], "a": "(A) prohibit"}, {"d": "Day 20", "n": 1, "s": "The new product displays were ------ positioned so as to attract shoppers who are waiting in line at the checkouts.", "o": ["strategy", "strategies", "strategize", "strategically"], "a": "(D) strategically"}, {"d": "Day 20", "n": 2, "s": "Vendors should arrive at the venue two hours before the book fair begins to leave ------ time for booth assembly.", "o": ["competent", "perpetual", "immersive", "adequate"], "a": "(D) adequate"}, {"d": "Day 20", "n": 3, "s": "The ------ documents contained in the welcome pack help new employees to settle in and understand our company's work environment.", "o": ["arbitrary", "supplemental", "superfluous", "potential"], "a": "(B) supplemental"}, {"d": "Day 21", "n": 1, "s": "Thenew office executive's goal is the ------ of expenses resulting from excessive paper waste.", "o": ["eliminate", "eliminated", "elimination", "eliminator"], "a": "(C) elimination"}, {"d": "Day 21", "n": 2, "s": "Becauseof his ------ knowledge of computers, Mr. Davis's coworkers often ask him for technical assistance.", "o": ["amicable", "hospitable", "recurring", "extensive"], "a": "(D) extensive"}, {"d": "Day 21", "n": 3, "s": "The workshop organizer always provides supplementary handouts ------ what she discussed during her training workshops.", "o": ["reinforced", "is reinforcing", "reinforces", "to reinforce"], "a": "(D) to reinforce"}, {"d": "Day 22", "n": 1, "s": "Walkingtours around the ------ important Riverfront Park set off from the main gate at 10 A.M. every day.", "o": ["history", "historian", "historical", "historically"], "a": "(D) historically"}, {"d": "Day 22", "n": 2, "s": "Undernew management, The Emerald Lodge has changed its ------ to Golden Suites.", "o": ["policy", "address", "name", "room"], "a": "(C) name"}, {"d": "Day 22", "n": 3, "s": "Ms. Williams has concerns over whether her company can ------ itself if the current level of expenditure continues.", "o": ["sustained", "sustaining", "sustain", "sustainable"], "a": "(C) sustain"}, {"d": "Day 23", "n": 1, "s": "Sales staff at ElectroGlobe Tech will ------ demonstrate how to operate a device if a client is confused.", "o": ["gladly", "evenly", "rigidly", "gratefully"], "a": "(A) gladly"}, {"d": "Day 23", "n": 2, "s": "------ each interaction with each customer, employees should reflect on whether they could have handled the situation better.", "o": ["Above", "Following", "Opposite", "Without"], "a": "(B) Following"}, {"d": "Day 23", "n": 3, "s": "Ms. Evans will discuss how important it is to make wise investment ------ .", "o": ["items", "decisions", "values", "remedies"], "a": "(B) decisions"}, {"d": "Day 24", "n": 1, "s": "The personal trainers at FlexXtreme Fitness teach members how to lift ------ safely.", "o": ["weighs", "weights", "weighty", "weighed"], "a": "(B) weights"}, {"d": "Day 24", "n": 2, "s": "It is ------ to turn off the main power supply before you install these light bulbs in your home.", "o": ["adviser", "advising", "advisable", "advise"], "a": "(C) advisable"}, {"d": "Day 24", "n": 3, "s": "The signs placed around the kitchen serve as ------ procedures, helping new employees prepare our meals correctly.", "o": ["instant", "tight", "opposed", "routine"], "a": "(D) routine"}, {"d": "Day 25", "n": 1, "s": "Wealthwise& Alpha is an ------ consulting group that provides financial advice to smallbusiness owners.", "o": ["expert", "expertise", "expertly", "experts"], "a": "(A) expert"}, {"d": "Day 25", "n": 2, "s": "Each newly-installed HeatWaveProboiler comes with an extended ------ to covertechnical issues.", "o": ["record", "operation", "budget", "warranty"], "a": "(D) warranty"}, {"d": "Day 25", "n": 3, "s": "In order to make it easier for customers to find particular items, some sections of the wine store were ------ .", "o": ["rearranged", "rearranging", "rearrange", "rearranges"], "a": "(A) rearranged"}, {"d": "Day 26", "n": 1, "s": "According to the marketing director, increasing our domestic market share is more ------ than entering international markets.", "o": ["profit", "profitable", "profits", "profiting"], "a": "(B) profitable"}, {"d": "Day 26", "n": 2, "s": "All of our storage units come with climate control systems that allow customers to ------ the temperature.", "o": ["adjust", "adjusted", "adjusting", "will adjust"], "a": "(A) adjust"}, {"d": "Day 26", "n": 3, "s": "The Donalson Hotel has developed a reputation for surpassing its visitors' ------ for more than a decade.", "o": ["expect", "expectable", "expectably", "expectations"], "a": "(D) expectations"}, {"d": "Day 27", "n": 1, "s": "Medical professionals highly ------ Maria Clark's award-winning documentary on the dangers of junk food.", "o": ["establish", "provide", "publish", "recommend"], "a": "(D) recommend"}, {"d": "Day 27", "n": 2, "s": "Dartford City Council members will convene at City Hall following the ------ of the new mayor.", "o": ["elect", "elects", "election", "elective"], "a": "(C) election"}, {"d": "Day 27", "n": 3, "s": "Mr. Bradley posted a warning on the office refrigerator to remind staff that ------ expired food can result in food poisoning.", "o": ["consumer", "consumption", "consumes", "consuming"], "a": "(D) consuming"}, {"d": "Day 28", "n": 1, "s": "Ms. Lewis received a promotion for ------ reducing the firm's annual expenditure.", "o": ["success", "succeeds", "successfully", "succeeded"], "a": "(C) successfully"}, {"d": "Day 28", "n": 2, "s": "The Bellview Retreat offers exceptional guest bedrooms at ------ affordable rates.", "o": ["remark", "remarking", "remarkably", "remarked"], "a": "(C) remarkably"}, {"d": "Day 28", "n": 3, "s": "Introducing an employee incentive program and bi-monthly bonus plan increased the workforce's ------ .", "o": ["productive", "produce", "produced", "productivity"], "a": "(D) productivity"}, {"d": "Day 29", "n": 1, "s": "Following a lengthy ------ between judging panel members, the top art prize was awarded to two different contestants.", "o": ["debate", "trial", "majority", "result"], "a": "(A) debate"}, {"d": "Day 29", "n": 2, "s": "Terrel Manufacturing acquired the ------ warehouse on Victoria Avenue in February but sold it only three months later.", "o": ["abandon", "abandoned", "abandoning", "to abandon"], "a": "(B) abandoned"}, {"d": "Day 29", "n": 3, "s": "For further information on this topic, consult the list of ------ that are included in the final chapter.", "o": ["resourcefully", "resourceful", "resourced", "resources"], "a": "(D) resources"}, {"d": "Day 30", "n": 1, "s": "Many of the suggestions on our customer comment cards were found to be ------ .", "o": ["helpful", "probable", "tentative", "grateful"], "a": "(A) helpful"}, {"d": "Day 30", "n": 2, "s": "The fastfood restaurant on Belgrave Street stops ------ breakfast at 10:00 a.m.", "o": ["taking", "buying", "serving", "working"], "a": "(C) serving"}, {"d": "Day 30", "n": 3, "s": "Mr. Hawkins ------ that the number of customer complaints was rising, so he organized a training session for employees.", "o": ["noticed", "obscured", "withdrew", "appeared"], "a": "(A) noticed"}]}</script>
+<script>
+(function(){
+const DATA=JSON.parse(document.getElementById('data').textContent);
+const WORDS=DATA.words.map((w,i)=>({...w,id:i}));
+const COLLS=DATA.colls, EXAM=DATA.quiz;
+const DAYS=[...new Set(WORDS.map(w=>w.d))];
+const MAIN=DAYS.filter(d=>/^Day/.test(d)), EXTRA=DAYS.filter(d=>!/^Day/.test(d));
+const $=s=>document.querySelector(s), $$=s=>[...document.querySelectorAll(s)];
+const esc=s=>String(s??'').replace(/[&<>"]/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c]));
+const STAR='<svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M12 2.8l2.9 6 6.6.9-4.8 4.6 1.2 6.5L12 17.7l-5.9 3.1 1.2-6.5L2.5 9.7l6.6-.9z"/></svg>';
+const STAR_O='<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linejoin="round" aria-hidden="true"><path d="M12 2.8l2.9 6 6.6.9-4.8 4.6 1.2 6.5L12 17.7l-5.9 3.1 1.2-6.5L2.5 9.7l6.6-.9z"/></svg>';
+const SPK='<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M11 5L6 9H2v6h4l5 4z"/><path d="M15.5 8.5a5 5 0 010 7"/></svg>';
+const NOTE='<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4 4h16v12l-4 4H4z"/><path d="M16 20v-4h4"/><path d="M8 9h8M8 13h5"/></svg>';
+const NOTE_F='<svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M4 4h16v12l-4 4H4z"/><path d="M8 9h8M8 13h5" stroke="var(--surface)" stroke-width="1.8" stroke-linecap="round"/></svg>';
+const CHECK='<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="12" r="9"/><path d="M8.5 12.5l2.5 2.5 4.5-5"/></svg>';
+const CHECK_F='<svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><circle cx="12" cy="12" r="10"/><path d="M8 12.5l2.7 2.7L16.5 9.5" fill="none" stroke="var(--surface)" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"/></svg>';
+const TICK='<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12.5l4.5 4.5L19 7.5"/></svg>';
+
+function load(k,d){try{const v=localStorage.getItem(k);return v?JSON.parse(v):d}catch(e){return d}}
+function save(k,v){try{localStorage.setItem(k,JSON.stringify(v))}catch(e){}}
+let stars=new Set(load('voca.stars',[]));
+let selected=new Set(load('voca.days',['Day 01']).filter(d=>DAYS.includes(d)));
+if(!selected.size)selected.add(DAYS[0]);
+let examAns=load('voca.exam',{});
+let memos=load('voca.memo',{});
+let wrongs=load('voca.wrong',{});
+const wc=id=>wrongs[id]||0;
+let streak=load('voca.streak',{});           // 연속 정답 횟수 (표시하지 않음)
+let done=new Set(load('voca.done',[]));       // 암기 완료
+function setDone(id,on){on?done.add(id):done.delete(id);if(!on)streak[id]=0;save('voca.done',[...done]);save('voca.streak',streak);}
+let showMemos=load('voca.showMemos',false);
+const pool=()=>WORDS.filter(w=>selected.has(w.d));
+const dayWords=d=>WORDS.filter(w=>w.d===d);
+const doneIn=ws=>ws.filter(w=>done.has(w.id)).length;
+
+// ---------- speech ----------
+const synth=window.speechSynthesis;
+const hasSpeech=!!synth&&('SpeechSynthesisUtterance' in window);
+let voices=[];
+function loadVoices(){if(hasSpeech)voices=synth.getVoices();}
+if(hasSpeech){loadVoices();synth.onvoiceschanged=loadVoices;}
+function pickVoice(lang){
+  const pref=lang==='en'?['en-us','en-gb','en']:['ko-kr','ko'];
+  const L=v=>v.lang.replace('_','-').toLowerCase();
+  for(const p of pref){const v=voices.find(v=>L(v).startsWith(p)&&v.localService)||voices.find(v=>L(v).startsWith(p));if(v)return v;}
+  return null;
+}
+let ttsRate=1;
+function speak(text,lang,rate){
+  return new Promise(res=>{
+    if(!hasSpeech||!text){res();return;}
+    const u=new SpeechSynthesisUtterance(text);
+    u.lang=lang==='en'?'en-US':'ko-KR';const v=pickVoice(lang);if(v)u.voice=v;
+    u.rate=rate||ttsRate;u.onend=()=>res();u.onerror=()=>res();
+    synth.speak(u);
+  });
+}
+function sayNow(text,lang){if(!hasSpeech){$('#noSpeech').hidden=false;return;}if(playing)stopPlay();synth.cancel();speak(text,lang);}
+let playing=false,playToken=0;
+const wait=ms=>new Promise(r=>setTimeout(r,ms));
+function stopPlay(){playing=false;playToken++;if(hasSpeech)synth.cancel();$('#ttsBar').hidden=true;$('#ttsPlay').setAttribute('aria-pressed','false');$$('.row.playing').forEach(r=>r.classList.remove('playing'));}
+async function startPlay(){
+  if(!hasSpeech){$('#noSpeech').hidden=false;return;}
+  let rows=$$('#wordList .row[data-id]');
+  if(!$('#ttsDone').checked&&filter!=='done')rows=rows.filter(r=>!done.has(+r.dataset.id));
+  if(!rows.length){$('#ttsBar').hidden=false;$('#ttsNow').innerHTML='<small>읽을 단어가 없어요. 이 범위는 전부 암기 완료했어요 — 「완료 단어 포함」을 켜면 읽어요.</small>';return;}
+  playing=true;const tok=++playToken;$('#ttsBar').hidden=false;$('#ttsPlay').setAttribute('aria-pressed','true');
+  synth.cancel();
+  const smooth=matchMedia('(prefers-reduced-motion: reduce)').matches?'auto':'smooth';
+  do{
+    for(let i=0;i<rows.length;i++){
+      if(tok!==playToken)return;
+      const r=rows[i],w=WORDS[+r.dataset.id];
+      $$('.row.playing').forEach(x=>x.classList.remove('playing'));r.classList.add('playing');
+      r.scrollIntoView({block:'center',behavior:smooth});
+      $('#ttsNow').innerHTML=esc(w.w)+'<small>'+(i+1)+' / '+rows.length+'</small>';
+      await speak(w.w,'en');if(tok!==playToken)return;
+      if($('#ttsKo').checked){await wait(250);await speak(w.m.replace(/\s*\/\s*/g,', '),'ko');if(tok!==playToken)return;}
+      await wait(500);
+    }
+  }while($('#ttsLoop').checked&&tok===playToken);
+  if(tok===playToken)stopPlay();
+}
+$('#ttsPlay').addEventListener('click',()=>playing?stopPlay():startPlay());
+$('#ttsStop').addEventListener('click',stopPlay);
+$('#ttsDone').addEventListener('change',()=>{if(playing){stopPlay();startPlay();}else if(!$('#ttsBar').hidden)startPlay();});
+$$('#ttsRate button').forEach(b=>b.addEventListener('click',()=>{ttsRate=+b.dataset.v;$$('#ttsRate button').forEach(x=>x.setAttribute('aria-pressed',x===b));}));
+document.addEventListener('visibilitychange',()=>{if(document.hidden&&playing)stopPlay();});
+
+// ---------- range ----------
+let draft=new Set(selected);
+function rangeLabel(set){
+  const a=[...set];if(!a.length)return '범위 없음';
+  if(a.length===DAYS.length)return '전체';
+  const m=a.filter(d=>MAIN.includes(d)).map(d=>+d.slice(4)).sort((x,y)=>x-y);
+  const e=a.filter(d=>EXTRA.includes(d));
+  const parts=[];
+  if(m.length){let s=m[0],p=m[0],out=[];
+    for(let i=1;i<=m.length;i++){if(m[i]===p+1){p=m[i];continue}out.push(s===p?`${s}`:`${s}–${p}`);s=p=m[i];}
+    parts.push('Day '+out.join(', '));}
+  parts.push(...e);
+  return parts.join(' · ');
+}
+function syncRange(){
+  const p=pool();
+  $('#rangeText').textContent=rangeLabel(selected);
+  $('#rangeCount').textContent=`${p.length}`;
+  save('voca.days',[...selected]);
+  renderRail();
+}
+function renderRail(){
+  const mk=d=>{const ws=dayWords(d),dn=doneIn(ws),pct=ws.length?dn/ws.length*100:0;
+    return `<button type="button" class="rail-day${dn===ws.length?' full':''}" data-day="${esc(d)}" aria-pressed="${selected.has(d)}">
+      <span class="box">${TICK}</span>
+      <span class="nm"><b>${esc(d)}</b><span class="bar"><i style="width:${pct}%"></i></span></span>
+      <span class="ct num">${dn}/${ws.length}</span></button>`;};
+  $('#railDays').innerHTML=MAIN.map(mk).join('')+`<div class="eyebrow" style="padding:10px 10px 4px">토익 기출</div>`+EXTRA.map(mk).join('');
+  const p=pool(),dn=doneIn(p),pct=p.length?Math.round(dn/p.length*100):0;
+  $('#sumBig').innerHTML=`${pct}<small>%</small>`;
+  $('#sumBar').style.width=pct+'%';
+  $('#sumText').textContent=`${rangeLabel(selected)} · ${dn} / ${p.length} 완료`;
+}
+$('#railDays').addEventListener('click',e=>{
+  const b=e.target.closest('.rail-day');if(!b)return;const d=b.dataset.day;
+  if(e.target.closest('.box')||e.shiftKey||e.ctrlKey||e.metaKey){selected.has(d)?selected.delete(d):selected.add(d);if(!selected.size)selected.add(d);}
+  else selected=new Set([d]);
+  if(playing)stopPlay();syncRange();render();
+});
+function buildGrid(){
+  const mk=(d,wide)=>{const ws=dayWords(d),dn=doneIn(ws);return `<button type="button" class="dchip${wide?' wide':''}" data-day="${esc(d)}" aria-pressed="${draft.has(d)}"><span class="d">${esc(d)}</span><span class="s num">${dn?`${dn}/${ws.length}`:`${ws.length}단어`}</span></button>`;};
+  $('#dayGrid').innerHTML=MAIN.map(d=>mk(d)).join('');
+  $('#extraGrid').innerHTML=EXTRA.map(d=>mk(d,true)).join('');
+  $('#rangeMeta').textContent=`${draft.size}개 선택 · ${WORDS.filter(w=>draft.has(w.d)).length}단어`;
+  $('#rangeApply').disabled=!draft.size;
+}
+const dlg=$('#rangeDlg');
+const openRange=()=>{draft=new Set(selected);buildGrid();dlg.showModal();};
+$('#rangeBtn').addEventListener('click',openRange);
+$('#railEdit').addEventListener('click',openRange);
+$('#rangeClose').addEventListener('click',()=>dlg.close());
+dlg.addEventListener('click',e=>{
+  if(e.target===dlg){dlg.close();return;}
+  const c=e.target.closest('.dchip');if(c){const d=c.dataset.day;draft.has(d)?draft.delete(d):draft.add(d);buildGrid();return;}
+  const q=e.target.closest('.quick button');if(q){const v=q.dataset.q;
+    if(v==='all')draft=new Set(DAYS);else if(v==='none')draft=new Set();else if(v==='extra')draft=new Set(EXTRA);
+    else{const [a,b]=v.split('-').map(Number);draft=new Set(MAIN.filter(d=>{const n=+d.slice(4);return n>=a&&n<=b;}));}
+    buildGrid();}
+});
+$('#rangeApply').addEventListener('click',()=>{if(!draft.size)return;if(playing)stopPlay();selected=new Set(draft);dlg.close();syncRange();render();});
+
+// ---------- views ----------
+let view='list';
+function setView(v){view=v;if(playing)stopPlay();
+  $$('[data-view]').forEach(b=>b.setAttribute('aria-selected',b.dataset.view===v));
+  ['list','quiz','exam'].forEach(x=>$('#view-'+x).hidden=x!==v);
+  window.scrollTo({top:0});render();}
+$$('[data-view]').forEach(b=>b.addEventListener('click',()=>setView(b.dataset.view)));
+
+// ---------- list ----------
+let hide='none', filter='all', query='';
+$$('#hideSeg button').forEach(b=>b.addEventListener('click',()=>{hide=b.dataset.v;$$('#hideSeg button').forEach(x=>x.setAttribute('aria-pressed',x===b));renderList();}));
+$$('#filterSeg button').forEach(b=>b.addEventListener('click',()=>{filter=b.dataset.v;$$('#filterSeg button').forEach(x=>x.setAttribute('aria-pressed',x===b));renderList();}));
+$('#wrongReset').addEventListener('click',()=>{
+  const ids=pool().filter(w=>wc(w.id)>0).map(w=>w.id);if(!ids.length)return;
+  if(!confirm(`현재 범위의 틀린 횟수 기록 ${ids.length}개를 지울까요?`))return;
+  ids.forEach(id=>delete wrongs[id]);save('voca.wrong',wrongs);renderList();updateStartMeta();
+});
+$('#search').addEventListener('input',e=>{query=e.target.value.trim().toLowerCase();renderList();});
+function listSub(){const all=pool();return `${all.length}단어 · 완료 ${doneIn(all)} · ★ ${all.filter(w=>stars.has(w.id)).length}`;}
+function wordRow(w,multi){const hasMemo=!!(memos[w.id]&&memos[w.id].trim());const isDone=done.has(w.id);return `<div class="row${hasMemo?' has-memo':''}${isDone?' done':''}" data-id="${w.id}">
+  <span class="n num">${String(w.n).padStart(2,'0')}</span>
+  <div class="w"><span class="en say" role="button" tabindex="0" title="발음 듣기">${esc(w.w)}</span>${isDone?`<span class="badge done">완료</span>`:''}${wc(w.id)?`<span class="badge" title="퀴즈에서 틀린 횟수">틀림 ${wc(w.id)}</span>`:''}${multi?`<span class="tag">${esc(w.d)}</span>`:''}</div>
+  <div class="m"><span class="pos">${esc(w.p)}</span><span>${esc(w.m)}</span></div>
+  <div class="acts">
+    <button type="button" class="ib done-btn${isDone?' on':''}" aria-label="암기 완료" aria-pressed="${isDone}" title="암기 완료 표시">${isDone?CHECK_F:CHECK}</button>
+    <button type="button" class="ib say-word" aria-label="발음 듣기">${SPK}</button>
+    <button type="button" class="ib memo-btn${hasMemo?' on':''}" aria-label="메모" aria-pressed="false">${hasMemo?NOTE_F:NOTE}</button>
+    <button type="button" class="ib star${stars.has(w.id)?' on':''}" data-id="${w.id}" aria-pressed="${stars.has(w.id)}" aria-label="헷갈리는 단어로 표시">${stars.has(w.id)?STAR:STAR_O}</button>
+  </div>
+  <div class="memo"><textarea rows="1" placeholder="메모 추가 (예: 동의어, 헷갈리는 이유)" aria-label="${esc(w.w)} 메모">${esc(memos[w.id]||'')}</textarea></div>
+</div>`;}
+function renderList(){
+  const multi=selected.size>1;
+  const all=pool();
+  let rows=all;
+  if(filter==='star')rows=rows.filter(w=>stars.has(w.id));
+  if(filter==='wrong')rows=rows.filter(w=>wc(w.id)>0).sort((a,b)=>wc(b.id)-wc(a.id));
+  if(filter==='done')rows=rows.filter(w=>done.has(w.id));
+  $('#wrongReset').hidden=!(filter==='wrong'&&rows.length);
+  if(query)rows=rows.filter(w=>w.w.toLowerCase().includes(query)||w.m.includes(query));
+  $('#listTitle').textContent=rangeLabel(selected);
+  $('#listSub').textContent=listSub()+(rows.length!==all.length?` · 표시 중 ${rows.length}`:'');
+  const L=$('#wordList');L.dataset.hide=hide;L.classList.toggle('show-memos',showMemos);$('#memoAll').setAttribute('aria-pressed',showMemos);
+  if(rows.length){L.innerHTML=rows.map(w=>wordRow(w,multi)).join('');if(showMemos)$$('#wordList .row.has-memo textarea').forEach(autoGrow);}
+  else if(filter==='star'&&!query)L.innerHTML=`<div class="empty"><strong>이 범위에 ★ 표시한 단어가 없어요</strong><span>단어 오른쪽 별을 눌러 헷갈리는 단어를 모아 두세요.</span><button type="button" class="btn" id="emptyStarOff">전체 단어 보기</button></div>`;
+  else if(filter==='done'&&!query)L.innerHTML=`<div class="empty"><strong>이 범위에 암기 완료한 단어가 없어요</strong><span>퀴즈에서 3번 연속 맞히면 자동으로 완료되고, 단어 옆 ✓ 버튼으로 직접 표시할 수도 있어요.</span><button type="button" class="btn" id="emptyGoQuiz">퀴즈 풀러 가기</button></div>`;
+  else if(filter==='wrong'&&!query)L.innerHTML=`<div class="empty"><strong>이 범위에서 퀴즈로 틀린 단어가 없어요</strong><span>퀴즈를 풀면 틀린 횟수가 단어마다 쌓이고, 여기서 많이 틀린 순으로 볼 수 있어요.</span><button type="button" class="btn" id="emptyGoQuiz">퀴즈 풀러 가기</button></div>`;
+  else if(query)L.innerHTML=`<div class="empty"><strong>“${esc(query)}”에 맞는 단어가 없어요</strong><span>다른 검색어를 입력하거나 범위를 넓혀 보세요.</span></div>`;
+  else L.innerHTML=`<div class="empty"><strong>이 범위에 표시할 단어가 없어요</strong><button type="button" class="btn" id="emptyRange">범위 바꾸기</button></div>`;
+  const cs=COLLS.filter(c=>selected.has(c.d));
+  const C=$('#collList');C.dataset.hide=hide;
+  $('#collMeta').textContent=cs.length?`${cs.length}개`:'';
+  C.innerHTML=cs.length?cs.map(c=>`<div class="row" data-say="${esc(c.c)}"><span class="n num">${String(c.n).padStart(2,'0')}</span><div class="w"><span class="en say" role="button" tabindex="0" title="발음 듣기">${esc(c.c)}</span>${multi?`<span class="tag">${esc(c.d)}</span>`:''}</div><div class="m"><span>${esc(c.m)}</span></div><div class="acts"><button type="button" class="ib say-word" aria-label="발음 듣기">${SPK}</button></div></div>`).join(''):`<div class="empty"><span>이 범위에는 Collocation이 없어요.</span></div>`;
+}
+document.addEventListener('click',e=>{
+  if(e.target.closest('#emptyStarOff')){$('#fl-all').click();return;}
+  if(e.target.closest('#emptyGoQuiz')){setView('quiz');return;}
+  if(e.target.closest('#emptyRange')){openRange();return;}
+  const sy=e.target.closest('.row .say-word, .row .en.say');
+  if(sy){const r=sy.closest('.row');const txt=r.dataset.id!=null?WORDS[+r.dataset.id].w:r.dataset.say;sayNow(txt,'en');return;}
+  const db=e.target.closest('.row .done-btn');
+  if(db){const r=db.closest('.row');const id=+r.dataset.id;const on=!done.has(id);setDone(id,on);
+    r.classList.toggle('done',on);db.classList.toggle('on',on);db.setAttribute('aria-pressed',on);db.innerHTML=on?CHECK_F:CHECK;
+    const wEl=r.querySelector('.w');let bd=wEl.querySelector('.badge.done');
+    if(on&&!bd){bd=document.createElement('span');bd.className='badge done';bd.textContent='완료';wEl.querySelector('.en').after(bd);}else if(!on&&bd)bd.remove();
+    updateStartMeta();renderRail();$('#listSub').textContent=listSub();return;}
+  const mb=e.target.closest('.row .memo-btn');
+  if(mb){const r=mb.closest('.row');const open=!r.classList.contains('memo-open');r.classList.toggle('memo-open',open);mb.setAttribute('aria-pressed',open);
+    if(open){const ta=r.querySelector('textarea');autoGrow(ta);ta.focus();}return;}
+  const st=e.target.closest('.row .star');
+  if(st){const id=+st.dataset.id;const on=!stars.has(id);on?stars.add(id):stars.delete(id);save('voca.stars',[...stars]);
+    st.classList.toggle('on',on);st.setAttribute('aria-pressed',on);st.innerHTML=on?STAR:STAR_O;updateStartMeta();$('#listSub').textContent=listSub();return;}
+  const cell=e.target.closest('.list[data-hide="ko"] .row .m, .list[data-hide="en"] .row .w');
+  if(cell)cell.classList.toggle('open');
+});
+document.addEventListener('keydown',e=>{if(e.key==='Enter'&&e.target.matches('.row .en.say')){e.preventDefault();e.target.click();}});
+function autoGrow(ta){ta.style.height='auto';ta.style.height=ta.scrollHeight+'px';}
+document.addEventListener('input',e=>{
+  const ta=e.target.closest('.row .memo textarea');if(!ta)return;autoGrow(ta);
+  const r=ta.closest('.row'),id=+r.dataset.id;const v=ta.value;
+  if(v.trim())memos[id]=v;else delete memos[id];save('voca.memo',memos);
+  const has=!!memos[id];r.classList.toggle('has-memo',has);const b=r.querySelector('.memo-btn');b.classList.toggle('on',has);b.innerHTML=has?NOTE_F:NOTE;
+});
+$('#memoAll').addEventListener('click',()=>{showMemos=!showMemos;save('voca.showMemos',showMemos);const L=$('#wordList');L.classList.toggle('show-memos',showMemos);$('#memoAll').setAttribute('aria-pressed',showMemos);if(showMemos)$$('#wordList .row.has-memo textarea').forEach(autoGrow);});
+
+// ---------- quiz ----------
+const opt={type:'mc',dir:'en',count:'10',pool:'todo'};
+function seg(id,key,after){$$('#'+id+' button').forEach(b=>b.addEventListener('click',()=>{opt[key]=b.dataset.v;$$('#'+id+' button').forEach(x=>x.setAttribute('aria-pressed',x===b));after&&after();updateStartMeta();}));}
+seg('optType','type',()=>{const mc=opt.type==='mc';$('#typeHelp').textContent=mc?'보기 4개 중 하나를 고릅니다. 숫자키 1~4로도 고를 수 있어요.':'뜻을 보고 영어 단어를 직접 입력합니다. 대소문자·띄어쓰기는 무시해요.';$('#dirOpt').hidden=!mc;});
+seg('optDir','dir',()=>{$('#dirHelp').textContent=opt.dir==='en'?'영어 단어를 보고 알맞은 뜻을 고릅니다.':'뜻을 보고 알맞은 영어 단어를 고릅니다.';});
+seg('optCount','count');seg('optPool','pool');
+function quizPool(){let p=pool();if(opt.pool==='star')p=p.filter(w=>stars.has(w.id));if(opt.pool==='wrong')p=p.filter(w=>wc(w.id)>0).sort((a,b)=>wc(b.id)-wc(a.id));if(opt.pool==='todo')p=p.filter(w=>!done.has(w.id));return p;}
+function updateStartMeta(){
+  const p=quizPool();const n=opt.count==='all'?p.length:Math.min(+opt.count,p.length);
+  const all=pool();
+  const sc=all.filter(w=>stars.has(w.id)).length, wcnt=all.filter(w=>wc(w.id)>0).length, dn=doneIn(all);
+  $('#poolHelp').textContent=opt.pool==='wrong'?`현재 범위에서 틀린 적 있는 단어 ${wcnt}개 · 많이 틀린 순으로 먼저 나와요`:opt.pool==='todo'?`아직 암기 완료하지 않은 단어 ${all.length-dn}개 · 3번 연속 맞히면 완료돼요`:`현재 범위에 ★ 표시 ${sc}개 · 틀린 단어 ${wcnt}개 · 암기 완료 ${dn}개`;
+  $('#startMeta').textContent=p.length?`${n}문제 · ${rangeLabel(selected)} (${p.length}단어)`:(opt.pool==='star'?'★ 표시한 단어가 없어요. 단어장에서 별을 눌러 표시해 주세요.':opt.pool==='wrong'?'아직 틀린 단어가 없어요. 전체로 먼저 풀어 보세요.':opt.pool==='todo'?'이 범위는 전부 암기 완료했어요. 「전체」를 고르면 완료 단어도 다시 풀 수 있어요.':'출제할 단어가 없어요. 범위를 바꿔 주세요.');
+  $('#startQuiz').disabled=p.length<1;
+}
+const shuffle=a=>{a=a.slice();for(let i=a.length-1;i>0;i--){const j=Math.floor(Math.random()*(i+1));[a[i],a[j]]=[a[j],a[i]];}return a;};
+let Q=null;
+function startQuiz(list){
+  const p=list||quizPool();
+  const n=list?list.length:(opt.count==='all'?p.length:Math.min(+opt.count,p.length));
+  const items=(!list&&opt.pool==='wrong')?shuffle(p.slice(0,n)):shuffle(p).slice(0,n);
+  Q={items,i:0,correct:0,wrong:[],mode:opt.type,dir:opt.dir,answered:false};
+  $('#quizSetup').hidden=true;$('#quizResult').hidden=true;$('#quizPlay').hidden=false;
+  window.scrollTo({top:0});showQ();
+}
+function distractors(w){
+  const key=x=>Q.dir==='en'?x.m:x.w;
+  const cand=shuffle(WORDS.filter(x=>x.id!==w.id&&x.m!==w.m&&x.w!==w.w));
+  cand.sort((a,b)=>(b.p===w.p)-(a.p===w.p));
+  const seen=new Set([key(w)]),out=[];
+  for(const x of cand){if(seen.has(key(x)))continue;seen.add(key(x));out.push(x);if(out.length===3)break;}
+  return out;
+}
+const norm=s=>s.toLowerCase().replace(/[^a-z]/g,'');
+function showQ(){
+  const w=Q.items[Q.i];Q.answered=false;
+  const askEn=Q.mode==='mc'&&Q.dir==='en';
+  $('#qPos').textContent=`${String(Q.i+1).padStart(2,'0')} / ${String(Q.items.length).padStart(2,'0')}`;
+  $('#qMode').textContent=Q.mode==='mc'?(askEn?'객관식 · EN → KO':'객관식 · KO → EN'):'주관식 · KO → EN';
+  $('#qProg').style.width=(Q.i/Q.items.length*100)+'%';
+  $('#qScore').textContent=`맞힘 ${Q.correct} · 틀림 ${Q.wrong.length}`;
+  const fb=$('#qFeed');fb.hidden=true;fb.className='feedback';fb.textContent='';
+  $('#qNext').disabled=true;$('#qNext').textContent=Q.i===Q.items.length-1?'결과 보기':'다음';
+  const prompt=$('#qPrompt');prompt.textContent=askEn?w.w:w.m;prompt.parentElement.classList.toggle('ko',!askEn);
+  $('#qSay').hidden=!askEn||!hasSpeech;
+  $('#qHint').textContent=`${w.p} · ${w.d}`;
+  const ch=$('#qChoices');ch.innerHTML='';
+  if(Q.mode==='mc'){
+    $('#qAnswer').hidden=true;
+    const opts=shuffle([w,...distractors(w)]);
+    opts.forEach((x,k)=>{const b=document.createElement('button');b.type='button';b.className='choice'+(askEn?'':' en');
+      b.innerHTML=`<span class="k">${k+1}</span><span>${esc(askEn?x.m:x.w)}</span>`;
+      b.addEventListener('click',()=>answerMC(b,x,w,opts));ch.appendChild(b);});
+  }else{
+    $('#qAnswer').hidden=false;const inp=$('#qInput');inp.value='';inp.className='';inp.disabled=false;$('#qCheck').disabled=false;
+    setTimeout(()=>inp.focus(),0);
+  }
+}
+function answerMC(btn,x,w,opts){
+  if(Q.answered)return;Q.answered=true;
+  const ok=x.id===w.id;
+  $$('#qChoices .choice').forEach((b,k)=>{b.disabled=true;if(opts[k].id===w.id)b.classList.add('correct');});
+  if(!ok)btn.classList.add('wrong');
+  finish(ok,w,Q.dir==='en'?x.m:x.w);
+}
+function answerSA(){
+  if(Q.answered)return;const w=Q.items[Q.i];const inp=$('#qInput');const v=inp.value.trim();if(!v){inp.focus();return;}
+  Q.answered=true;inp.disabled=true;$('#qCheck').disabled=true;
+  const ok=norm(v)===norm(w.w);inp.className=ok?'ok':'no';
+  finish(ok,w,v);
+}
+function finish(ok,w,given){
+  if(ok){Q.correct++;streak[w.id]=(streak[w.id]||0)+1;if(streak[w.id]>=3&&!done.has(w.id)){done.add(w.id);Q.newDone=(Q.newDone||0)+1;save('voca.done',[...done]);}}
+  else{Q.wrong.push({w,given});wrongs[w.id]=wc(w.id)+1;save('voca.wrong',wrongs);streak[w.id]=0;if(done.has(w.id)){done.delete(w.id);Q.lostDone=(Q.lostDone||0)+1;save('voca.done',[...done]);}}
+  save('voca.streak',streak);
+  const fb=$('#qFeed');fb.hidden=false;fb.className='feedback '+(ok?'good':'bad');
+  fb.innerHTML=(ok?'정답 · ':'오답 · 정답은 ')+`<b>${esc(w.w)}</b> ${esc(w.p)} ${esc(w.m)}`+(ok&&streak[w.id]===3&&done.has(w.id)?' <span class="badge done">암기 완료</span>':'')+(hasSpeech?` <button type="button" class="say-btn" id="fbSay" aria-label="발음 듣기" style="width:32px;height:32px">${SPK}</button>`:'');
+  if(hasSpeech&&!(Q.mode==='mc'&&Q.dir==='en'))sayNow(w.w,'en');
+  $('#qScore').textContent=`맞힘 ${Q.correct} · 틀림 ${Q.wrong.length}`;
+  $('#qNext').disabled=false;$('#qNext').focus();
+}
+$('#qSay').addEventListener('click',()=>{if(Q)sayNow(Q.items[Q.i].w,'en');});
+$('#qCheck').addEventListener('click',answerSA);
+$('#qInput').addEventListener('keydown',e=>{if(e.key==='Enter'){e.preventDefault();Q.answered?next():answerSA();}});
+document.addEventListener('keydown',e=>{
+  if(!Q||$('#quizPlay').hidden||dlg.open)return;
+  if(Q.mode==='mc'&&!Q.answered&&/^[1-4]$/.test(e.key)){const b=$$('#qChoices .choice')[+e.key-1];b&&b.click();}
+  else if(Q.answered&&e.key==='Enter'&&document.activeElement.tagName!=='INPUT'){e.preventDefault();next();}
+});
+function next(){if(!Q.answered)return;Q.i++;if(Q.i>=Q.items.length)showResult();else showQ();}
+$('#qNext').addEventListener('click',next);
+$('#qFeed').addEventListener('click',e=>{if(e.target.closest('#fbSay')&&Q)sayNow(Q.items[Q.i].w,'en');});
+$('#qQuit').addEventListener('click',()=>{if(hasSpeech)synth.cancel();Q=null;$('#quizPlay').hidden=true;$('#quizSetup').hidden=false;updateStartMeta();renderRail();});
+$('#startQuiz').addEventListener('click',()=>startQuiz());
+function showResult(){
+  $('#quizPlay').hidden=true;$('#quizResult').hidden=false;window.scrollTo({top:0});
+  const n=Q.items.length,pct=Math.round(Q.correct/n*100);
+  $('#rPct').innerHTML=pct+'<small>%</small>';
+  $('#rCount').innerHTML=`${Q.correct}<small> / ${n}</small>`;
+  const extra=(Q.newDone?` 이번에 ${Q.newDone}개가 암기 완료됐어요.`:'')+(Q.lostDone?` 틀려서 완료가 풀린 단어 ${Q.lostDone}개.`:'');
+  $('#rMsg').textContent=(pct===100?'전부 맞혔어요. 다음 Day로 넘어가도 좋겠어요.':pct>=80?'거의 다 외웠어요. 틀린 단어만 한 번 더 보면 끝.':'틀린 횟수는 단어마다 쌓여요. 단어장의 「틀린 단어」에서 많이 틀린 순으로 다시 볼 수 있어요.')+extra;
+  $('#rWrongWrap').hidden=!Q.wrong.length;$('#rWrongN').textContent=`${Q.wrong.length}개`;
+  $('#rWrong').innerHTML=Q.wrong.map(({w,given})=>`<div class="row"><div class="w"><span class="en">${esc(w.w)}</span><span class="badge" title="누적 틀린 횟수">누적 ${wc(w.id)}</span><span class="tag">${esc(w.d)}</span></div><div class="m"><span class="pos">${esc(w.p)}</span><span>${esc(w.m)}</span></div><div class="your" title="내 답">${esc(given)}</div></div>`).join('');
+  $('#rRetryWrong').disabled=!Q.wrong.length;
+  const unstarred=Q.wrong.filter(({w})=>!stars.has(w.id)).length;
+  const sb=$('#rStarWrong');sb.disabled=!unstarred;sb.textContent=Q.wrong.length?(unstarred?`틀린 단어 모두 ★ 표시 (${unstarred})`:'틀린 단어 모두 ★ 표시됨'):'틀린 단어 모두 ★ 표시';
+  renderRail();
+}
+$('#rRetryWrong').addEventListener('click',()=>startQuiz(Q.wrong.map(x=>x.w)));
+$('#rStarWrong').addEventListener('click',()=>{Q.wrong.forEach(({w})=>stars.add(w.id));save('voca.stars',[...stars]);const sb=$('#rStarWrong');sb.disabled=true;sb.textContent='틀린 단어 모두 ★ 표시됨';updateStartMeta();});
+$('#rAgain').addEventListener('click',()=>startQuiz());
+$('#rBack').addEventListener('click',()=>{Q=null;$('#quizResult').hidden=true;$('#quizSetup').hidden=false;updateStartMeta();});
+
+// ---------- exam ----------
+function renderExam(){
+  const qs=EXAM.filter(q=>selected.has(q.d));
+  const key=q=>q.d+'#'+q.n;
+  const solved=qs.filter(q=>examAns[key(q)]!=null).length;
+  const right=qs.filter(q=>{const a=examAns[key(q)];return a!=null&&'ABCD'[a]===q.a[1];}).length;
+  $('#examMeta').textContent=qs.length?`${rangeLabel(selected)} · ${qs.length}문제 · 푼 문제 ${solved} · 맞힘 ${right}`:rangeLabel(selected);
+  $('#examReset').disabled=!solved;
+  $('#examList').innerHTML=qs.length?qs.map(q=>{const k=key(q);const a=examAns[k];const ai='ABCD'.indexOf(q.a[1]);
+    const status=a==null?'':(a===ai?'<span class="pill good">정답</span>':'<span class="pill bad">오답</span>');
+    return `<div class="exam"><div class="hd"><span>${esc(q.d)} · Q${q.n}</span>${status}</div><div class="sent">${esc(q.s)}</div><div class="choices">${q.o.map((o,i)=>{
+      let cls='choice';if(a!=null){if(i===ai)cls+=' correct';else if(i===a)cls+=' wrong';}
+      return `<button type="button" class="${cls}" data-key="${esc(k)}" data-k="${i}" ${a!=null?'disabled':''}><span class="k">${'ABCD'[i]}</span><span>${esc(o)}</span></button>`;}).join('')}</div></div>`;}).join('')
+    :`<div class="empty panel"><strong>이 범위에는 기출 문제가 없어요</strong><span>기출 변형 문제는 Day 01~30에 3문제씩 들어 있어요.</span><button type="button" class="btn" id="emptyRange">범위 바꾸기</button></div>`;
+}
+$('#examList').addEventListener('click',e=>{const b=e.target.closest('.choice');if(!b||b.disabled)return;examAns[b.dataset.key]=+b.dataset.k;save('voca.exam',examAns);renderExam();});
+$('#examReset').addEventListener('click',()=>{EXAM.filter(q=>selected.has(q.d)).forEach(q=>delete examAns[q.d+'#'+q.n]);save('voca.exam',examAns);renderExam();});
+
+function render(){
+  if(view==='list')renderList();
+  else if(view==='quiz'){const busy=!$('#quizPlay').hidden||!$('#quizResult').hidden;$('#quizSetup').hidden=busy;updateStartMeta();}
+  else renderExam();
+}
+syncRange();updateStartMeta();render();
+})();
+</script>
+</body></html>
