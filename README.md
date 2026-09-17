@@ -4,3 +4,14 @@
 
 - `index.html` — 앱 본체(데이터 포함)
 - `manifest.json`, `icon.*` — 홈 화면 추가용
+
+## 배포
+
+Cloudflare Workers(정적 에셋)로 배포합니다. `CLOUDFLARE_API_TOKEN`이 있는 환경에서:
+
+```bash
+npx wrangler deploy
+```
+
+- 배포 주소: https://voca-halu.suhwanit.workers.dev
+- `public/` 안의 파일이 그대로 서비스됩니다.
