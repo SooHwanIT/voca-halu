@@ -11,7 +11,7 @@
   --ink:#1E1E1C; --ink-2:#5B5A56; --ink-3:#8C8A84;
   --signal:#E4520B; --signal-hover:#C9470A; --signal-soft:#F9E1D4; --on-signal:#FFFFFF;
   --ok:#3C8A4E; --ok-soft:#DCEEDF; --no:#C4321C; --no-soft:#F6DCD6;
-  --shadow:0 1px 0 rgba(30,30,28,.06),0 1px 3px rgba(30,30,28,.08);
+  --shadow:none;
   --shadow-lg:0 20px 50px rgba(30,30,28,.22);
   --latin:"IBM Plex Sans","Helvetica Neue",Arial,sans-serif;
   --sans:"IBM Plex Sans","Noto Sans KR","Apple SD Gothic Neo","Malgun Gothic",system-ui,sans-serif;
@@ -24,7 +24,7 @@
     --ink:#ECEBE7; --ink-2:#A9A8A3; --ink-3:#7A7975;
     --signal:#FF6A2E; --signal-hover:#FF8552; --signal-soft:#3A2418; --on-signal:#161616;
     --ok:#6CC282; --ok-soft:#1E3324; --no:#F27E6A; --no-soft:#3C201B;
-    --shadow:0 1px 0 rgba(0,0,0,.4),0 1px 3px rgba(0,0,0,.4);
+    --shadow:none;
     --shadow-lg:0 20px 50px rgba(0,0,0,.6);
   }
 }
@@ -33,7 +33,7 @@
   --ink:#ECEBE7; --ink-2:#A9A8A3; --ink-3:#7A7975;
   --signal:#FF6A2E; --signal-hover:#FF8552; --signal-soft:#3A2418; --on-signal:#161616;
   --ok:#6CC282; --ok-soft:#1E3324; --no:#F27E6A; --no-soft:#3C201B;
-  --shadow:0 1px 0 rgba(0,0,0,.4),0 1px 3px rgba(0,0,0,.4);
+  --shadow:none;
   --shadow-lg:0 20px 50px rgba(0,0,0,.6);
 }
 
@@ -163,7 +163,7 @@ dialog.sheet::backdrop{background:rgba(20,20,18,.5)}
 .field input:focus{border-color:var(--ink);outline:0}
 .field svg{position:absolute;left:11px;top:50%;transform:translateY(-50%);color:var(--ink-3);pointer-events:none;width:15px;height:15px}
 .toolbar{display:flex;align-items:center;gap:8px;flex-wrap:wrap;padding-block:14px 12px}
-.panel{background:var(--surface);border:1px solid var(--line);border-radius:var(--r-lg);overflow:hidden;box-shadow:var(--shadow)}
+.panel{background:var(--surface);border:1px solid var(--line);border-radius:var(--r-lg);overflow:hidden}
 .sec{display:flex;align-items:baseline;justify-content:space-between;margin:26px 0 8px;padding-inline:2px}
 .sec h2{font-size:13px;font-weight:600}
 .empty{padding:44px 20px;text-align:center;color:var(--ink-3);display:flex;flex-direction:column;align-items:center;gap:12px}
@@ -228,16 +228,17 @@ dialog.sheet::backdrop{background:rgba(20,20,18,.5)}
 .nospeech{font-size:12.5px;color:var(--no);padding:6px 2px}
 
 /* ---------- quiz ---------- */
-.setup{display:grid;grid-template-columns:repeat(2,1fr);gap:10px;margin-top:14px}
-.opt{background:var(--surface);border:1px solid var(--line);border-radius:var(--r-lg);padding:14px 16px 12px;box-shadow:var(--shadow)}
+.setup{display:grid;grid-template-columns:repeat(2,1fr);gap:18px 28px;margin-top:20px}
+.opt{padding:0}
 .opt .eyebrow{margin-bottom:10px}
 .opt .seg{display:flex;width:100%}
 .opt .seg button{flex:1}
 .opt p{margin-top:8px;font-size:12.5px;color:var(--ink-3)}
 .startbar{margin-top:16px;display:flex;align-items:center;gap:14px;flex-wrap:wrap}
-.q{background:var(--surface);border:1px solid var(--line);border-radius:var(--r-lg);padding:20px 22px 18px;margin-top:14px;box-shadow:var(--shadow)}
-.q .top{display:flex;justify-content:space-between;align-items:center;font-family:var(--mono);font-size:11.5px;color:var(--ink-3);margin-bottom:10px;text-transform:uppercase;letter-spacing:.04em}
-.prog{height:4px;background:var(--surface-3);border-radius:2px;overflow:hidden;margin-bottom:24px}
+.q{padding:22px 0 0;margin-top:0}
+.q .top{display:flex;justify-content:space-between;align-items:center;font-family:var(--mono);font-size:12px;color:var(--ink-3);margin-bottom:10px}
+.q .top .x{margin:-6px -8px -6px 0}
+.prog{height:3px;background:var(--surface-3);border-radius:2px;overflow:hidden;margin-bottom:28px}
 .prog i{display:block;height:100%;background:var(--signal);width:0;transition:width .2s ease-out}
 @media (prefers-reduced-motion:reduce){.prog i{transition:none}}
 .prompt{font-family:var(--latin);font-size:34px;font-weight:600;line-height:1.15;margin:0 0 6px;overflow-wrap:anywhere}
@@ -256,14 +257,14 @@ dialog.sheet::backdrop{background:rgba(20,20,18,.5)}
 .row .ex .ko-s{color:var(--ink-2)}
 .row .ex .ko-s mark{background:transparent;color:var(--ink);font-weight:700}
 .choices{display:grid;gap:8px}
-.choice{text-align:left;border:1px solid var(--line-2);background:var(--surface);border-radius:var(--r);padding:0 14px 0 8px;display:flex;gap:12px;align-items:center;font-size:15px;min-height:50px;line-height:1.4;box-shadow:var(--shadow)}
-.choice .k{font-family:var(--mono);font-size:12px;color:var(--ink-2);width:26px;height:26px;border-radius:4px;border:1px solid var(--line-2);display:grid;place-items:center;flex:none;background:var(--surface-2)}
+.choice{text-align:left;border:1px solid var(--line);background:var(--surface);border-radius:var(--r);padding:0 14px;display:flex;gap:14px;align-items:center;font-size:15px;min-height:52px;line-height:1.4}
+.choice .k{font-family:var(--mono);font-size:12px;color:var(--ink-3);flex:none;width:12px}
 .choice.en{font-family:var(--latin);font-size:17px;font-weight:500}
 .choice:hover:not(:disabled){border-color:var(--ink)}
 .choice:active:not(:disabled){transform:translateY(1px);box-shadow:none}
 .choice.correct{background:var(--ok-soft);border-color:var(--ok);color:var(--ok)}
 .choice.wrong{background:var(--no-soft);border-color:var(--no);color:var(--no)}
-.choice.correct .k,.choice.wrong .k{color:inherit;border-color:currentColor;background:transparent}
+.choice.correct .k,.choice.wrong .k{color:inherit}
 .choice:disabled{box-shadow:none}
 .answer-row{display:flex;gap:8px}
 .answer-row input{flex:1;min-width:0;border:1px solid var(--line-2);background:var(--surface);border-radius:var(--r);padding:0 14px;font-family:var(--latin);font-size:20px;font-weight:500;height:50px}
@@ -274,9 +275,9 @@ dialog.sheet::backdrop{background:rgba(20,20,18,.5)}
 .feedback.good{background:var(--ok-soft);color:var(--ok)}
 .feedback.bad{background:var(--no-soft);color:var(--no)}
 .feedback b{font-family:var(--latin);font-size:17px;font-weight:600}
-.q .foot{display:flex;justify-content:space-between;align-items:center;margin-top:18px;gap:10px}
-.q .foot .r{display:flex;align-items:center;gap:8px}
-.result{background:var(--surface);border:1px solid var(--line);border-radius:var(--r-lg);padding:22px;margin-top:14px;box-shadow:var(--shadow)}
+.q .foot{display:flex;justify-content:flex-end;align-items:center;margin-top:18px;gap:10px}
+.q .foot .btn.primary{min-width:140px;min-height:46px}
+.result{padding:6px 0 0;margin-top:0}
 .score{display:flex;gap:36px;flex-wrap:wrap;margin-bottom:10px}
 .score .big{font-family:var(--latin);font-size:48px;font-weight:600;line-height:1}
 .score .big small{font-size:18px;color:var(--ink-3);font-weight:500}
@@ -286,7 +287,8 @@ dialog.sheet::backdrop{background:rgba(20,20,18,.5)}
 .wrong-list .row .your{padding:10px 14px;color:var(--no);font-family:var(--latin);font-size:15px;overflow-wrap:anywhere}
 
 /* ---------- exam ---------- */
-.exam{background:var(--surface);border:1px solid var(--line);border-radius:var(--r-lg);padding:16px 18px;margin-bottom:10px;box-shadow:var(--shadow)}
+.exam{padding:18px 0 20px;border-bottom:1px solid var(--line)}
+.exam:last-child{border-bottom:0}
 .exam .hd{display:flex;justify-content:space-between;align-items:center;font-family:var(--mono);font-size:11.5px;color:var(--ink-3);text-transform:uppercase;letter-spacing:.04em}
 .exam .sent{font-family:var(--latin);font-size:16.5px;margin:8px 0 12px;line-height:1.55}
 .exam .choices{grid-template-columns:repeat(2,1fr)}
@@ -323,9 +325,10 @@ dialog.sheet::backdrop{background:rgba(20,20,18,.5)}
   .q{padding:16px}
   .prompt{font-size:27px}
   .prompt.ko{font-size:19px}
-  .q .foot{flex-direction:column-reverse;align-items:stretch}
-  .q .foot .btn.primary{width:100%;min-height:48px}
-  .q .foot .r{justify-content:space-between}
+  .q .foot .btn.primary{width:100%;min-height:50px}
+  .panel{border-left:0;border-right:0;border-radius:0;margin-inline:-16px}
+  .row .w{padding-left:0}
+  .setup{gap:18px}
   .exam .choices{grid-template-columns:1fr}
   .grid-days{grid-template-columns:repeat(4,1fr)}
   .range .c{display:none}
@@ -430,7 +433,7 @@ dialog.sheet::backdrop{background:rgba(20,20,18,.5)}
 
   <div id="quizPlay" hidden>
     <div class="q">
-      <div class="top"><span class="num" id="qPos"></span><span id="qMode"></span></div>
+      <div class="top"><span class="num" id="qPos"></span><span id="qMode" hidden></span><button class="x" id="qQuit" aria-label="그만두기" title="그만두기"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round"><path d="M6 6l12 12M18 6L6 18"/></svg></button></div>
       <div class="prog"><i id="qProg"></i></div>
       <p class="prompt"><span id="qPrompt"></span><button type="button" class="say-btn" id="qSay" aria-label="발음 듣기" hidden><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M11 5L6 9H2v6h4l5 4z"/><path d="M15.5 8.5a5 5 0 010 7"/><path d="M18.5 5.5a9 9 0 010 13"/></svg></button></p>
       <div class="ko-line" id="qKo" hidden></div>
@@ -442,8 +445,8 @@ dialog.sheet::backdrop{background:rgba(20,20,18,.5)}
       </div>
       <div class="feedback" id="qFeed" hidden aria-live="polite"></div>
       <div class="foot">
-        <div class="r"><span class="meta num" id="qScore"></span><button class="btn ghost" id="qQuit">그만두기</button></div>
-        <button class="btn primary" id="qNext" disabled>다음</button>
+        <span class="meta num" id="qScore" hidden></span>
+        <button class="btn primary" id="qNext" hidden>다음</button>
       </div>
     </div>
   </div>
@@ -771,17 +774,17 @@ const norm=s=>s.toLowerCase().replace(/[^a-z]/g,'');
 function showQ(){
   const w=Q.items[Q.i];Q.answered=false;
   const askEn=Q.mode==='mc'&&Q.dir==='en';const fill=Q.mode==='fill';
-  $('#qPos').textContent=`${String(Q.i+1).padStart(2,'0')} / ${String(Q.items.length).padStart(2,'0')}`;
+  $('#qPos').textContent=`${Q.i+1} / ${Q.items.length}`+(Q.wrong.length?`  ·  틀림 ${Q.wrong.length}`:'');
   $('#qMode').textContent=Q.mode==='mc'?(askEn?'객관식 · EN → KO':'객관식 · KO → EN'):fill?'예문 빈칸':'주관식 · KO → EN';
   $('#qProg').style.width=(Q.i/Q.items.length*100)+'%';
   $('#qScore').textContent=`맞힘 ${Q.correct} · 틀림 ${Q.wrong.length}`;
   const fb=$('#qFeed');fb.hidden=true;fb.className='feedback';fb.textContent='';
-  $('#qNext').disabled=true;$('#qNext').textContent=Q.i===Q.items.length-1?'결과 보기':'다음';
+  $('#qNext').hidden=true;$('#qNext').textContent=Q.i===Q.items.length-1?'결과 보기':'다음';
   const prompt=$('#qPrompt');const P=prompt.parentElement;P.classList.toggle('fill',fill);P.classList.toggle('ko',!askEn&&!fill);
   if(fill){prompt.innerHTML=exEn(w,'blank');$('#qKo').hidden=false;$('#qKo').innerHTML=exKo(w);}
   else{prompt.textContent=askEn?w.w:w.m;$('#qKo').hidden=true;}
   $('#qSay').hidden=!(askEn||fill)||!hasSpeech;
-  $('#qHint').textContent=`${w.p} · ${w.d}`;
+  $('#qHint').textContent=fill?'':w.p;$('#qHint').hidden=fill;
   const ch=$('#qChoices');ch.innerHTML='';
   if(Q.mode==='mc'||fill){
     $('#qAnswer').hidden=true;
@@ -793,13 +796,14 @@ function showQ(){
     $('#qAnswer').hidden=false;const inp=$('#qInput');inp.value='';inp.className='';inp.disabled=false;$('#qCheck').disabled=false;
     setTimeout(()=>inp.focus(),0);
   }
+  if(hasSpeech){if(askEn)sayNow(w.w,'en');else if(fill)sayNow(w.ex.replace(/\[[^\]]+\]/,' ... '),'en');}
 }
 function answerMC(btn,x,w,opts){
   if(Q.answered)return;Q.answered=true;
   const ok=x.id===w.id;
   $$('#qChoices .choice').forEach((b,k)=>{b.disabled=true;if(opts[k].id===w.id)b.classList.add('correct');});
   if(!ok)btn.classList.add('wrong');
-  if(Q.mode==='fill'){$('#qPrompt').innerHTML=exEn(w,ok?'ok':'no');}
+  if(Q.mode==='fill'){$('#qPrompt').innerHTML=exEn(w,'ok');}
   finish(ok,w,(Q.mode==='mc'&&Q.dir==='en')?x.m:x.w);
 }
 function answerSA(){
@@ -816,9 +820,9 @@ function finish(ok,w,given){
   fb.innerHTML=(ok?'정답 · ':'오답 · 정답은 ')+`<b>${esc(w.w)}</b> ${esc(w.p)} ${esc(w.m)}`+(ok&&streak[w.id]===3&&done.has(w.id)?' <span class="badge done">암기 완료</span>':'')+(hasSpeech?` <button type="button" class="say-btn" id="fbSay" aria-label="발음 듣기" style="width:32px;height:32px">${SPK}</button>`:'');
   if(hasSpeech){if(Q.mode==='fill')sayNow(w.ex.replace(/[\[\]]/g,''),'en');else if(!(Q.mode==='mc'&&Q.dir==='en'))sayNow(w.w,'en');}
   $('#qScore').textContent=`맞힘 ${Q.correct} · 틀림 ${Q.wrong.length}`;
-  $('#qNext').disabled=false;$('#qNext').focus();
+  $('#qNext').hidden=false;$('#qNext').focus();
 }
-$('#qSay').addEventListener('click',()=>{if(!Q)return;const w=Q.items[Q.i];sayNow(Q.mode==='fill'?(Q.answered?w.ex.replace(/[\[\]]/g,''):w.ex.replace(/\[[^\]]+\]/,'blank')):w.w,'en');});
+$('#qSay').addEventListener('click',()=>{if(!Q)return;const w=Q.items[Q.i];sayNow(Q.mode==='fill'?(Q.answered?w.ex.replace(/[\[\]]/g,''):w.ex.replace(/\[[^\]]+\]/,' ... ')):w.w,'en');});
 $('#qCheck').addEventListener('click',answerSA);
 $('#qInput').addEventListener('keydown',e=>{if(e.key==='Enter'){e.preventDefault();Q.answered?next():answerSA();}});
 document.addEventListener('keydown',e=>{
