@@ -550,36 +550,41 @@ body.opening-on{overflow:hidden}
 .pack.hero.drained .bstack{opacity:.4}
 /* ---------- 개봉 중 퀴즈 ---------- */
 .opening .ostage{transition:width .4s var(--ease)}
-.opening.asking{justify-content:flex-start;padding-top:calc(24px + env(safe-area-inset-top));gap:14px}
-.opening.asking .ostage{width:min(44vw,190px,28dvh)}
+.opening.asking{justify-content:flex-start;padding:calc(16px + env(safe-area-inset-top)) 16px calc(16px + env(safe-area-inset-bottom));gap:10px}
+.opening.asking .ostage{width:min(56vw,236px,33dvh);flex:none}
 .ocard.ask .front .cap em{opacity:0}
 .ocard.ask .front .cap::before{content:"?";font-size:15cqw;font-weight:700;line-height:1;margin-right:auto}
 .ocard.missed .front .pcard{filter:grayscale(.85) brightness(.6)}
-.oquiz{width:min(100%,440px);display:flex;flex-direction:column;gap:10px;color:#EDEBF0}
-.oq-s{font-size:17px;line-height:1.55;text-align:center}
+.oquiz{width:min(100%,440px);display:flex;flex-direction:column;gap:12px;color:#EDEBF0}
+.opening.asking .oquiz{flex:1 1 auto;min-height:0}
+.oq-q{display:flex;flex-direction:column;gap:6px;padding:4px 4px 0;margin:auto 0}
+.oq-dock{display:flex;flex-direction:column;gap:10px}
+.opening.asking .olabel{min-height:21px;font-size:14px;line-height:21px}
+.oq-s{font-size:18px;line-height:1.5;text-align:center;text-wrap:balance}
 .oq-s .blank{display:inline-block;min-width:5ch;border-bottom:2px solid var(--signal);line-height:1;margin:0 2px;color:var(--signal)}
 .oq-s .blank.ok{color:#8FE3A8;border-color:#8FE3A8}
 .oq-k{font-size:13.5px;line-height:1.5;text-align:center;color:#9C99A3}
 .oq-k mark{background:transparent;color:#EDEBF0;font-weight:700}
-.oq-ch{display:grid;grid-template-columns:1fr 1fr;gap:8px;margin-top:4px}
-.oq-c{display:flex;align-items:center;gap:10px;min-height:50px;padding:0 14px;border:1px solid rgba(255,255,255,.18);border-radius:var(--r);background:rgba(255,255,255,.05);color:#EDEBF0;font-size:16px;font-weight:500;text-align:left}
+.oq-ch{display:grid;grid-template-columns:1fr 1fr;gap:10px}
+.oq-c{display:flex;align-items:center;gap:10px;min-height:56px;padding:0 16px;border-radius:12px;border:1px solid rgba(255,255,255,.18);border-radius:var(--r);background:rgba(255,255,255,.05);color:#EDEBF0;font-size:16px;font-weight:500;text-align:left}
 .oq-c span{font-size:12px;color:#8C8993}
 .oq-c:hover:not(:disabled){border-color:rgba(255,255,255,.45)}
 .oq-c.ok{border-color:#6CC282;background:rgba(108,194,130,.16);color:#8FE3A8}
 .oq-c.no{border-color:#F27E6A;background:rgba(242,126,106,.14);color:#F6A496}
-.oq-in{display:flex;gap:8px;margin-top:4px}
-.oq-in input{flex:1;min-width:0;height:50px;border:1px solid rgba(255,255,255,.22);border-radius:var(--r);background:rgba(255,255,255,.06);color:#EDEBF0;padding:0 14px;font-size:18px;font-weight:500}
+.oq-in{display:flex;gap:8px}
+.oq-in input{flex:1;min-width:0;height:56px;border-radius:12px;border:1px solid rgba(255,255,255,.22);border-radius:var(--r);background:rgba(255,255,255,.06);color:#EDEBF0;padding:0 14px;font-size:18px;font-weight:500}
 .oq-in input:focus{outline:0;border-color:rgba(255,255,255,.6)}
 .oq-in input.ok{border-color:#6CC282;color:#8FE3A8}
 .oq-in input.no{border-color:#F27E6A;color:#F6A496}
-.oq-in .btn{min-height:50px}
+.oq-in .btn{min-height:56px;border-radius:12px}
 .oq-say{align-self:center}
-.oq-ans{text-align:center;font-size:17px;font-weight:700;color:#EDEBF0}
+.oq-ans{text-align:center;font-size:15px;color:#EDEBF0;margin-top:2px}
+.oq-ans b{font-size:17px;font-weight:700}
 .oq-ans span{font-size:13.5px;font-weight:500;color:#9C99A3;margin-left:6px}
-.oq-go{position:fixed;left:50%;bottom:calc(20px + env(safe-area-inset-bottom));transform:translateX(-50%);width:min(calc(100% - 32px),440px);min-height:54px;font-size:16px;border-radius:12px;z-index:75}
-@keyframes goIn{from{transform:translate(-50%,24px);opacity:0}}
-@media (prefers-reduced-motion:no-preference){.oq-go{animation:goIn .32s cubic-bezier(.34,1.56,.64,1)}}
-.opening.asking{padding-bottom:calc(96px + env(safe-area-inset-bottom))}
+.oq-go{width:100%;min-height:56px;font-size:16px;border-radius:12px;visibility:hidden}
+.oq-go.on{visibility:visible}
+@keyframes goIn{from{transform:translateY(16px);opacity:0}}
+@media (prefers-reduced-motion:no-preference){.oq-go.on{animation:goIn .32s cubic-bezier(.34,1.56,.64,1)}}
 .oq-go:focus-visible{outline-color:#fff}
 @keyframes capIn{from{opacity:0;transform:translateY(6px) scale(.9)}}
 @media (prefers-reduced-motion:no-preference){
@@ -588,7 +593,8 @@ body.opening-on{overflow:hidden}
   .ocard.solved .front .pcard{animation:solvedPop .5s var(--ease)}
 }
 @keyframes solvedPop{40%{transform:scale(1.06)}}
-@media (max-width:639px){.oq-c{font-size:15px;min-height:48px}}
+@media (max-width:639px){.oq-c{font-size:15.5px}}
+@media (min-width:640px){.opening.asking{justify-content:center}.opening.asking .oquiz{flex:0 0 auto}.oq-dock{margin-top:14px}}
 
 
 
@@ -1815,7 +1821,7 @@ function askCard(it){
   let body;
   if(fmt==='mc'){OPEN.q.opts=wordChoices(w);body=`<div class="oq-ch">${OPEN.q.opts.map((o,k)=>`<button type="button" class="oq-c" data-k="${k}"><span>${k+1}</span>${esc(o.w)}</button>`).join('')}</div>`;}
   else body=`<form class="oq-in" id="oqForm" autocomplete="off"><input id="oqInput" autocapitalize="off" autocorrect="off" spellcheck="false" placeholder="${fmt==='type'?`${esc(ans[0])}… ${ans.length}글자`:'들리는 단어'}" aria-label="답 입력"><button class="btn primary" type="submit">확인</button></form>${fmt==='listen'?'<button type="button" class="btn ghost sm oq-say">다시 듣기</button>':''}`;
-  const Z=$('#oQuiz');Z.innerHTML=`<p class="oq-s" lang="en">${exEn(x,'blank')}</p><p class="oq-k">${exKo(x)}</p>${body}`;Z.hidden=false;
+  const Z=$('#oQuiz');Z.innerHTML=`<div class="oq-q"><p class="oq-s" lang="en">${exEn(x,'blank')}</p><p class="oq-k">${exKo(x)}</p></div><div class="oq-dock">${body}<button type="button" class="btn primary oq-go" tabindex="-1" aria-hidden="true">${OPEN.k>=OPEN.items.length-1?'결과 보기':'다음 카드'}</button></div>`;Z.hidden=false;
   Z.classList.remove('in');void Z.offsetWidth;Z.classList.add('in');$('#opening').classList.add('asking');
   if(fmt==='listen')setTimeout(()=>sayNow(x.ex.replace(/[\[\]]/g,''),'en'),350);
   if(fmt!=='mc')setTimeout(()=>{const inp=$('#oqInput');if(inp)inp.focus();},380);
@@ -1835,8 +1841,8 @@ function answerCard(ok,pick){
   if(q.fmt==='mc')$$('#oQuiz .oq-c').forEach((b,k)=>{b.disabled=true;if(q.opts[k].id===q.w.id)b.classList.add('ok');else if(k===pick)b.classList.add('no');});
   else{const inp=$('#oqInput');if(inp){inp.disabled=true;inp.classList.add(ok?'ok':'no');}const sb=$('#oqForm button');if(sb)sb.disabled=true;}
   $('#oQuiz .oq-s').innerHTML=exEn(q.x,'ok');
-  if(!ok)Z.insertAdjacentHTML('beforeend',`<p class="oq-ans">${esc(q.w.w)} <span>${esc(q.w.m)}</span></p>`);
-  Z.insertAdjacentHTML('beforeend',`<button type="button" class="btn primary oq-go">${OPEN.k>=OPEN.items.length-1?'결과 보기':'다음 카드'}</button>`);
+  if(!ok)$('#oQuiz .oq-q').insertAdjacentHTML('beforeend',`<p class="oq-ans"><b lang="en">${esc(q.w.w)}</b> <span>${esc(q.w.m)}</span></p>`);
+  {const g=$('#oQuiz .oq-go');g.classList.add('on');g.removeAttribute('tabindex');g.removeAttribute('aria-hidden');}
   setTimeout(()=>{const g=$('#oQuiz .oq-go');if(g)g.focus({preventScroll:true});},60);
   {const [x,y]=stageMid(),r=stageRect();
     if(!ok){SFX.play('no');const st=$('#oStage');st.classList.remove('shake');void st.offsetWidth;if(!matchMedia('(prefers-reduced-motion: reduce)').matches)st.classList.add('nope');setTimeout(()=>st.classList.remove('nope'),400);}
