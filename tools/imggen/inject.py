@@ -22,7 +22,7 @@ def tag(x):
     return 0
 
 
-s = INDEX.read_text(encoding="utf-8")
+s = INDEX.read_bytes().decode("utf-8")  # 줄바꿈을 건드리지 않도록 바이트로 읽고 쓴다
 m = re.search(r'(<script id="data" type="application/json">)(.*?)(</script>)', s, re.S)
 d = json.loads(m.group(2))
 have = total = 0
@@ -30,5 +30,5 @@ for w in d["words"]:
     for x in [w] + (w.get("more") or []):
         have += tag(x)
         total += 1
-INDEX.write_text(s[:m.start(2)] + json.dumps(d, ensure_ascii=False) + s[m.end(2):], encoding="utf-8")
+INDEX.write_bytes((s[:m.start(2)] + json.dumps(d, ensure_ascii=False) + s[m.end(2):]).encode("utf-8"))
 print(f"pictures ready for {have}/{total} sentences")
