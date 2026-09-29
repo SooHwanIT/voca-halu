@@ -11,3 +11,6 @@ tools/imggen/*.log
 tools/imggen/STOP
 __pycache__/
 public/img/**/*.tmp
+
+# 발음 생성 작업 파일
+tools/tts/*.log

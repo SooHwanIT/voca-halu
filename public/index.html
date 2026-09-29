@@ -682,6 +682,33 @@ body.opening-on{overflow:hidden}
 .pocket .pcard .fine{display:none}
 .pocket .pcard .cap{bottom:6.5cqw}
 
+
+/* ---------- 팩 선반 ---------- */
+.packs{margin-top:10px}
+.shelf{--pw:min(50vw,200px);position:relative;display:flex;overflow-x:auto;overflow-y:visible;scroll-snap-type:x mandatory;scrollbar-width:none;margin:0 -16px;padding:22px 0 30px;-webkit-overflow-scrolling:touch}
+.shelf::-webkit-scrollbar{display:none}
+.shelf-pack{flex:none;position:relative;width:var(--pw);aspect-ratio:.66;margin:0 calc(var(--pw) * -.06);padding:0;border:0;background:none;scroll-snap-align:center;border-radius:6%/4.5%;
+  transform:translateY(calc(var(--ad,0) * 18px)) scale(calc(1 - var(--ad,0) * .2)) rotate(calc(var(--d,0) * 5deg));opacity:calc(1 - var(--ad,0) * .4);filter:brightness(calc(1 - var(--ad,0) * .35)) saturate(calc(1 - var(--ad,0) * .3));
+  z-index:calc(10 - var(--ad,0) * 5);transition:filter .2s}
+.shelf-pack .pf{box-shadow:0 22px 40px -18px rgba(0,0,0,.55)}
+.shelf-pack.on .pf{box-shadow:0 30px 50px -20px rgba(0,0,0,.6),0 0 0 1px rgba(255,255,255,.25)}
+.shelf-done{position:absolute;left:50%;top:44%;z-index:5;transform:translate(-50%,-50%) rotate(-10deg);font-size:12px;font-weight:800;letter-spacing:.18em;color:#fff;border:2px solid #fff;border-radius:4px;padding:3px 8px;background:rgba(0,0,0,.35)}
+.shelf-pack.done .pf{filter:saturate(.5)}
+@media (prefers-reduced-motion:no-preference){.shelf-pack.on .pf{animation:bob 3.4s ease-in-out infinite}}
+.shelf-info{display:flex;align-items:baseline;justify-content:center;gap:10px;margin-top:-8px}
+.shelf-info b{font-size:18px;font-weight:700;letter-spacing:-.01em}
+.shelf-info span{font-size:13.5px;color:var(--ink-3);font-variant-numeric:tabular-nums}
+.shelf-bar{display:flex;align-items:center;gap:10px;margin:16px 0 10px;min-height:34px}
+.pips{display:flex;gap:5px}
+.pips i{width:13px;height:18px;border-radius:3px;background:var(--surface-3);box-shadow:inset 0 0 0 1px var(--line)}
+.pips i.on{background:var(--signal);box-shadow:none}
+.pips i.fill{background:linear-gradient(to top,color-mix(in srgb,var(--signal) 55%,transparent) var(--p,0%),var(--surface-3) var(--p,0%))}
+.tmr{display:inline-flex;align-items:center;gap:5px;font-size:13.5px;color:var(--ink-3)}
+.tmr b{color:var(--ink-2);font-weight:600;font-variant-numeric:tabular-nums}
+.tmr svg{width:15px;height:15px}
+.shelf-open{width:100%;min-height:54px;font-size:16px;border-radius:12px}
+.shelf-bar .btn{margin-right:-6px}
+
 /* ---------- 발음 ---------- */
 .orow{display:flex;align-items:center;justify-content:center;gap:4px;min-height:26px;max-width:360px}
 .osay{flex:none;width:36px;height:36px;border:0;border-radius:50%;background:rgba(255,255,255,.08);color:#EDEBF0;display:grid;place-items:center}
@@ -1023,8 +1050,11 @@ let ttsRate=+load('voca.rate',1);
 let autoRead=load('voca.autoRead',true);   // 자동 발음: 문제·새 카드·카드 상세에서 저절로 읽는다 (직접 누르는 발음은 항상)
 const canSay=()=>hasSpeech||canNeural;
 const sent=x=>String(x.ex||'').replace(/[\[\]]/g,'');
-const VOICES=[['luna','여성 · 친근함'],['thalia','여성 · 또렷함'],['athena','여성 · 차분함'],['asteria','여성 · 밝음'],['helena','여성 · 따뜻함'],['andromeda','여성 · 편안함'],['orion','남성 · 부드러움'],['arcas','남성 · 자연스러움'],['apollo','남성 · 편안함'],['odysseus','남성 · 차분함'],['orpheus','남성 · 또렷함'],['zeus','남성 · 깊음']];
-let speaker=load('voca.speaker','luna');if(!VOICES.some(v=>v[0]===speaker))speaker='luna';
+const VOICES=[['heart','여성 · 자연스러움'],['luna','여성 · 친근함'],['thalia','여성 · 또렷함'],['athena','여성 · 차분함'],['asteria','여성 · 밝음'],['helena','여성 · 따뜻함'],['andromeda','여성 · 편안함'],['orion','남성 · 부드러움'],['arcas','남성 · 자연스러움'],['apollo','남성 · 편안함'],['odysseus','남성 · 차분함'],['orpheus','남성 · 또렷함'],['zeus','남성 · 깊음']];
+// 기본 목소리 heart: Kokoro(af_heart)로 미리 만들어 앱에 넣은 음성 — tools/tts/gen_kokoro.py. 서버를 거치지 않아 비용이 없고 오프라인에서도 나온다
+const PACK_VOICE='heart';
+let speaker=load('voca.speaker',PACK_VOICE);if(!VOICES.some(v=>v[0]===speaker))speaker=PACK_VOICE;
+if(!load('voca.voiceMig',0)){speaker=PACK_VOICE;save('voca.speaker',speaker);save('voca.voiceMig',1);}   // 한 번은 모두 heart로 옮긴다
 // 영어는 Cloudflare Workers AI 음성, 안 되면 기기 음성
 const TTS_API='https://voca-halu.suhwanit.workers.dev/api/tts';
 const canNeural=/^https?:/.test(location.protocol);
@@ -1032,21 +1062,32 @@ let neuralOK=canNeural;
 const audioCache=new Map();
 let curAudio=null;
 function fetchAudio(text){
-  const k=speaker+'|'+text.toLowerCase();
+  const sp=speaker===PACK_VOICE?'luna':speaker,k=sp+'|'+text.toLowerCase();
   if(audioCache.has(k))return audioCache.get(k);
-  const pr=fetch(TTS_API+'?s='+speaker+'&t='+encodeURIComponent(text)).then(r=>{if(!r.ok)throw new Error(r.status);return r.blob();}).then(b=>URL.createObjectURL(b));
+  const pr=fetch(TTS_API+'?s='+sp+'&t='+encodeURIComponent(text)).then(r=>{if(!r.ok)throw new Error(r.status);return r.blob();}).then(b=>URL.createObjectURL(b));
   audioCache.set(k,pr);pr.catch(()=>audioCache.delete(k));
   return pr;
 }
-function prefetch(text){if(neuralOK&&text)fetchAudio(text).catch(()=>{});}
-function speakNeural(text){
-  return fetchAudio(text).then(url=>new Promise((res,rej)=>{
-    const a=new Audio(url);a.playbackRate=ttsRate;curAudio=a;
-    a.onended=()=>{if(curAudio===a)curAudio=null;res();};
-    a.onerror=()=>rej(new Error('audio'));
-    a.play().catch(rej);
-  }));
-}
+// ----- 앱에 넣은 음성: Day마다 json(해시→[묶음, 시작, 길이]) + 묶음 bin(MP3 이어 붙임). 생성 스크립트와 같은 규칙
+let PACK_DAY=null;
+function packDayOf(t){
+  if(!PACK_DAY){PACK_DAY=new Map();const add=(x,d)=>{x=(x||'').trim();if(x&&!PACK_DAY.has(x))PACK_DAY.set(x,d);};
+    WORDS.forEach(w=>{add(w.w,w.d);w.xs.forEach(x=>{if(!x.ex)return;add(x.ex.replace(/[\[\]]/g,''),w.d);add(x.ex.replace(/\[[^\]]+\]/,' ... '),w.d);});});
+    COLLS.forEach(c=>add(c.c,c.d));}
+  return PACK_DAY.get(t);}
+const h32=x=>{let h=0x811c9dc5;for(let i=0;i<x.length;i++){h^=x.charCodeAt(i);h=Math.imul(h,0x01000193)>>>0;}return h.toString(16).padStart(8,'0');};
+const packIdx=new Map(),packBin=new Map(),packURL=new Map();
+function packGet(map,url,json){if(!map.has(url)){const p=fetch(url).then(r=>{if(!r.ok)throw new Error(r.status);return json?r.json():r.arrayBuffer();});map.set(url,p);p.catch(()=>map.delete(url));}return map.get(url);}
+async function packAudio(text){
+  const t=text.trim();if(packURL.has(t))return packURL.get(t);
+  const d=packDayOf(t);if(d==null)throw new Error('nopack');
+  const base=`tts/${PACK_VOICE}/${DAYS.indexOf(d)}`,idx=await packGet(packIdx,base+'.json',true),e=idx[h32(t)];if(!e)throw new Error('nopack');
+  const buf=await packGet(packBin,`${base}-${e[0]}.bin`,false),url=URL.createObjectURL(new Blob([buf.slice(e[1],e[1]+e[2])],{type:'audio/mpeg'}));
+  packURL.set(t,url);return url;}
+function playURL(url){return new Promise((res,rej)=>{const a=new Audio(url);a.playbackRate=ttsRate;curAudio=a;
+  a.onended=()=>{if(curAudio===a)curAudio=null;res();};a.onerror=()=>rej(new Error('audio'));a.play().catch(rej);});}
+function prefetch(text){if(!text)return;if(speaker===PACK_VOICE){packAudio(text).catch(()=>{});return;}if(neuralOK)fetchAudio(text).catch(()=>{});}
+function speakNeural(text){return fetchAudio(text).then(playURL);}
 function speakLocal(text,lang,rate){
   return new Promise(res=>{
     if(!hasSpeech||!text){res();return;}
@@ -1058,6 +1099,7 @@ function speakLocal(text,lang,rate){
 }
 async function speak(text,lang,rate){
   if(!text)return;
+  if(lang==='en'&&speaker===PACK_VOICE){try{await playURL(await packAudio(text));return;}catch(e){if(e&&e.name==='NotAllowedError')return;}}
   if(lang==='en'&&neuralOK){
     try{await speakNeural(text);return;}
     catch(e){if(!(e&&e.name==='NotAllowedError'))neuralOK=false;}
@@ -1145,13 +1187,13 @@ function setPics(on,theme){
 const setDlg=$('#setDlg');
 function renderVoices(){$('#voiceGrid').innerHTML=VOICES.map(([id,d])=>`<button type="button" class="voice" data-v="${id}" aria-pressed="${id===speaker}"><b>${id}</b><small>${d}</small></button>`).join('');
   $$('#setAuto button').forEach(x=>x.setAttribute('aria-pressed',(+x.dataset.v===1)===autoRead));
-  $('#voiceHelp').textContent=canNeural&&neuralOK?'':'기기 음성으로 재생 중';}
+  $('#voiceHelp').textContent=speaker===PACK_VOICE||(canNeural&&neuralOK)?'':'기기 음성으로 재생 중';}
 $('#setBtn').addEventListener('click',()=>{renderVoices();renderPicSet();$$('#setSfx button').forEach(x=>x.setAttribute('aria-pressed',(x.dataset.v==='1')===SFX.on));setDlg.showModal();});
 $('#setSfx').addEventListener('click',e=>{const b=e.target.closest('button');if(!b)return;SFX.set(b.dataset.v==='1');$$('#setSfx button').forEach(x=>x.setAttribute('aria-pressed',x===b));});
 $('#setClose').addEventListener('click',()=>setDlg.close());
 setDlg.addEventListener('click',e=>{
   if(e.target===setDlg){setDlg.close();return;}
-  const v=e.target.closest('.voice');if(v){speaker=v.dataset.v;save('voca.speaker',speaker);$$('.voice').forEach(x=>x.setAttribute('aria-pressed',x===v));sayNow('The meeting will begin at nine o\'clock sharp.','en');return;}
+  const v=e.target.closest('.voice');if(v){speaker=v.dataset.v;save('voca.speaker',speaker);$$('.voice').forEach(x=>x.setAttribute('aria-pressed',x===v));sayNow(sent(WORDS[0].xs[0]),'en');return;}
   const pt=e.target.closest('.pic-theme');if(pt){setPics(true,pt.dataset.v);return;}
   const ps=e.target.closest('#setPics button');if(ps){setPics(ps.dataset.v==='1');return;}
   const a=e.target.closest('#setAuto button');if(a){autoRead=a.dataset.v==='1';save('voca.autoRead',autoRead);$$('#setAuto button').forEach(x=>x.setAttribute('aria-pressed',x===a));}
@@ -1594,15 +1636,33 @@ async function sharePack(){
 }
 
 // ---------- 오늘 ----------
+const chargePct=()=>Math.round(100-nextChargeIn()/CHARGE_MS*100);
+// 선반 가운데 맞추기 · 가운데에서 멀수록 작고 어둡게(커버플로)
+function shelfPad(){const sh=$('#shelf'),b=sh&&sh.querySelector('.shelf-pack');if(!b)return;const pad=(sh.clientWidth-b.offsetWidth)/2+b.offsetWidth*.06;sh.style.paddingLeft=sh.style.paddingRight=pad+'px';}
+function shelfCenter(smooth){const sh=$('#shelf'),b=sh&&sh.querySelector(`[data-shelf="${expSel}"]`);if(!b)return;sh.scrollTo({left:b.offsetLeft-(sh.clientWidth-b.offsetWidth)/2,behavior:smooth&&!matchMedia('(prefers-reduced-motion: reduce)').matches?'smooth':'auto'});}
+function shelfFx(){const sh=$('#shelf');if(!sh)return null;const mid=sh.scrollLeft+sh.clientWidth/2;let best=null,bd=1e9;
+  sh.querySelectorAll('.shelf-pack').forEach(b=>{const c=b.offsetLeft+b.offsetWidth/2,d=(c-mid)/b.offsetWidth;b.style.setProperty('--d',Math.max(-1.6,Math.min(1.6,d)).toFixed(3));b.style.setProperty('--ad',Math.min(1.6,Math.abs(d)).toFixed(3));if(Math.abs(c-mid)<bd){bd=Math.abs(c-mid);best=b;}});
+  return best;}
+function syncShelf(){
+  const e=curExp(),ch=charges(),al=expCards(e),got=al.filter(owned).length,can=hasFree(e)||dueCount()>0;
+  $$('#shelf .shelf-pack').forEach(b=>{const on=b.dataset.shelf===e.id;b.classList.toggle('on',on);b.setAttribute('aria-selected',on);});
+  $('#shelfName').textContent=e.label;$('#shelfMeta').textContent=`${got} / ${al.length}`;
+  const o=$('#shelfOpen');o.dataset.openpack=e.id;o.disabled=!(can&&ch>0);
+  o.innerHTML=!can?'다 모았어요':ch?`${e.label} 팩 열기`:`<span data-timer>${fmtClock(nextChargeIn())}</span>&nbsp;뒤 충전`;
+}
+addEventListener('resize',()=>{if($('#shelf')){shelfPad();shelfCenter(false);shelfFx();}});
 function renderToday(){
   const now=new Date(),s=streakDays();
   $('#todaySub').textContent=`${now.getMonth()+1}월 ${now.getDate()}일${s?` · 연속 ${s}일`:''}`;
-  const due=dueCount(),ch=charges(),e=packExp(),owns=Object.keys(cards).length,can=!!e,on=ch>0&&can;
-  const stack=e?Array.from({length:Math.max(1,Math.min(ch,3))},(_,k)=>`<span class="bpk b${k}">${packFace(e)}</span>`).reverse().join(''):'';
-  $('#packs').innerHTML=`<button type="button" class="pack hero${on?' hot':''}${ch?'':' drained'}" data-openpack="${e?e.id:''}"${on?'':' disabled'}>
-    <span class="pstage" aria-hidden="true"><span class="bstack">${stack}</span></span>
-    <span class="cta">${!can?'모두 열었어요':ch?`열기 ${ch}/${CHARGE_MAX}`:`<span data-timer>${fmtClock(nextChargeIn())}</span>&nbsp;뒤 충전`}</span></button>`
-    +(ch<CHARGE_MAX&&can?`<div class="adrow"><span>${ch?`${CLOCK}<b data-timer aria-label="다음 팩 충전까지">${fmtClock(nextChargeIn())}</b>`:''}</span>${adLeft()>0?`<button type="button" class="btn ghost sm" data-ad>${PLAY}광고 보고 +1</button>`:''}</div>`:'');
+  const due=dueCount(),ch=charges(),owns=Object.keys(cards).length,cur=curExp();
+  // 팩 선반: 챕터 팩이 가로로 늘어서고, 가운데 팩이 고른 팩이다
+  $('#packs').innerHTML=`<div class="shelf" id="shelf" role="listbox" aria-label="챕터 팩">${EXPS.map(x=>`<button type="button" class="shelf-pack${x===cur?' on':''}${hasFree(x)?'':' done'}" data-shelf="${x.id}" role="option" aria-selected="${x===cur}" aria-label="${esc(x.label)} 팩">${packFace(x)}${hasFree(x)?'':'<span class="shelf-done">COMPLETE</span>'}</button>`).join('')}</div>
+    <div class="shelf-info"><b id="shelfName"></b><span id="shelfMeta"></span></div>
+    <div class="shelf-bar"><span class="pips" role="img" aria-label="남은 팩 ${ch}개">${Array.from({length:CHARGE_MAX},(_,k)=>`<i class="${k<ch?'on':k===ch?'fill':''}"${k===ch?` style="--p:${chargePct()}%"`:''}></i>`).join('')}</span>${ch<CHARGE_MAX?`<span class="tmr">${CLOCK}<b data-timer aria-label="다음 팩 충전까지">${fmtClock(nextChargeIn())}</b></span>`:''}<span class="spacer"></span>${ch<CHARGE_MAX&&adLeft()>0?`<button type="button" class="btn ghost sm" data-ad>${PLAY}광고 보고 +1</button>`:''}</div>
+    <button type="button" class="btn primary lg shelf-open" id="shelfOpen"></button>`;
+  syncShelf();
+  const sh=$('#shelf');requestAnimationFrame(()=>{shelfPad();shelfCenter(false);shelfFx();});
+  sh.addEventListener('scroll',()=>{const bt=shelfFx();if(bt&&bt.dataset.shelf!==expSel){expSel=bt.dataset.shelf;save('voca.exp',expSel);daySel='all';save('voca.day',daySel);syncShelf();buzz(3);}},{passive:true});
   const t=packs[dkey()];$('#shareToday').hidden=!(t&&t.v===2&&t.opened);
   const mon=new Date(now);mon.setDate(now.getDate()-((now.getDay()+6)%7));
   const W=sumLog(dkey(mon),dkey(now));
@@ -1698,6 +1758,7 @@ cardDlg.addEventListener('click',e=>{
 });
 document.addEventListener('click',e=>{
   const s=e.target.closest('.pocket[data-card]');if(s){openCard(s.dataset.card,null,+s.dataset.no||0);return;}
+  const sp=e.target.closest('[data-shelf]');if(sp){if(sp.dataset.shelf===expSel){const o=$('#shelfOpen');if(o&&!o.disabled)o.click();}else{expSel=sp.dataset.shelf;save('voca.exp',expSel);daySel='all';save('voca.day',daySel);syncShelf();shelfCenter(true);}return;}
   const op=e.target.closest('[data-openpack]');if(op&&!op.disabled){if(cardDlg.open)cardDlg.close();openPack(EXPS.find(x=>x.id===op.dataset.openpack));return;}
   const ex=e.target.closest('[data-exp]');if(ex){setExp(ex.dataset.exp);return;}
 });
@@ -2003,8 +2064,8 @@ document.addEventListener('keydown',e=>{
 let tut=load('voca.tut',null);if(tut===null)tut=load('voca.intro',0)?99:0;
 const inPack=()=>!!OPEN&&OPEN.mode==='pack';
 const TUT=[
-  {sel:()=>'.pack[data-openpack]',when:()=>(view==='today'||navMode==='c')&&!OPEN,stale:inPack,mode:'tap',
-    t:'챕터 팩',b:'새 단어와 다시 만날 카드가 5장씩 들어 있어요. 10분마다 1팩씩 차요.',
+  {sel:()=>'#shelfOpen',when:()=>(view==='today'||navMode==='c')&&!OPEN,stale:inPack,mode:'tap',
+    t:'챕터 팩',b:'옆으로 밀어 팩을 고르고 열어요. 5장씩 들어 있고, 10분마다 1팩씩 차요.',
     tap:()=>openPack(packExp()||EXPS[0],{free:!Object.keys(cards).length&&!Object.keys(pend).length,intro:true})},
   {sel:()=>'#oPack',when:()=>inPack()&&OPEN.phase==='sealed',stale:()=>!inPack()||OPEN.phase!=='sealed',mode:'hint',pos:'above',
     t:'팩 뜯기',b:'윗부분을 옆으로 밀어요. 탭해도 돼요.'},
@@ -2020,7 +2081,7 @@ const TUT=[
     t:'카드 · 단어',b:'단어장처럼 보고, 듣고, 연습해요.'},
   {sel:()=>navMode==='a'?'#switcher [data-view=today]':innerWidth<640?'.bottomnav [data-view=today]':'.tabs [data-view=today]',when:()=>view==='binder'&&navMode!=='c',stale:()=>navMode==='c'||view==='today',mode:'tap',
     t:'오늘로',b:''},
-  {sel:()=>'.pack[data-openpack]',when:()=>view==='today'||navMode==='c',mode:'next',last:true,
+  {sel:()=>'#shelf',when:()=>view==='today'||navMode==='c',mode:'next',last:true,
     t:'다시 만나면 퀴즈',b:'다시 나온 카드는 빈칸 문제예요. 맞히면 카드가 실버 · 골드 · 홀로 · 프리즘으로 자라요.'},
 ];
 const coach={on:null,el:null,mask:false};
@@ -2141,7 +2202,7 @@ document.addEventListener('click',e=>{if(e.target.closest('[data-ad]'))watchAdFo
 // 충전 타이머: 1초마다 남은 시간을 고치고, 팩이 차면 화면을 다시 그린다
 {let last=charges();setInterval(()=>{if(document.hidden)return;const ch=charges();
   if(ch!==last){last=ch;if(!OPEN&&view!=='quiz'&&!(view==='binder'&&bMode==='words'))render();return;}
-  const t=fmtClock(nextChargeIn());$$('[data-timer]').forEach(el=>{if(el.textContent!==t)el.textContent=t;});},1000);}
+  const t=fmtClock(nextChargeIn());$$('[data-timer]').forEach(el=>{if(el.textContent!==t)el.textContent=t;});const pf=$('.pips i.fill');if(pf)pf.style.setProperty('--p',chargePct()+'%');},1000);}
 
 // ---------- 제스처 ----------
 // 끌기로 끝난 동작 뒤에 따라오는 click은 한 번 버린다
@@ -2207,7 +2268,7 @@ applyCols();
 // A안: 오늘 ↔ 바인더 좌우 스와이프
 {let s=null;
   document.addEventListener('touchstart',e=>{s=null;if(navMode!=='a'||view==='quiz'||OPEN||coach.mask||$$('dialog[open]').length||e.touches.length>1)return;
-    if(e.target.closest('.exptabs,.dayrow,#wordList .row,input,textarea,.intro'))return;const t=e.touches[0];s={x:t.clientX,y:t.clientY};},{passive:true});
+    if(e.target.closest('.exptabs,.dayrow,.shelf,#wordList .row,input,textarea,.intro'))return;const t=e.touches[0];s={x:t.clientX,y:t.clientY};},{passive:true});
   document.addEventListener('touchmove',e=>{if(e.touches.length>1)s=null;},{passive:true});
   document.addEventListener('touchend',e=>{if(!s)return;const t=e.changedTouches[0],dx=t.clientX-s.x,dy=t.clientY-s.y;s=null;if(Math.abs(dx)<70||Math.abs(dx)<Math.abs(dy)*2)return;
     if(dx<0&&view==='today')setView('binder',{dir:1});else if(dx>0&&view==='binder')setView('today',{dir:-1});},{passive:true});}

@@ -2,8 +2,8 @@
 // 앱 본체: 네트워크 우선(새 버전 반영), 실패하면 캐시.
 // 그림(img/): 캐시 우선 — 본 적 있는 포카만 저장한다(전체 1만 7천 장을 미리 받지 않는다).
 // 글꼴 등 외부 정적 파일: 캐시를 먼저 쓰고 뒤에서 갱신.
-// 음성(/api/tts): 캐시하지 않는다.
-const SHELL = 'pv-shell-6', IMG = 'pv-img-1';
+// 음성(/api/tts): 캐시하지 않는다. 앱에 넣은 음성(tts/)은 같은 곳 파일이라 본 것만 저장된다.
+const SHELL = 'pv-shell-7', IMG = 'pv-img-1';
 const CORE = ['./', './index.html', './manifest.json', './icon.svg', './icon-192.png', './icon-512.png'];
 
 self.addEventListener('install', e => {
