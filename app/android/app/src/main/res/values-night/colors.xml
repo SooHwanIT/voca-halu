@@ -1,0 +1,5 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <!-- 어두운 테마: 상태 표시줄·제스처 막대 뒤 바탕을 앱 바탕과 맞춘다 -->
+    <color name="appBackground">#151516</color>
+</resources>
