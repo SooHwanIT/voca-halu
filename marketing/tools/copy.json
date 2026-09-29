@@ -1,0 +1,120 @@
+{
+ "url": "voca-halu.suhwanit.workers.dev",
+ "heroes": {
+  "fan": {
+   "id": "c6cd68e954",
+   "word": "proudly",
+   "ex": "She [proudly] accepted the award."
+  },
+  "reveal": {
+   "id": "f500c76161",
+   "word": "weigh"
+  },
+  "versions": {
+   "id": "a5a883822f",
+   "word": "meticulous"
+  },
+  "four": {
+   "word": "leak",
+   "xs": [
+    {
+     "i": "17f2615a33",
+     "ex": "The pipe under the sink began to [leak] last night."
+    },
+    {
+     "i": "d74e052cbb",
+     "ex": "The maintenance team found a small [leak] in the office roof."
+    },
+    {
+     "i": "1d43de90b6",
+     "ex": "Please report any water [leaks] to the building manager."
+    },
+    {
+     "i": "43bc5f1c2f",
+     "ex": "The engine was [leaking] oil, so the truck was repaired."
+    }
+   ]
+  }
+ },
+ "feature": {
+  "title": "외운 단어는<br><em>포카</em>가 된다",
+  "sub": "토익 단어 1,050개 · 포카 17,524장"
+ },
+ "store": [
+  {
+   "kind": "fan",
+   "eyebrow": "토익 단어장",
+   "title": "외운 단어는<br><em>포카</em>가 된다",
+   "sub": "예문 4,381개, 전부 그림으로"
+  },
+  {
+   "kind": "reveal",
+   "eyebrow": "퀴즈",
+   "title": "맞히면<br>포카가 <em>열려요</em>"
+  },
+  {
+   "kind": "versions",
+   "eyebrow": "버전 4종",
+   "title": "같은 단어,<br>버전은 <em>네 가지</em>"
+  },
+  {
+   "kind": "four",
+   "eyebrow": "예문 4개",
+   "title": "leak 하나에<br>포카 <em>네 장</em>"
+  },
+  {
+   "kind": "phone",
+   "shot": "b5_quiz_gain",
+   "eyebrow": "예문 빈칸",
+   "title": "빈칸 옆에<br>그림 <em>한 장</em>",
+   "phoneTop": 520
+  },
+  {
+   "kind": "phone",
+   "shot": "c1_binder",
+   "eyebrow": "바인더",
+   "title": "모을수록<br><em>채워지는</em> 바인더",
+   "phoneTop": 520
+  }
+ ],
+ "social": [
+  {
+   "kind": "fan",
+   "eyebrow": "토익 단어장",
+   "title": "외운 단어는<br><em>포카</em>가 된다"
+  },
+  {
+   "kind": "reveal",
+   "eyebrow": "포카보카 퀴즈",
+   "title": "맞히면<br>포카가 <em>열려요</em>"
+  },
+  {
+   "kind": "versions",
+   "eyebrow": "최애 버전은?",
+   "title": "meticulous<br><em>버전 4종</em>"
+  },
+  {
+   "kind": "numbers",
+   "eyebrow": "포카보카",
+   "title": "토익 단어 포카,<br><em>전부 무료</em>"
+  }
+ ],
+ "numbers": [
+  [
+   "토익 단어",
+   "1,050"
+  ],
+  [
+   "예문",
+   "4,381"
+  ],
+  [
+   "포카 (예문 그림)",
+   "17,524"
+  ],
+  [
+   "가격",
+   "0원"
+  ]
+ ]
+}

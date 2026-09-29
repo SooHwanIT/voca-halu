@@ -1,13 +1,19 @@
 {
-  "name": "비밀과외 VOCA 암기장",
-  "short_name": "VOCA",
+  "id": "./",
+  "name": "포카보카",
+  "short_name": "포카보카",
+  "description": "외운 단어는 포카가 된다. 예문마다 그림이 있는 토익 단어장.",
+  "lang": "ko",
   "start_url": "./",
+  "scope": "./",
   "display": "standalone",
-  "background_color": "#E6E4DF",
-  "theme_color": "#E4520B",
+  "background_color": "#151516",
+  "theme_color": "#151516",
   "icons": [
     {"src": "icon.svg", "sizes": "any", "type": "image/svg+xml"},
-    {"src": "icon-512.png", "sizes": "512x512", "type": "image/png"},
+    {"src": "icon-192.png", "sizes": "192x192", "type": "image/png", "purpose": "any"},
+    {"src": "icon-512.png", "sizes": "512x512", "type": "image/png", "purpose": "any"},
+    {"src": "icon-512.png", "sizes": "512x512", "type": "image/png", "purpose": "maskable"},
     {"src": "icon-180.png", "sizes": "180x180", "type": "image/png"}
   ]
 }
