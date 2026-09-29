@@ -1,0 +1,548 @@
+8bedbfc389	secure	Ms. Lee found a [secure] job with a large shipping company.	이 씨는 대형 해운 회사에서 【안정적인】 일자리를 구했다.
+3546fb6031	secure	Your payment information is kept [secure] on our servers.	고객님의 결제 정보는 저희 서버에 【안전하게】 보관된다.
+38d0163460	secure	Heavy shelves should be [secured] to the wall.	무거운 선반은 벽에 【고정해야】 한다.
+ac25899f4d	secure	The agency [secured] a deal with a major sports brand.	그 대행사는 대형 스포츠 브랜드와 계약을 【따냈다】.
+e7ccf34b42	acclaimed	The film was [acclaimed] by critics.	그 영화는 평론가들에게 【찬사를 받았다】.
+16d824053d	acclaimed	The hotel restaurant is run by an [acclaimed] chef from Lyon.	그 호텔 식당은 리옹 출신의 【호평받는】 요리사가 운영한다.
+103bbc866f	acclaimed	The bakery is widely [acclaimed] for its fresh sourdough bread.	그 빵집은 신선한 사워도우 빵으로 널리 【호평받고】 있다.
+6ab47df909	acclaimed	Mr. Novak's first novel was critically [acclaimed] and sold well.	노박 씨의 첫 소설은 평론가들의 【찬사를 받았고】 잘 팔렸다.
+2396bccac0	commute	Many employees [commute] by train.	많은 직원이 기차로 【통근한다】.
+4c3ff133bc	commute	Mr. Han's daily [commute] takes about forty minutes by bus.	한 씨의 매일 【출퇴근】은 버스로 약 40분이 걸린다.
+2e742f56d7	commute	Ms. Obi [commutes] from the suburbs to the city every day.	오비 씨는 매일 교외에서 도시로 【통근한다】.
+4b19f81d1f	commute	The new subway line will shorten the [commute] for many workers.	새 지하철 노선은 많은 직장인의 【통근 시간】을 줄여 줄 것이다.
+970cb315a8	commute	Flexible hours let [commuters] avoid rush-hour traffic.	유연 근무제 덕분에 【통근자들】은 출퇴근 혼잡을 피할 수 있다.
+e57eea8f89	low-cost	The airline offers [low-cost] flights to Tokyo.	그 항공사는 도쿄행 【저가】 항공편을 제공한다.
+5533052cc8	low-cost	The city opened a [low-cost] fitness center for local residents.	시는 지역 주민을 위한 【저렴한】 헬스장을 열었다.
+0723be5c47	low-cost	The startup developed a [low-cost] solar panel for rural homes.	그 신생 기업은 농촌 가정을 위한 【저가형】 태양광 패널을 개발했다.
+356f68bd03	low-cost	Hiring interns is a [low-cost] way to handle extra work in summer.	인턴 채용은 여름철 추가 업무를 처리하는 【비용이 적게 드는】 방법이다.
+a748dee6eb	extraordinary	She showed [extraordinary] talent at a young age.	그녀는 어린 나이에 【비범한】 재능을 보였다.
+3dd15b1604	extraordinary	The hotel staff made an [extraordinary] effort to prepare for the royal visit.	호텔 직원들은 귀빈 방문을 준비하기 위해 【놀라운】 노력을 기울였다.
+ae0617dd7e	extraordinary	The board called an [extraordinary] meeting to discuss the crisis.	이사회는 위기를 논의하기 위해 【임시】 회의를 소집했다.
+bdd0ce3bfd	extraordinary	It is [extraordinary] that the store sold out in just one hour.	매장이 단 한 시간 만에 매진되었다니 【놀랍다】.
+cf2377a991	hospitality industry	He has worked in the [hospitality industry] for years.	그는 수년간 【서비스업】에서 일해 왔다.
+7b473dc4cc	hospitality industry	Language skills are highly valued in the [hospitality industry].	【서비스업】에서는 외국어 능력이 매우 중요하게 여겨진다.
+2ef0038215	hospitality industry	The [hospitality industry] is facing a shortage of trained staff.	【서비스업】은 숙련된 인력 부족을 겪고 있다.
+48a97b7f79	hospitality industry	The course prepares students for careers in the [hospitality industry].	그 과정은 학생들이 【서비스업】 분야에서 일하도록 준비시킨다.
+ff641fc449	steep	The hill is too [steep] for cycling.	그 언덕은 자전거를 타기에 너무 【가파르다】.
+2d5622a373	steep	Many small shops closed because of the [steep] rise in rent.	임대료가 【급격히】 올라 많은 작은 가게들이 문을 닫았다.
+484bca1871	steep	Customers complained about the [steep] prices at the airport café.	고객들은 공항 카페의 【비싼】 가격에 불만을 제기했다.
+e192145e3e	steep	Staff faced a [steep] learning curve with the new software.	직원들은 새 소프트웨어를 익히는 데 【큰】 어려움을 겪었다.
+9f174498e3	vigorous	The company took [vigorous] action against fraud.	회사는 사기에 대해 【강력한】 조치를 취했다.
+497d9816d1	vigorous	Mr. Lopez goes for a [vigorous] run every morning before work.	로페즈 씨는 매일 아침 출근 전에 【힘차게】 달리기를 한다.
+16dc8e36d3	vigorous	After [vigorous] debate, the council approved the new budget.	【열띤】 토론 끝에 의회는 새 예산안을 승인했다.
+c5f578c7a2	vigorous	The mayor is a [vigorous] supporter of public transportation.	시장은 대중교통을 【적극적으로】 지지하는 사람이다.
+ee6aae0c89	void	The contract is now [void].	그 계약은 이제 【무효】다.
+c5f61fae6a	void	The coupon is [void] if it is copied or sold.	그 쿠폰은 복사하거나 판매하면 【무효가 된다】.
+13689e4fcd	void	Opening the device yourself will make the warranty [void].	기기를 직접 열면 보증이 【무효가】 된다.
+88f049672e	void	The court declared the agreement null and [void].	법원은 그 합의가 【무효】라고 선언했다.
+9a565587b9	measure	The city took [measures] to reduce pollution.	시는 오염을 줄이기 위한 【조치】를 취했다.
+d0a7e39509	measure	The technician [measured] the room before ordering the new carpet.	기술자는 새 카펫을 주문하기 전에 방의 크기를 【쟀다】.
+875e0db3ef	measure	New safety [measures] were introduced after the accident.	사고 이후 새로운 안전 【조치】가 도입되었다.
+fe9104fdbe	measure	The desk [measures] 150 centimeters in length.	그 책상의 【치수】는 길이 150센티미터이다.
+17e3fa65f5	measure	Customer satisfaction is [measured] through monthly surveys.	고객 만족도는 매달 설문 조사로 【측정된다】.
+29d9ec786a	skeptical	Some experts are [skeptical] about the forecast.	일부 전문가는 그 전망에 【회의적이다】.
+fa84d3bcfe	skeptical	Ms. Tan was [skeptical] of the low price offered by the new supplier.	탄 씨는 새 공급업체가 제시한 낮은 가격을 【의심스러워했다】.
+c07faef257	skeptical	Many investors remain [skeptical] that the plan will succeed.	많은 투자자들은 그 계획이 성공할지 여전히 【의심한다】.
+4b8ee17464	skeptical	The [skeptical] customer asked for proof of the product's safety.	【의심 많은】 고객은 제품 안전성에 대한 증거를 요구했다.
+7ad8d1b466	recipient	The [recipient] must sign for the package.	【수령인】은 소포에 서명해야 한다.
+1d94e9e1ba	recipient	The [recipients] of this year's sales award will be announced on Friday.	올해 영업상 【수상자】들은 금요일에 발표될 것이다.
+a306b30ae6	recipient	Please write the [recipient]'s name and address clearly on the envelope.	봉투에 【받는 사람】의 이름과 주소를 또렷하게 적어 주세요.
+2363e6ccbf	recipient	Ms. Ferro was the first [recipient] of the company's new scholarship.	페로 씨는 회사가 새로 만든 장학금의 첫 【수혜자】였다.
+0e6576a0f3	ergonomic	The keyboard has an [ergonomic] design.	그 키보드는 【인체 공학적】 디자인을 갖고 있다.
+68c47aa7bf	ergonomic	The company bought [ergonomic] chairs to reduce back pain among staff.	그 회사는 직원들의 허리 통증을 줄이려고 【인체 공학적인】 의자를 샀다.
+0132902099	ergonomic	The office was redesigned to be more [ergonomic] for staff.	사무실은 직원들에게 더 【인체 공학적】이도록 새로 설계되었다.
+3d1e77d202	ergonomic	Is this chair [ergonomic] enough for long hours at a desk?	이 의자는 오래 앉아 일하기에 충분히 【인체 공학적인가요】?
+1281dc3551	applicant	All [applicants] must submit a resume and two letters of reference.	모든 【지원자】는 이력서와 추천서 두 통을 제출해야 한다.
+36856f320e	applicant	The HR team narrowed the list of [applicants] down to five.	인사팀은 【지원자】 명단을 다섯 명으로 좁혔다.
+b7a3ae1ab4	applicant	Only [applicants] with a valid driver's license will be considered.	유효한 운전면허가 있는 【지원자】만 검토 대상이 된다.
+51aa89bd7b	applicant	Each [applicant] will be interviewed by two managers.	각 【지원자】는 관리자 두 명과 면접을 본다.
+b3403bd966	applicant	The job attracted more than three hundred [applicants] from overseas.	그 일자리에는 해외에서 300명이 넘는 【지원자】가 몰렸다.
+d9dc1361c3	candidate	The ideal [candidate] will have at least three years of sales experience.	이상적인 【후보자】는 최소 3년의 영업 경력을 갖춘 사람이다.
+78b06e71fb	candidate	Mr. Lee is a strong [candidate] for the regional manager position.	이 씨는 지역 관리자 자리의 유력한 【후보자】이다.
+6d8db4c8d2	candidate	We will contact only the [candidates] selected for an interview.	면접 대상자로 선정된 【지원자】에게만 연락드릴 예정이다.
+2bc0e77527	candidate	Three [candidates] are running for mayor this year.	올해 시장 선거에 세 명의 【후보】가 출마했다.
+261607c787	hire	Brixton Logistics plans to [hire] twenty new drivers this spring.	브릭스턴 물류는 이번 봄에 신규 운전기사 20명을 【고용할】 계획이다.
+0298b48842	hire	Each new [hire] is assigned a mentor during the first month.	각 【신입 사원】에게는 첫 달 동안 멘토가 배정된다.
+bac2998c17	hire	Ms. Tran was [hired] as a sales manager last spring.	트란 씨는 지난봄 영업 관리자로 【채용되었다】.
+716763a85d	hire	The company is not [hiring] at the moment.	그 회사는 현재 【채용】을 하지 않는다.
+258226e874	hire	Bikes are available for [hire] at the hotel entrance.	호텔 입구에서 자전거를 【대여】할 수 있다.
+3e92412818	recruit	The company is actively [recruiting] engineers from local universities.	그 회사는 지역 대학에서 엔지니어를 적극적으로 【채용하고】 있다.
+34c48db43a	recruit	The new [recruits] will complete a two-week training program.	【신입 사원】들은 2주간의 교육 프로그램을 이수할 것이다.
+3fd414a110	recruit	Volunteers were [recruited] to help at the city marathon.	시 마라톤을 도울 자원봉사자들이 【모집되었다】.
+0e54da68a8	recruit	The firm uses social media to [recruit] young talent.	그 회사는 젊은 인재를 【채용하기】 위해 소셜 미디어를 활용한다.
+831e5765dc	recruit	Our newest [recruit] will join the design team on Monday.	우리 【신입 사원】은 월요일에 디자인팀에 합류한다.
+15f83f6e73	promote	Ms. Garcia was [promoted] to senior accountant last month.	가르시아 씨는 지난달 선임 회계사로 【승진했다】.
+fa7b5688e4	promote	The firm hired a local agency to [promote] its new service.	그 회사는 새 서비스를 【홍보하기】 위해 지역 대행사를 고용했다.
+ec16c501e4	promote	The city is working to [promote] tourism in the region.	시는 지역 관광을 【장려하기】 위해 노력하고 있다.
+9d6b6053d0	promote	Regular breaks [promote] better focus and productivity.	규칙적인 휴식은 집중력과 생산성을 【높여 준다】.
+b45bd1ce58	personnel	Only authorized [personnel] may enter the server room.	허가받은 【직원】만 서버실에 들어갈 수 있다.
+a1e96e1992	personnel	Applicants should send their forms to the [personnel] office by Friday.	지원자는 금요일까지 【인사과】로 서류를 보내야 한다.
+2e8919e7a8	personnel	All [personnel] must wear ID badges inside the factory.	모든 【직원】은 공장 안에서 사원증을 착용해야 한다.
+9e387d1c62	personnel	The hospital is short of medical [personnel] this winter.	그 병원은 이번 겨울 의료 【인력】이 부족하다.
+bc455080ea	experienced	We are looking for an [experienced] graphic designer to join our team.	우리는 팀에 합류할 【경력 있는】 그래픽 디자이너를 찾고 있다.
+2fedcfaecf	experienced	Even [experienced] staff members must attend the annual safety training.	【숙련된】 직원들도 연례 안전 교육에 참석해야 한다.
+bf08b79fac	experienced	Ms. Ito is [experienced] in managing large international events.	이토 씨는 대규모 국제 행사 운영에 【경험이 많다】.
+ea5b1a83c8	experienced	Our tour guides are highly [experienced] and speak three languages.	저희 여행 가이드들은 매우 【노련하며】 3개 국어를 한다.
+e5b66d2827	supervise	Mr. Tanaka [supervises] a team of twelve sales representatives.	다나카 씨는 12명의 영업 사원으로 구성된 팀을 【관리한다】.
+f5b94ad50e	supervise	Interns will be closely [supervised] during their first week.	인턴들은 첫 주 동안 가까이에서 【감독을 받을】 것이다.
+20a3c8bf01	supervise	Who will [supervise] the store while the manager is on vacation?	매니저가 휴가 중일 때 누가 매장을 【관리할】 건가요?
+c10c6f7ef8	supervise	Ms. Cole was hired to [supervise] the construction of the new plant.	콜 씨는 새 공장 건설을 【감독하기】 위해 채용되었다.
+911dd5703e	performance	Employees receive a [performance] review at the end of each year.	직원들은 매년 말 【업무 성과】 평가를 받는다.
+1ffdeeaadc	performance	Tickets for Saturday's [performance] sold out in two hours.	토요일 【공연】 표가 두 시간 만에 매진되었다.
+8fffc25a03	performance	The company's strong [performance] this year pleased investors.	올해 회사의 좋은 【실적】은 투자자들을 만족시켰다.
+cc2d87d9d5	performance	The new laptop offers better [performance] at a lower price.	새 노트북은 더 낮은 가격에 더 뛰어난 【성능】을 제공한다.
+95c74ac796	orientation	New employees must attend a one-day [orientation] on their first Monday.	신입 직원은 첫 월요일에 하루 동안 진행되는 【오리엔테이션】에 참석해야 한다.
+57327c2f0a	orientation	The [orientation] session covers company policies and security procedures.	【예비 교육】 시간에는 회사 방침과 보안 절차를 다룬다.
+b317e0b89a	orientation	Please bring a photo ID to the new staff [orientation].	신입 직원 【오리엔테이션】에 사진이 있는 신분증을 가져와 주세요.
+b31b31808d	orientation	[Orientation] for new students will take place in the main hall.	신입생 【예비 교육】은 본관에서 열린다.
+063bd01a04	opening	There are several [openings] in our marketing department.	우리 마케팅 부서에 【공석】이 여러 개 있다.
+29402583af	opening	The grand [opening] of the new branch is scheduled for May 3.	새 지점의 【개업】 행사는 5월 3일로 예정되어 있다.
+69bf6d9b17	opening	We currently have an [opening] for a part-time receptionist.	현재 시간제 접수원 【자리】가 하나 비어 있다.
+b5b6430a0e	opening	The museum's [opening] hours are 9 A.M. to 6 P.M.	박물관 【개관】 시간은 오전 9시부터 오후 6시까지이다.
+78e6df52cb	opening	The CEO made a short speech at the [opening] of the conference.	CEO는 회의 【개막】 때 짧은 연설을 했다.
+b0bda4a0a0	incentive	Staff who exceed their sales targets receive a cash [incentive].	판매 목표를 넘긴 직원은 현금 【장려금】을 받는다.
+1aa9fa0042	incentive	Flexible hours are a strong [incentive] for many job seekers.	유연 근무제는 많은 구직자에게 강력한 【동기 부여 요인】이다.
+e9650f7002	incentive	The city offers tax [incentives] to companies that hire local workers.	시는 지역 주민을 채용하는 기업에 세금 【혜택】을 준다.
+3581c36dd1	incentive	There is little [incentive] for customers to switch to a new bank.	고객이 새 은행으로 옮길 【동기】가 거의 없다.
+7e4beeb465	benefit	The position offers a competitive salary and excellent [benefits].	그 직책은 경쟁력 있는 급여와 훌륭한 【복리 후생】을 제공한다.
+1e3d1ac835	benefit	All departments will [benefit] from the new scheduling software.	모든 부서가 새 일정 관리 소프트웨어로 【도움을 받을】 것이다.
+fe71e6190f	benefit	The new park will [benefit] local families and businesses.	새 공원은 지역 가정과 업체에 【도움이 될】 것이다.
+557c06a6ed	benefit	One [benefit] of the membership is free shipping on all orders.	회원 【혜택】 중 하나는 모든 주문의 무료 배송이다.
+a262f053a0	benefit	The concert was held for the [benefit] of the children's hospital.	그 콘서트는 어린이 병원을 【돕기】 위해 열렸다.
+1a7ef1e995	wage	The minimum [wage] will rise by five percent next year.	최저 【임금】이 내년에 5퍼센트 오를 것이다.
+bdc8d78a39	wage	Part-time workers are paid an hourly [wage] every two weeks.	시간제 근로자는 2주마다 시간당 【임금】을 받는다.
+e2c9812ccb	wage	Workers at the factory are demanding higher [wages].	공장 근로자들은 【임금】 인상을 요구하고 있다.
+496a9446f0	wage	The report compares average [wage] levels across the region.	그 보고서는 지역별 평균 【임금】 수준을 비교한다.
+c8bee1684a	trainee	Each [trainee] will work alongside a senior employee for two weeks.	각 【수습 직원】은 2주 동안 선임 직원과 함께 일하게 된다.
+e43ec88772	trainee	The workshop is limited to fifteen [trainees] per session.	워크숍은 회당 【교육생】 15명으로 제한된다.
+b148071874	trainee	Ms. Park started as a [trainee] and is now a branch manager.	박 씨는 【수습 직원】으로 시작해 지금은 지점장이다.
+02491c6e57	trainee	[Trainee] teachers observe classes for a month before teaching.	【교생】들은 수업을 하기 전에 한 달 동안 수업을 참관한다.
+5da249b82d	mentor	Ms. Novak served as a [mentor] to many young designers.	노박 씨는 많은 젊은 디자이너의 【멘토】 역할을 했다.
+8c1118d4f4	mentor	Senior staff are encouraged to [mentor] new team members.	선임 직원들은 새 팀원들을 【지도하도록】 권장된다.
+fb6f6027ef	mentor	New hires are [mentored] by experienced staff for six months.	신입 사원은 6개월 동안 경력 직원에게 【지도를 받는다】.
+c4c91347a9	mentor	The company runs a [mentoring] program for young employees.	그 회사는 젊은 직원을 위한 【멘토링】 프로그램을 운영한다.
+79aa4c63d7	competent	Mr. Ahmed is a highly [competent] project manager.	아메드 씨는 매우 【유능한】 프로젝트 관리자이다.
+ca3330078b	competent	Applicants must be [competent] in spreadsheet software.	지원자는 스프레드시트 프로그램을 【능숙하게】 다룰 수 있어야 한다.
+36d602786a	competent	We need a [competent] translator for the Tokyo meeting.	도쿄 회의를 위해 【유능한】 통역사가 필요하다.
+6052655f4e	competent	She is [competent] to handle the account on her own.	그녀는 그 고객 업무를 혼자 처리할 【능력이 있다】.
+a8c025a41f	proficient	Candidates should be [proficient] in both English and Spanish.	지원자는 영어와 스페인어 둘 다 【능숙해야】 한다.
+7dc0f7c6a6	proficient	After three months, most trainees become [proficient] at using the booking system.	3개월이 지나면 대부분의 교육생이 예약 시스템 사용에 【숙달된다】.
+2c9b51a212	proficient	A [proficient] user of the software can finish the task in minutes.	그 소프트웨어에 【능숙한】 사용자는 몇 분 만에 작업을 끝낼 수 있다.
+cb14dcfa10	proficient	Staff must become fully [proficient] with the new register by Friday.	직원들은 금요일까지 새 계산대 사용에 완전히 【익숙해져야】 한다.
+03a754593e	dedicated	The director thanked our [dedicated] staff for their hard work this year.	이사는 올해 수고해 준 【헌신적인】 직원들에게 감사를 전했다.
+e761c0595a	dedicated	The company opened a [dedicated] training center for new employees.	회사는 신입 직원을 위한 【전용】 교육 센터를 열었다.
+cce8b24f8f	dedicated	Mr. Fox is [dedicated] to providing excellent customer service.	폭스 씨는 훌륭한 고객 서비스를 제공하는 데 【헌신한다】.
+ac8e53833d	dedicated	The hotel has a [dedicated] lane for electric vehicle charging.	그 호텔에는 전기차 충전 【전용】 차선이 있다.
+e9c45d2ad9	credential	Applicants should bring copies of their professional [credentials] to the interview.	지원자는 면접에 전문 【자격증】 사본을 가져와야 한다.
+61a290f057	credential	Dr. Kim's academic [credentials] impressed the hiring committee.	김 박사의 학문적 【이력】은 채용 위원회에 깊은 인상을 주었다.
+edc76b2108	credential	Please show your press [credentials] at the entrance.	입구에서 기자 【출입증】을 보여 주세요.
+c88f33096d	credential	The consultant has strong [credentials] in the energy industry.	그 컨설턴트는 에너지 업계에서 탄탄한 【경력】을 갖추고 있다.
+8e6654ae4f	familiarize	New staff should [familiarize] themselves with the safety manual before starting.	신입 직원은 업무 시작 전에 안전 설명서를 【숙지해야】 한다.
+2fa16e69a8	familiarize	The tour will [familiarize] interns with the layout of the building.	견학을 통해 인턴들은 건물 배치에 【익숙해질】 것이다.
+84b60280c2	familiarize	Take a few minutes to [familiarize] yourself with the emergency exits.	잠시 시간을 내어 비상구 위치를 【숙지해】 주세요.
+27091c60bb	familiarize	Ms. Obi spent her first week [familiarizing] herself with company policies.	오비 씨는 첫 주를 회사 정책을 【익히는】 데 보냈다.
+ab18e7c0bc	workforce	Nearly half of our [workforce] works remotely at least twice a week.	우리 【전 직원】의 거의 절반이 일주일에 최소 두 번은 원격 근무를 한다.
+e5d4fe3bc8	workforce	Delmont Bank plans to expand its [workforce] by 15 percent.	델몬트 은행은 【인력】을 15퍼센트 늘릴 계획이다.
+c410cc1c2f	workforce	Women now make up 60 percent of the company's [workforce].	현재 여성이 회사 【전체 인력】의 60퍼센트를 차지한다.
+30498dd1ec	workforce	The city needs a skilled [workforce] to attract tech companies.	시가 기술 기업을 유치하려면 숙련된 【인력】이 필요하다.
+72ee64a62c	prospective	[Prospective] employees may tour the office before the interview.	【예비】 직원들은 면접 전에 사무실을 둘러볼 수 있다.
+e4dcddd121	prospective	The job fair gives students a chance to meet [prospective] employers.	취업 박람회는 학생들에게 【잠재적인】 고용주를 만날 기회를 준다.
+44fc6a8c5a	prospective	The agent showed the house to several [prospective] buyers.	중개인은 여러 【예비】 구매자에게 그 집을 보여 주었다.
+953eb7b0a6	prospective	[Prospective] students can join a campus tour every Saturday.	【입학 희망】 학생들은 매주 토요일 캠퍼스 투어에 참여할 수 있다.
+78da8262d6	diligent	Ms. Chen was praised for her [diligent] work on the annual report.	첸 씨는 연례 보고서 작업에서 보여 준 【성실한】 태도로 칭찬받았다.
+dd39d79772	diligent	Thanks to [diligent] preparation, the training program ran smoothly.	【꼼꼼한】 준비 덕분에 교육 프로그램이 순조롭게 진행되었다.
+905fbb8cb5	diligent	Mr. Kaur is [diligent] about checking every invoice for errors.	카우르 씨는 모든 청구서의 오류를 【꼼꼼하게】 확인한다.
+b39a9acfce	diligent	Our cleaning staff are [diligent] and reliable.	저희 청소 직원들은 【성실하고】 믿을 만하다.
+84d06cf761	morale	The team-building retreat greatly improved employee [morale].	팀 단합 수련회는 직원들의 【사기】를 크게 높였다.
+4f41b31a99	morale	Low [morale] among staff can lead to high turnover.	직원들의 낮은 【의욕】은 높은 이직률로 이어질 수 있다.
+bc5e42dfac	morale	Free lunches on Fridays helped boost [morale] in the office.	금요일 무료 점심 덕분에 사무실의 【사기】가 올라갔다.
+30488c23f0	morale	Staff [morale] has been high since the new director arrived.	새 이사가 온 뒤로 직원들의 【사기】가 높다.
+3590a7f8a9	agenda	The first item on the [agenda] is the budget for next quarter.	【안건】의 첫 번째 항목은 다음 분기 예산이다.
+865e076c35	agenda	Participants should review the meeting [agenda] before Thursday.	참석자들은 목요일 전에 회의 【의제】를 검토해야 한다.
+f46b1adba9	agenda	Please send me any items you want to add to the [agenda].	【안건】에 추가하고 싶은 항목이 있으면 보내 주세요.
+09097f8d51	agenda	Customer satisfaction is high on the company's [agenda] this year.	올해 고객 만족은 회사의 【주요 과제】이다.
+a70b952ee6	attend	All department heads are required to [attend] the weekly meeting.	모든 부서장은 주간 회의에 【참석해야】 한다.
+d56172b2c4	attend	Mr. Holt [attended] a business school in Toronto.	홀트 씨는 토론토의 경영 대학원에 【다녔다】.
+cca13daff6	attend	More than five hundred people [attended] the product launch.	500명이 넘는 사람들이 제품 출시 행사에 【참석했다】.
+99b7d0ecd2	attend	Nurses [attend] to patients around the clock.	간호사들은 하루 종일 환자를 【돌본다】.
+6fa097210a	deadline	The [deadline] for submitting expense reports is the 25th of each month.	경비 보고서 제출 【마감일】은 매달 25일이다.
+8661155c9a	deadline	The design team worked late to meet the client's [deadline].	디자인팀은 고객의 【마감 기한】을 맞추기 위해 늦게까지 일했다.
+260a8d3045	deadline	The [deadline] has been extended to next Monday.	【마감일】이 다음 주 월요일로 연장되었다.
+f1a890c572	deadline	Late applications received after the [deadline] will not be accepted.	【마감】 이후에 접수된 지원서는 받지 않는다.
+7fc80370ff	colleague	Ms. Rivera shared the award with her [colleagues] on the research team.	리베라 씨는 연구팀 【동료】들과 그 상을 함께 나눴다.
+a68eed82f0	colleague	I will ask a [colleague] to answer my calls while I am away.	자리를 비운 동안 【동료】에게 전화 응대를 부탁할 것이다.
+532bbd405b	colleague	Mr. Tate is well respected by his [colleagues].	테이트 씨는 【동료】들에게 존경을 받는다.
+16e534997c	colleague	Please introduce yourself to your new [colleagues] at the meeting.	회의에서 새 【동료】들에게 자기소개를 해 주세요.
+35f5e7f9d4	stationery	The office manager orders [stationery] and printer ink every month.	사무실 관리자는 매달 【문구류】와 프린터 잉크를 주문한다.
+7a61971f06	stationery	The new company logo will appear on all official [stationery].	새 회사 로고는 모든 공식 【편지지】에 들어갈 것이다.
+5cb5e2cfc7	stationery	The hotel room comes with free [stationery] and a pen.	호텔 객실에는 무료 【편지지】와 펜이 비치되어 있다.
+cc12e9eac9	stationery	The [stationery] store downtown has a big back-to-school sale.	시내 【문구】점에서 신학기 맞이 대규모 할인을 한다.
+c3d274ef8f	reschedule	The client meeting has been [rescheduled] for next Tuesday.	고객과의 회의가 다음 주 화요일로 【일정이 변경되었다】.
+3070f18395	reschedule	Mr. Park asked to [reschedule] his interview because of a flight delay.	박 씨는 항공편 지연 때문에 면접 【일정을 다시 잡아】 달라고 요청했다.
+c8f51572bd	reschedule	Please call us at least 24 hours in advance to [reschedule].	【일정을 변경하려면】 최소 24시간 전에 전화해 주세요.
+02d4875eca	reschedule	Can we [reschedule] our call for later this afternoon?	통화를 오늘 오후 늦게로 【다시 잡을】 수 있을까요?
+dca7a713ac	tentative	The [tentative] date for the board meeting is June 14.	이사회의 【잠정적인】 날짜는 6월 14일이다.
+b4de4271e4	tentative	The two firms reached a [tentative] agreement on the project timeline.	두 회사는 프로젝트 일정에 대해 【잠정】 합의에 이르렀다.
+82bf3d74d8	tentative	The schedule is [tentative] and may change.	일정은 【잠정적】이며 바뀔 수 있다.
+b635a3defa	tentative	Ms. Lin made [tentative] plans to visit the Busan office in May.	린 씨는 5월에 부산 사무소를 방문할 【잠정적인】 계획을 세웠다.
+8f52c54073	confirm	Participants must [confirm] their attendance by replying to the e-mail.	참석자는 이메일에 회신하여 참석 여부를 【확정해야】 한다.
+6c70287f4a	confirm	The vendor [confirmed] that the chairs would arrive on Monday.	판매업체는 의자가 월요일에 도착할 것이라고 【확인해 주었다】.
+ea406489c4	confirm	Your reservation has been [confirmed] for May 5.	고객님의 예약이 5월 5일로 【확정되었다】.
+b0c856134c	confirm	Could you [confirm] the delivery address, please?	배송 주소를 【확인해】 주시겠어요?
+9ea827235e	notify	Staff will be [notified] of any schedule changes by e-mail.	직원들은 일정 변경 사항을 이메일로 【통지받을】 것이다.
+b5a4b267f5	notify	Employees must [notify] their manager if they cannot attend the meeting.	직원은 회의에 참석할 수 없으면 관리자에게 【알려야】 한다.
+1fd1f82e88	notify	Please [notify] us in writing if your address changes.	주소가 바뀌면 서면으로 【알려】 주세요.
+c955fe026b	notify	Winners will be [notified] that they have won by phone.	당첨자에게는 전화로 당첨 사실을 【알린다】.
+631a105a03	submit	All proposals must be [submitted] by 5 P.M. on Friday.	모든 제안서는 금요일 오후 5시까지 【제출되어야】 한다.
+3bb87849a4	submit	Ms. Omar [submitted] her monthly report ahead of schedule.	오마르 씨는 월간 보고서를 예정보다 일찍 【제출했다】.
+dfa34c840b	submit	Please [submit] your application along with a copy of your ID.	신분증 사본과 함께 지원서를 【제출해】 주세요.
+2003709d4c	submit	Have you [submitted] your travel expenses yet?	출장 경비를 벌써 【제출하셨나요】?
+cec042f20e	handout	Copies of the [handout] will be available at the entrance.	【유인물】은 입구에서 받을 수 있다.
+de76a3a4cd	handout	Mr. Ford distributed a [handout] summarizing last quarter's results.	포드 씨는 지난 분기 실적을 요약한 【배포 자료】를 나눠 주었다.
+bf505f7f8b	handout	Please refer to the [handouts] for the full schedule.	전체 일정은 【배포 자료】를 참고해 주세요.
+4b7f3a31b1	handout	The speaker prepared [handouts] for all two hundred attendees.	강연자는 참석자 200명 모두를 위한 【유인물】을 준비했다.
+b538315b84	summarize	Mr. Evans [summarized] the main points of the meeting for absent staff.	에반스 씨는 불참한 직원들을 위해 회의의 요점을 【요약했다】.
+9c2f94eae8	summarize	The report [summarizes] customer feedback from the past six months.	그 보고서는 지난 6개월간의 고객 의견을 【요약해】 담고 있다.
+76bb9c1dcd	summarize	Could you [summarize] the article in a few sentences?	그 기사를 몇 문장으로 【요약해】 주시겠어요?
+efcb6ec011	summarize	[Summarized] results will be posted on the website next week.	【요약된】 결과는 다음 주 웹사이트에 게시된다.
+f125c1ae55	proposal	The committee will review all [proposals] at its next meeting.	위원회는 다음 회의에서 모든 【제안서】를 검토할 것이다.
+7e3120135c	proposal	Ms. Burke's [proposal] to adopt a four-day workweek was approved.	주 4일 근무제를 도입하자는 버크 씨의 【제안】이 승인되었다.
+f2f7920a27	proposal	The city rejected a [proposal] to build a mall near the park.	시는 공원 근처에 쇼핑몰을 짓자는 【제안】을 거부했다.
+22ef68ace0	proposal	Please submit your budget [proposal] by the end of the week.	이번 주 말까지 예산 【제안서】를 제출해 주세요.
+7cf169cd6e	consensus	The managers finally reached a [consensus] on the new office layout.	관리자들은 마침내 새 사무실 배치에 대해 【합의】에 이르렀다.
+2cd57cdc5f	consensus	There is a general [consensus] that meetings should be shorter.	회의가 더 짧아야 한다는 데 전반적인 【공감대】가 형성되어 있다.
+d61c70db53	consensus	The final decision was made by [consensus].	최종 결정은 【합의】로 이루어졌다.
+2b9ef2bcb3	consensus	There is no [consensus] among experts about the cause of the problem.	그 문제의 원인에 대해 전문가들 사이에 【의견 일치】가 없다.
+9ab1d0ca3e	prioritize	Team leaders should [prioritize] tasks that are due this week.	팀장들은 이번 주가 기한인 업무를 【우선 처리해야】 한다.
+b1086b1883	prioritize	The planning meeting helped us [prioritize] next year's projects.	기획 회의는 우리가 내년 프로젝트의 【우선순위를 정하는】 데 도움이 되었다.
+d64cd8756b	prioritize	Learning to [prioritize] is an important skill for new managers.	【우선순위를 정하는】 법을 배우는 것은 신임 관리자에게 중요한 능력이다.
+100e314f66	prioritize	Urgent repairs will be [prioritized] over routine maintenance.	긴급 수리는 정기 정비보다 【우선 처리된다】.
+1712bb0675	facilitate	The new software will [facilitate] communication between branch offices.	새 소프트웨어는 지점 간 소통을 【원활하게 할】 것이다.
+70f0c1d894	facilitate	Ms. Duval will [facilitate] this afternoon's planning session.	뒤발 씨가 오늘 오후 기획 회의를 【진행할】 것이다.
+61311d5a5f	facilitate	The new ramp will [facilitate] access for wheelchair users.	새 경사로는 휠체어 이용자의 출입을 【쉽게 할】 것이다.
+b0af4036ef	facilitate	The workshop was [facilitated] by an outside consultant.	그 워크숍은 외부 컨설턴트가 【진행했다】.
+3ef7e42156	session	The morning [session] will focus on time management skills.	오전 【세션】은 시간 관리 기술에 초점을 맞출 것이다.
+007cf2f923	session	The board met in a closed [session] to discuss the merger.	이사회는 합병을 논의하기 위해 비공개 【회의】를 열었다.
+b5f384f58a	session	The training [sessions] will be held every Tuesday afternoon.	교육 【시간】은 매주 화요일 오후에 열린다.
+e2bf30ec0f	session	Each yoga [session] lasts about fifty minutes.	요가 【수업】은 한 번에 약 50분 동안 진행된다.
+e18d2fd225	session	The parliament is now in [session] until the end of July.	의회는 7월 말까지 【회기】 중이다.
+b3f84f9da9	headquarters	The annual meeting will be held at our [headquarters] in Chicago.	연례 회의는 시카고에 있는 【본사】에서 열릴 것이다.
+7ac992b899	headquarters	Ms. Hale was transferred from a branch office to [headquarters].	헤일 씨는 지점에서 【본사】로 전근되었다.
+c14bc54773	headquarters	The company's [headquarters] is located in downtown Seattle.	그 회사의 【본사】는 시애틀 시내에 있다.
+9740ec85c6	headquarters	All travel requests must be approved by [headquarters].	모든 출장 요청은 【본사】의 승인을 받아야 한다.
+975564b8f9	overview	Mr. Singh gave a brief [overview] of the project at the start of the meeting.	싱 씨는 회의 시작 때 프로젝트의 간략한 【개요】를 설명했다.
+87b0431176	overview	The first chapter of the manual provides an [overview] of office procedures.	설명서의 첫 장은 사무 절차의 【개요】를 보여 준다.
+75b2c9ac05	overview	This video offers a quick [overview] of our main products.	이 영상은 주요 제품의 【개요】를 간단히 보여 준다.
+cb62cdb173	overview	For an [overview] of the tour schedule, see page 3.	투어 일정의 【개요】는 3쪽을 참고해 주세요.
+af741e7edd	input	The manager asked for staff [input] on the new meeting format.	관리자는 새로운 회의 방식에 대한 직원들의 【의견】을 요청했다.
+68ac091dc3	input	Employees must [input] their hours into the timesheet system by Friday.	직원들은 금요일까지 근무 시간을 근무 기록 시스템에 【입력해야】 한다.
+58d787612c	input	Thank you for your valuable [input] on the new design.	새 디자인에 대해 귀중한 【의견】을 주셔서 감사합니다.
+8a1143806d	input	All customer orders are [input] into the system by noon.	모든 고객 주문은 정오까지 시스템에 【입력된다】.
+bda6cdacc3	memo	A [memo] about the new parking policy was sent to all staff.	새로운 주차 방침에 관한 【회람】이 전 직원에게 발송되었다.
+5c761b5e3a	memo	Ms. Grant left a [memo] on my desk about tomorrow's meeting.	그랜트 씨가 내일 회의에 관한 【메모】를 내 책상에 남겼다.
+acd2684c2f	memo	According to the [memo], the office will close early on Friday.	【회람】에 따르면 금요일에는 사무실이 일찍 문을 닫는다.
+dfbc7d2991	memo	Please read the [memos] from the HR department carefully.	인사부에서 온 【회람】을 꼼꼼히 읽어 주세요.
+f8fda4fdaf	forward	I will [forward] the meeting minutes to everyone this afternoon.	오늘 오후에 모든 사람에게 회의록을 【전달하겠다】.
+d9ddf48c34	forward	The team is moving [forward] with the office renovation plan.	팀은 사무실 개조 계획을 【앞으로】 계속 진행하고 있다.
+8430db9ecd	forward	Your mail will be [forwarded] to your new address.	우편물은 새 주소로 【전달될】 것이다.
+61249d46a6	forward	We look [forward] to meeting you at the conference.	학회에서 뵙기를 【고대합니다】.
+79c1444833	forward	Please take one step [forward] when your name is called.	이름이 불리면 한 걸음 【앞으로】 나와 주세요.
+3acb74f3b2	convenient	Ms. Yoon asked the client to suggest a [convenient] time for a call.	윤 씨는 고객에게 통화하기 【편한】 시간을 알려 달라고 요청했다.
+b647c0911e	convenient	The new office is in a [convenient] location near the subway.	새 사무실은 지하철역 근처의 【편리한】 곳에 있다.
+838eebc0b2	convenient	Would Monday morning be [convenient] for you?	월요일 오전이 【괜찮으신가요】?
+d2056f242d	convenient	Online banking makes paying bills more [convenient].	온라인 뱅킹은 요금 납부를 더 【편리하게】 해 준다.
+2f04e23978	occupied	Conference Room B is [occupied] until 3 P.M. today.	B 회의실은 오늘 오후 3시까지 【사용 중이다】.
+b103c25a93	occupied	Mr. Webb is [occupied] with budget meetings all morning.	웹 씨는 오전 내내 예산 회의로 【바쁘다】.
+cbe4858a95	occupied	All the seats in the waiting room were [occupied].	대기실의 모든 좌석이 【차 있었다】.
+cba7f0ff66	occupied	The apartment has been [occupied] by the same tenant for ten years.	그 아파트에는 10년 동안 같은 세입자가 【살고】 있다.
+5cc027bde9	brainstorm	The team met to [brainstorm] ideas for the company anniversary event.	팀은 회사 창립 기념행사 【아이디어를 내기】 위해 모였다.
+7ae00eba7c	brainstorm	We [brainstormed] several solutions to the scheduling problem.	우리는 일정 문제의 해결책을 여러 가지 【브레인스토밍했다】.
+5a1b01782b	brainstorm	Let's [brainstorm] some names for the new coffee blend.	새 커피 블렌드의 이름을 함께 【생각해 봅시다】.
+d81dad43f6	brainstorm	The [brainstorming] session produced over forty ideas.	【브레인스토밍】 회의에서 40개가 넘는 아이디어가 나왔다.
+2876ed4699	advertise	The company [advertises] its products mainly on social media.	그 회사는 주로 소셜 미디어에 제품을 【광고한다】.
+ba4612aa16	advertise	The position was [advertised] in several local newspapers.	그 일자리는 여러 지역 신문에 【광고되었다】.
+a2db5cb86b	advertise	The restaurant [advertised] for a new chef on its website.	그 식당은 웹사이트에 새 요리사 【구인 광고를 냈다】.
+2f9610a696	advertise	The TV sold out in a day because it was [advertised] at half price.	그 TV는 반값으로 【광고되어】 하루 만에 매진되었다.
+613f520e0a	campaign	The new advertising [campaign] increased sales by 20 percent.	새 광고 【캠페인】으로 매출이 20퍼센트 늘었다.
+4d84662685	campaign	Local businesses [campaigned] for more parking downtown.	지역 업체들은 시내 주차 공간을 늘리기 위해 【운동을 벌였다】.
+a686759631	campaign	The city launched a [campaign] to encourage recycling.	시는 재활용을 장려하는 【캠페인】을 시작했다.
+5b2c35bc7d	campaign	Residents are [campaigning] against the new highway.	주민들은 새 고속도로 건설에 반대하는 【운동을 벌이고】 있다.
+edb6e76433	consumer	Many [consumers] now prefer products with eco-friendly packaging.	이제 많은 【소비자】가 친환경 포장 제품을 선호한다.
+fbad19ffd6	consumer	The study measured [consumer] confidence in the local economy.	그 연구는 지역 경제에 대한 【소비자】 신뢰도를 측정했다.
+b4c390dd74	consumer	The new law protects [consumers] from false advertising.	새 법은 허위 광고로부터 【소비자】를 보호한다.
+f5e29bc0dd	consumer	[Consumer] spending rose sharply during the holiday season.	연휴 기간에 【소비자】 지출이 크게 늘었다.
+45c517a4fa	target	The sales team met its quarterly [target] two weeks early.	영업팀은 분기 【목표】를 2주 일찍 달성했다.
+f6cac3f39f	target	The new line of snacks is [targeted] at young professionals.	새 과자 제품군은 젊은 직장인을 【대상으로 한다】.
+113ed29fd8	target	Our main [target] market is people in their twenties.	저희의 주요 【목표】 시장은 20대이다.
+2dec21317b	target	The campaign [targets] first-time home buyers.	그 캠페인은 생애 첫 주택 구매자를 【대상으로 한다】.
+eabbd1e81a	target	Sales are on [target] to reach one million dollars this year.	매출은 올해 100만 달러라는 【목표】를 무난히 달성할 전망이다.
+3bbf328039	brand	The company spent millions to build a strong [brand] in Asia.	그 회사는 아시아에서 강력한 【브랜드】를 구축하기 위해 수백만 달러를 썼다.
+d272284b73	brand	Customers tend to stay loyal to [brands] they trust.	고객은 신뢰하는 【상표】를 계속 이용하는 경향이 있다.
+1ed6a471f8	brand	The store sells both famous [brands] and its own products.	그 매장은 유명 【브랜드】 제품과 자체 상품을 모두 판다.
+05d15115b2	brand	The company hired a designer to update its [brand] image.	그 회사는 【브랜드】 이미지를 새롭게 하려고 디자이너를 고용했다.
+a023f77085	brand	The new product was [branded] as a luxury item.	신제품은 고급 제품으로 【홍보되었다】.
+54f583fc30	survey	According to a recent [survey], most shoppers compare prices online.	최근 【설문 조사】에 따르면 대부분의 쇼핑객이 온라인에서 가격을 비교한다.
+efdca5e304	survey	The agency [surveyed] 500 customers about the new logo.	그 대행사는 새 로고에 대해 고객 500명을 【조사했다】.
+e39354676c	survey	Please take a moment to complete our customer [survey].	잠시 시간을 내어 고객 【설문 조사】에 응답해 주세요.
+84d2489959	survey	More than half of those [surveyed] said they shop online weekly.	【조사 대상자】의 절반 이상이 매주 온라인으로 쇼핑한다고 답했다.
+f3647a4b79	survey	A team was sent to [survey] the damage after the storm.	폭풍 후 피해 상황을 【조사하기】 위해 팀이 파견되었다.
+7316877b57	competitor	Our prices are lower than those of our main [competitors].	우리 가격은 주요 【경쟁 업체】들의 가격보다 낮다.
+3e67cf21af	competitor	Harlow Foods lost market share to a new [competitor].	할로우 식품은 새 【경쟁자】에게 시장 점유율을 빼앗겼다.
+373592331e	competitor	Prices dropped as more [competitors] entered the market.	더 많은 【경쟁 업체】가 시장에 들어오면서 가격이 떨어졌다.
+0118163030	competitor	Our [competitor]'s new phone is cheaper but has less memory.	【경쟁 업체】의 새 휴대폰은 더 저렴하지만 메모리가 적다.
+c0f8555e12	feature	The spring catalog [features] our newest outdoor furniture.	봄 카탈로그는 우리의 최신 야외 가구를 【특별히 소개한다】.
+aa977a556f	feature	The magazine ran a [feature] on successful small businesses.	그 잡지는 성공한 소기업에 관한 【특집 기사】를 실었다.
+5680b78c98	feature	The new phone has several useful safety [features].	새 휴대폰에는 유용한 안전 【기능】이 여러 개 있다.
+15543a38af	feature	The hotel was [featured] in a popular travel magazine.	그 호텔은 유명 여행 잡지에 【소개되었다】.
+464e9ee455	feature	The concert will [feature] several local jazz musicians.	그 콘서트에는 지역 재즈 음악가 여러 명이 【출연한다】.
+7e96437dd4	boost	The holiday promotion helped [boost] sales by 15 percent.	연휴 판촉 행사는 매출을 15퍼센트 【끌어올리는】 데 도움이 되었다.
+90f9b6d8d7	boost	The celebrity endorsement gave the brand a major [boost].	유명인의 광고 참여는 그 브랜드에 큰 【힘】이 되었다.
+25a97d020e	boost	A short walk after lunch can [boost] your energy.	점심 후 짧은 산책은 활력을 【높여】 줄 수 있다.
+deedc64d85	boost	Sales have been [boosted] by the new advertising campaign.	새 광고 캠페인 덕분에 매출이 【늘었다】.
+f22b161d45	boost	The tax cut provided a [boost] to small businesses.	감세는 소상공인들에게 【힘】이 되었다.
+159c1f912d	trend	Analysts are closely watching the [trend] toward online shopping.	분석가들은 온라인 쇼핑으로 옮겨 가는 【추세】를 면밀히 지켜보고 있다.
+4e8f197c71	trend	The magazine covers the latest fashion [trends] every month.	그 잡지는 매달 최신 패션 【유행】을 다룬다.
+78d4ba7e4e	trend	The [trend] in the housing market is toward smaller apartments.	주택 시장의 【추세】는 소형 아파트 쪽으로 가고 있다.
+e585e353dd	trend	Working from home has become a growing [trend] among tech firms.	재택근무는 기술 기업들 사이에서 점점 커지는 【추세】가 되었다.
+6b580ab51d	client	Ms. Moreau meets with new [clients] every Monday morning.	모로 씨는 매주 월요일 아침 새 【고객】들을 만난다.
+9473fb9bd4	client	The law firm represents [clients] in contract disputes.	그 법률 사무소는 계약 분쟁에서 【의뢰인】들을 대리한다.
+a51fc039ea	client	Our [client] would like to see the design by Friday.	저희 【고객】께서 금요일까지 디자인을 보고 싶어 하신다.
+71ee26ba0c	client	The firm has built a large [client] base in Europe.	그 회사는 유럽에 큰 【고객】층을 쌓았다.
+91dc3858e2	quota	Each sales representative has a monthly [quota] of 40 units.	각 영업 사원에게는 매달 40대의 판매 【할당량】이 있다.
+c45b2815c1	quota	Mr. Cho exceeded his sales [quota] for the third month in a row.	조 씨는 3개월 연속으로 판매 【목표량】을 넘어섰다.
+49d464cf86	quota	Only two salespeople met their [quotas] last month.	지난달 【할당량】을 채운 영업 사원은 두 명뿐이었다.
+aa1740ad9f	quota	The country set an import [quota] on foreign cars.	그 나라는 외국산 자동차에 수입 【할당량】을 정했다.
+aae48896a9	lucrative	The firm won a [lucrative] contract with a national retailer.	그 회사는 전국적인 소매업체와 【수익성 좋은】 계약을 따냈다.
+bb45bd3845	lucrative	Online advertising has become a [lucrative] business for the publisher.	온라인 광고는 그 출판사에 【돈이 되는】 사업이 되었다.
+3dc9de6633	lucrative	Mr. Olsen left his [lucrative] job to start his own bakery.	올슨 씨는 【보수가 좋은】 직장을 그만두고 자기 빵집을 차렸다.
+5da0d54385	lucrative	Tourism is one of the most [lucrative] industries on the island.	관광업은 그 섬에서 가장 【수익성이 높은】 산업 중 하나이다.
+d4af4a26d6	sponsor	Kellan Motors will [sponsor] this year's city marathon.	켈런 모터스가 올해 시 마라톤 대회를 【후원할】 것이다.
+ffc0ffae43	sponsor	The festival is still looking for corporate [sponsors].	그 축제는 아직 기업 【후원사】를 찾고 있다.
+d0a11f45a7	sponsor	The event is [sponsored] by several local businesses.	그 행사는 여러 지역 업체가 【후원한다】.
+d914cab286	sponsor	Delmont Bank is the main [sponsor] of the jazz festival.	델몬트 은행은 재즈 축제의 주요 【후원사】이다.
+4ae1cd881a	commercial	The film was a [commercial] success despite poor reviews.	그 영화는 혹평에도 불구하고 【상업적】 성공을 거두었다.
+878de4a4df	commercial	The company's new [commercial] will air during the championship game.	그 회사의 새 【광고】는 결승전 중에 방송될 것이다.
+78c04931c7	commercial	This area is zoned for [commercial] use only.	이 지역은 【상업】 용도로만 지정되어 있다.
+8e6d44b187	commercial	The actor appeared in [commercials] for a coffee brand.	그 배우는 한 커피 브랜드의 【광고】에 출연했다.
+1b5e9829a5	wholesale	We sell our products at [wholesale] prices to registered retailers.	우리는 등록된 소매업체에 【도매】 가격으로 제품을 판매한다.
+2be697c2d8	wholesale	The company moved from [wholesale] into direct online sales.	그 회사는 【도매】에서 온라인 직접 판매로 사업을 전환했다.
+bef6318993	wholesale	The shop buys its flowers [wholesale] from a local farm.	그 가게는 지역 농장에서 꽃을 【도매로】 구입한다.
+338df267c5	wholesale	Ms. Reyes runs a [wholesale] business that supplies restaurants.	레예스 씨는 식당에 물건을 공급하는 【도매】 사업을 한다.
+43422feed6	affiliate	The ad will run on all of the network's local [affiliates].	그 광고는 방송사의 모든 지역 【제휴사】에서 방영될 것이다.
+001602e5fc	affiliate	The agency is [affiliated] with a larger media group in London.	그 대행사는 런던의 한 대형 미디어 그룹과 【제휴 관계에】 있다.
+460b3e8661	affiliate	The hotel chain has [affiliates] in over thirty countries.	그 호텔 체인은 30개국 이상에 【제휴사】를 두고 있다.
+36f5497a29	affiliate	The clinic [affiliated] with a university hospital last year.	그 의원은 작년에 대학 병원과 【제휴했다】.
+24888fd9b9	expand	The company plans to [expand] into South American markets next year.	그 회사는 내년에 남미 시장으로 【사업을 확장할】 계획이다.
+5dc48232d8	expand	The bakery [expanded] its menu to include vegan desserts.	그 제과점은 비건 디저트를 포함하도록 메뉴를 【늘렸다】.
+ec354bd411	expand	The parking lot will be [expanded] to hold two hundred cars.	주차장은 차량 200대를 수용하도록 【확장된다】.
+34b6e11449	expand	The metal [expands] when it is heated.	그 금속은 열을 받으면 【팽창한다】.
+b8f070495f	expand	We are [expanding] our team and hiring three new designers.	저희는 팀을 【늘리며】 새 디자이너 세 명을 채용하고 있다.
+98c74cc352	highlight	The ad [highlights] the car's low fuel consumption.	그 광고는 자동차의 낮은 연료 소비량을 【강조한다】.
+19b42d891f	highlight	The [highlight] of the trade show was a live product demonstration.	무역 박람회의 【하이라이트】는 실시간 제품 시연이었다.
+c0ff4410db	highlight	The report [highlighted] the need for better staff training.	그 보고서는 더 나은 직원 교육의 필요성을 【강조했다】.
+33e270da8b	highlight	Key dates are [highlighted] in yellow on the calendar.	주요 날짜는 달력에 노란색으로 【표시되어】 있다.
+2500feb626	highlight	Here are the [highlights] of this week's sports news.	이번 주 스포츠 뉴스의 【주요 장면】을 소개한다.
+0521681e91	visibility	Sponsoring local events can increase a company's [visibility].	지역 행사를 후원하면 회사의 【인지도】를 높일 수 있다.
+96cb7e9953	visibility	Heavy fog reduced [visibility] on the highway this morning.	오늘 아침 짙은 안개로 고속도로의 【시야】가 나빠졌다.
+7053fe80c6	visibility	The new website gives our products greater online [visibility].	새 웹사이트는 우리 제품의 온라인 【노출】을 높여 준다.
+cacab1dfab	visibility	Drivers should slow down in areas of low [visibility].	운전자는 【시야】가 좋지 않은 지역에서 속도를 줄여야 한다.
+897c62fa2c	impression	A well-designed website makes a strong first [impression] on customers.	잘 디자인된 웹사이트는 고객에게 강한 첫 【인상】을 준다.
+ccf4ad50bb	impression	My [impression] is that the audience liked the new slogan.	내가 받은 【느낌】으로는 청중이 새 슬로건을 마음에 들어 한 것 같다.
+9de5af77ac	impression	Ms. Lam made a good [impression] on the interviewers.	람 씨는 면접관들에게 좋은 【인상】을 남겼다.
+fef4199258	impression	I was under the [impression] that the meeting was canceled.	나는 회의가 취소된 것으로 【알고 있었다】.
+8cd5cd9a87	pitch	Ms. Lowe gave a convincing sales [pitch] to the hotel owners.	로우 씨는 호텔 소유주들에게 설득력 있는 【영업 설명】을 했다.
+980d87ce9f	pitch	The agency [pitched] three campaign ideas to the client.	그 대행사는 고객에게 세 가지 캠페인 아이디어를 【제안했다】.
+ab57d56e08	pitch	Each team will have ten minutes to [pitch] its idea to investors.	각 팀은 투자자들에게 아이디어를 【제안할】 시간 10분을 갖는다.
+17b7e2ab31	pitch	The founder practiced her [pitch] before meeting the bank.	창업자는 은행과 만나기 전에 【발표】 연습을 했다.
+8219d54aa6	spokesperson	A company [spokesperson] said the product would launch in March.	회사 【대변인】은 그 제품이 3월에 출시될 것이라고 말했다.
+86b1412b39	spokesperson	The actress was chosen as the new [spokesperson] for the skincare brand.	그 배우는 그 스킨케어 브랜드의 새 【홍보 대사】로 뽑혔다.
+11016e1180	spokesperson	A [spokesperson] for the airline apologized for the delays.	그 항공사 【대변인】은 운항 지연에 대해 사과했다.
+73c6a11238	spokesperson	The city's [spokesperson] declined to comment on the report.	시 【대변인】은 그 보도에 대해 언급을 거부했다.
+c05d0a10e4	unveil	Tarn Motors will [unveil] its new electric model at the auto show.	탄 모터스는 자동차 박람회에서 새 전기차 모델을 【공개할】 것이다.
+bf713c1704	unveil	The mayor [unveiled] plans for a new downtown park.	시장은 새로운 시내 공원 계획을 【발표했다】.
+0325aae547	unveil	The new logo will be [unveiled] at the company's anniversary party.	새 로고는 회사 창립 기념 파티에서 【공개된다】.
+ac3a15b2ae	unveil	The museum is [unveiling] a statue of its founder next month.	박물관은 다음 달 설립자의 동상을 【제막할】 예정이다.
+7e05f0ec04	showcase	The fair gives local artists a chance to [showcase] their work.	그 박람회는 지역 예술가들에게 작품을 【선보일】 기회를 준다.
+25486b095d	showcase	The annual event is a [showcase] for new mobile games.	그 연례 행사는 새 모바일 게임의 【공개 무대】이다.
+9f00b706c8	showcase	The exhibition [showcases] furniture made by young designers.	그 전시회는 젊은 디자이너들이 만든 가구를 【선보인다】.
+0218181429	showcase	The chef's new menu was [showcased] at the food festival.	그 요리사의 새 메뉴는 음식 축제에서 【소개되었다】.
+697fa77e77	showcase	The glass [showcase] near the entrance displays our best-selling watches.	입구 옆 유리 【진열장】에는 인기 시계들이 전시되어 있다.
+96f57cf84a	fiscal	The company's [fiscal] year ends on March 31.	그 회사의 【회계】 연도는 3월 31일에 끝난다.
+f1efe76e00	fiscal	The city faces serious [fiscal] problems this year.	그 도시는 올해 심각한 【재정】 문제에 직면해 있다.
+bde16a14d5	fiscal	The government announced a stricter [fiscal] policy to reduce the deficit.	정부는 적자를 줄이기 위해 더 엄격한 【재정】 정책을 발표했다.
+2e8785b550	fiscal	Sales in the first [fiscal] quarter exceeded all expectations.	1【회계】 분기 매출이 모든 예상을 뛰어넘었다.
+a0c78c74f9	audit	An external [audit] is conducted every year in January.	매년 1월에 외부 【회계 감사】가 실시된다.
+1d82c4e9d6	audit	Two accountants will [audit] the branch's financial records next week.	회계사 두 명이 다음 주에 지점의 재무 기록을 【감사할】 것이다.
+2c6725bb5c	audit	The tax [audit] found several errors in last year's returns.	세무 【감사】에서 작년 신고서의 여러 오류가 발견되었다.
+8f8e20dea5	audit	Our accounts are [audited] by an independent firm every spring.	우리 회계 장부는 매년 봄 독립 회계법인의 【감사를 받는다】.
+8c7eca26b1	audit	The company will undergo a safety [audit] before the plant reopens.	그 회사는 공장 재가동 전에 안전 【점검】을 받을 것이다.
+529de133e2	invoice	The [invoice] must be paid within 30 days of receipt.	【청구서】 금액은 수령 후 30일 이내에 지불되어야 한다.
+45aa4b5577	invoice	We will [invoice] the client after the work is completed.	우리는 작업이 끝난 후 고객에게 【청구서를 보낼】 것이다.
+179a8bb530	invoice	Please include the [invoice] number when you make a payment.	대금을 지불하실 때 【송장】 번호를 함께 적어 주세요.
+28c725bfc9	invoice	Clients are [invoiced] at the end of each month.	고객들은 매달 말에 【청구서를 받는다】.
+e3b19e99ab	invoice	Several [invoices] from March have not been processed yet.	3월에 받은 【청구서】 몇 건이 아직 처리되지 않았다.
+c26054ce1e	balance	The remaining [balance] is due upon delivery.	남은 【잔액】은 배송 시 지불해야 한다.
+82f8b0a3ce	balance	The finance team worked hard to [balance] the budget.	재무팀은 예산의 【균형을 맞추기】 위해 열심히 노력했다.
+535b8ed095	balance	You can check your account [balance] through our mobile app.	저희 모바일 앱에서 계좌 【잔액】을 확인할 수 있습니다.
+43db59d252	balance	It is important to keep a healthy [balance] between work and rest.	일과 휴식 사이의 건강한 【균형】을 유지하는 것이 중요하다.
+06e9c0ebdc	profit	The company's [profits] rose 12 percent in the second quarter.	그 회사의 【이익】은 2분기에 12퍼센트 증가했다.
+6a337943d5	profit	Small firms can [profit] from the new tax rules.	소규모 회사들은 새 세법으로 【이익을 얻을】 수 있다.
+39553d55aa	profit	The bakery made a small [profit] in its first year of business.	그 빵집은 개업 첫해에 약간의 【이익】을 냈다.
+70f788b0ca	profit	Half of the [profits] from the event will go to charity.	행사 【수익금】의 절반은 자선 단체에 기부된다.
+946016e9dd	earnings	Varden Corp. will announce its quarterly [earnings] on Thursday.	바든 사는 목요일에 분기 【실적】을 발표할 것이다.
+f918330f7c	earnings	Her [earnings] increased after she became a full-time consultant.	그녀의 【소득】은 정규직 컨설턴트가 된 후 늘었다.
+9fe028f298	earnings	[Earnings] per share fell slightly compared to last year.	주당 【순이익】이 작년에 비해 조금 줄었다.
+51170324dc	earnings	Analysts expect strong [earnings] from the retail sector this quarter.	분석가들은 이번 분기 소매 부문의 좋은 【실적】을 예상한다.
+138f608a35	deduct	Taxes are automatically [deducted] from employees' monthly salaries.	세금은 직원들의 월급에서 자동으로 【공제된다】.
+85e6a15e3c	deduct	A $20 processing fee will be [deducted] from the total amount.	총액에서 20달러의 처리 수수료가 【차감될】 것이다.
+9025b615b3	deduct	Please [deduct] the cost of the damaged items from our next bill.	파손된 물품 비용은 다음 청구서에서 【빼】 주세요.
+29effa9477	deduct	How much will be [deducted] for health insurance each month?	매달 건강보험료로 얼마가 【공제되나요】?
+74c8a73095	deduct	The judges [deducted] points from teams that went over the time limit.	심사위원들은 제한 시간을 넘긴 팀의 점수를 【깎았다】.
+fdfe9225de	forecast	The sales [forecast] for next year looks very promising.	내년 매출 【전망】은 매우 밝아 보인다.
+737ea77f0f	forecast	Analysts [forecast] a slight drop in interest rates next year.	분석가들은 내년에 금리가 약간 떨어질 것으로 【예측한다】.
+acca105aa6	forecast	The weather [forecast] calls for heavy rain during the outdoor event.	일기 【예보】에 따르면 야외 행사 중 폭우가 내린다고 한다.
+d372d8fcfd	forecast	Profits are [forecast] to grow by eight percent next year.	내년에 이익이 8퍼센트 증가할 것으로 【예측된다】.
+741c351f38	projection	Revenue [projections] for the third quarter were revised upward.	3분기 수익 【추정치】가 상향 조정되었다.
+f025d95e07	projection	The actual costs were far higher than the initial [projections].	실제 비용은 초기 【예상】보다 훨씬 높았다.
+b2eef2634c	projection	Sales exceeded [projections] for the third month in a row.	매출이 석 달 연속 【예상치】를 넘어섰다.
+5b12810b93	projection	According to the latest [projection], the project will be finished by May.	최신 【추정】에 따르면 그 프로젝트는 5월까지 완료될 것이다.
+e3ed209475	shareholder	[Shareholders] will vote on the proposal at the annual meeting.	【주주】들은 연례 총회에서 그 제안에 대해 투표할 것이다.
+30e99bad30	shareholder	The CEO sent a letter to [shareholders] explaining the loss.	최고 경영자는 손실을 설명하는 서한을 【주주】들에게 보냈다.
+fbc7c614e2	shareholder	The annual [shareholders'] meeting will be held on April 12.	연례 【주주】 총회는 4월 12일에 열린다.
+110d6636f1	shareholder	Kellam Holdings is the largest [shareholder] in the airline.	켈럼 홀딩스는 그 항공사의 최대 【주주】이다.
+d58717883d	dividend	The board approved a quarterly [dividend] of 50 cents per share.	이사회는 주당 50센트의 분기 【배당금】을 승인했다.
+160aca644f	dividend	Investors expect higher [dividends] after the company's record year.	투자자들은 회사가 기록적인 한 해를 보낸 후 더 높은 【배당금】을 기대한다.
+cf0ae2e7fd	dividend	The company paid no [dividend] this year because of weak sales.	그 회사는 매출 부진으로 올해 【배당금】을 지급하지 않았다.
+5ea2b9daef	dividend	Regular exercise pays [dividends] in both health and productivity.	규칙적인 운동은 건강과 생산성 모두에서 【좋은 성과를 낸다】.
+f8cbd08733	deposit	A [deposit] of 20 percent is required to reserve the banquet hall.	연회장을 예약하려면 20퍼센트의 【계약금】이 필요하다.
+722a9ac56d	deposit	Salaries are [deposited] directly into employees' bank accounts.	급여는 직원들의 은행 계좌로 직접 【입금된다】.
+f0440b764f	deposit	Please [deposit] the checks at the bank before 3 P.M.	오후 3시 전에 은행에 수표를 【입금해】 주세요.
+31066b74fd	deposit	The security [deposit] will be returned when you move out.	이사 나가실 때 【보증금】을 돌려 드립니다.
+9ba1aeb61b	deposit	Customers can make [deposits] at any of our ATMs.	고객들은 저희 ATM 어디서나 【예금】을 할 수 있다.
+f2bb1c6c49	capital	The startup raised $2 million in [capital] from investors.	그 신생 기업은 투자자들로부터 200만 달러의 【자본】을 모았다.
+b9706049c2	capital	The company will open a new office in the nation's [capital].	그 회사는 【수도】에 새 사무실을 열 것이다.
+c28fec0566	capital	The firm lacks the [capital] needed to build a new factory.	그 회사는 새 공장을 지을 【자본】이 부족하다.
+8c527f928a	capital	Milan is often described as the fashion [capital] of Italy.	밀라노는 흔히 이탈리아 패션의 【중심지】로 불린다.
+e4971def1a	fund	The project was cancelled due to a lack of [funds].	그 프로젝트는 【자금】 부족으로 취소되었다.
+3144d60281	fund	The research is [funded] by a government grant.	그 연구는 정부 보조금으로 【자금을 지원받는다】.
+f3bc78d3cc	fund	Employees raised [funds] for the local children's hospital.	직원들이 지역 어린이 병원을 위해 【기금】을 모금했다.
+b099f5c48c	fund	The city will [fund] the construction of three new parks.	시는 새 공원 세 곳의 건설에 【자금을 댈】 것이다.
+9389ba6d7f	subsidy	Farmers receive a government [subsidy] for using clean energy.	농부들은 청정에너지를 사용하는 대가로 정부 【보조금】을 받는다.
+ba1a9ebf54	subsidy	The company offers a monthly transit [subsidy] to all employees.	그 회사는 전 직원에게 월 교통비 【지원금】을 제공한다.
+91c47fe9c5	subsidy	Many small farms depend on [subsidies] to stay in business.	많은 소규모 농장이 사업을 유지하기 위해 【보조금】에 의존한다.
+8525e5ee4f	subsidy	The government plans to cut [subsidies] for fuel next year.	정부는 내년에 연료 【보조금】을 줄일 계획이다.
+f484ea6559	loan	The bakery took out a small business [loan] to buy new ovens.	그 제과점은 새 오븐을 사기 위해 소상공인 【대출】을 받았다.
+8d2287c5af	loan	The museum [loaned] several paintings to a gallery in Paris.	그 박물관은 파리의 한 미술관에 그림 몇 점을 【빌려주었다】.
+f77123a4b7	loan	The bank approved our [loan] application within a week.	은행은 일주일 만에 우리의 【대출】 신청을 승인했다.
+ef37a6623c	loan	Mr. Park paid back the [loan] two years early.	박 씨는 【대출금】을 2년 일찍 갚았다.
+362bcf06fe	loan	The projector is on [loan] from the marketing department.	그 프로젝터는 마케팅 부서에서 【빌려 온】 것이다.
+d6275a76c9	debt	The company has reduced its [debt] by 30 percent since 2020.	그 회사는 2020년 이후 【부채】를 30퍼센트 줄였다.
+42a1ba4478	debt	Mr. Barnes used his bonus to pay off his credit card [debt].	반스 씨는 상여금으로 신용 카드 【빚】을 갚았다.
+ffef69bd0e	debt	The struggling retailer is deeply in [debt] to its suppliers.	경영난에 빠진 그 소매업체는 공급업체들에 큰 【빚】을 지고 있다.
+733cb14eb4	debt	We are in your [debt] for helping us meet the deadline.	마감을 맞추도록 도와주셔서 【신세】를 졌습니다.
+a6d3cea5a3	overdue	A reminder was sent to clients with [overdue] payments.	대금이 【연체된】 고객들에게 독촉장이 발송되었다.
+925d151230	overdue	A review of the accounting system is long [overdue].	회계 시스템에 대한 검토는 【진작 했어야 할】 일이다.
+0abe8adeb6	overdue	Library books that are [overdue] will be charged a small fee.	【반납 기한이 지난】 도서관 책에는 소액의 연체료가 부과된다.
+1c7b986346	overdue	Your electricity bill is two weeks [overdue].	귀하의 전기 요금이 2주 【연체되었습니다】.
+d4cf9b3043	payable	The course fee is [payable] in full before classes begin.	수강료는 수업이 시작되기 전에 전액 【지불해야 한다】.
+f363ec300d	payable	All checks should be made [payable] to Lorimer Arts Center.	모든 수표는 로리머 아트 센터 【앞으로】 발행해야 한다.
+64ad2b3a29	payable	The first payment is [payable] on the first day of each month.	첫 납부금은 매달 1일에 【내야 한다】.
+97d4a65877	payable	The accounts [payable] team processes supplier invoices every Friday.	【매입 채무】 팀은 매주 금요일 공급업체 송장을 처리한다.
+835aaec65a	installment	The loan will be repaid in 24 monthly [installments].	그 대출금은 24개월 【할부】로 상환될 것이다.
+28d5c0c2da	installment	The final [installment] of the consulting fee is due in June.	컨설팅 비용의 마지막 【분할 납부금】은 6월에 지급해야 한다.
+bc515bc2a3	installment	Customers can pay for the sofa in three [installments].	고객은 소파 값을 3회 【할부】로 낼 수 있다.
+4507a4593b	installment	The second [installment] of the documentary series airs next week.	그 다큐멘터리 시리즈의 두 번째 【편】이 다음 주에 방송된다.
+f9802c5968	incur	Employees will be repaid for travel expenses [incurred] during the trip.	직원들은 출장 중 【발생한】 여행 경비를 돌려받을 것이다.
+1a7f1b28f5	incur	The company [incurred] heavy losses after the warehouse fire.	그 회사는 창고 화재 이후 큰 손실을 【입었다】.
+a4ef193a9a	incur	Customers who cancel late will [incur] a $30 fee.	늦게 취소하는 고객에게는 30달러의 수수료가 【발생한다】.
+771e8ede1f	incur	The company [incurred] significant debt to finance the expansion.	그 회사는 확장 자금을 마련하려고 상당한 부채를 【떠안았다】.
+ee82f2a5d4	cost-effective	Hiring a temporary accountant is more [cost-effective] than paying overtime.	임시 회계사를 고용하는 것이 초과 근무 수당을 주는 것보다 【비용 효율이 높다】.
+81a175dad2	cost-effective	We are looking for a [cost-effective] way to store old records.	우리는 오래된 기록을 보관할 【비용이 적게 드는】 방법을 찾고 있다.
+55163ed980	cost-effective	Online advertising proved to be the most [cost-effective] option.	온라인 광고가 가장 【비용 효율이 높은】 방법으로 드러났다.
+cde50b7be2	cost-effective	Is it more [cost-effective] to repair the old printer or buy a new one?	낡은 프린터를 고치는 것과 새로 사는 것 중 어느 쪽이 더 【비용 효율적일까】?
+04134bdea8	curb	The new policy is intended to [curb] unnecessary spending.	새 방침은 불필요한 지출을 【억제하기】 위한 것이다.
+32d45d3061	curb	A delivery van was parked along the [curb] outside the bank.	배달 차량 한 대가 은행 앞 【연석】을 따라 주차되어 있었다.
+d12d81ec36	curb	Efforts to [curb] rising prices have not been successful.	치솟는 물가를 【억제하려는】 노력은 성공하지 못했다.
+d45ed6ed2a	curb	The city introduced new measures to [curb] traffic in the downtown area.	시는 도심 교통량을 【줄이기】 위한 새 대책을 도입했다.
+75d6ffa842	net	The company's [net] income rose to $4.5 million last year.	그 회사의 【순】이익은 작년에 450만 달러로 증가했다.
+4c1e278843	net	The charity auction [netted] more than $50,000.	그 자선 경매는 5만 달러 이상의 【순수익을 올렸다】.
+2bac8daf3e	net	The [net] weight of the package is 500 grams.	그 포장 제품의 【순】 중량은 500그램이다.
+818a50b9af	net	Her [net] salary after taxes is about $4,000 a month.	세금을 뗀 그녀의 【실수령】 월급은 약 4,000달러이다.
+b92f0a6985	margin	Rising fuel costs have reduced our profit [margins].	연료비 상승으로 우리의 【이윤 폭】이 줄었다.
+c77944af3c	margin	The budget proposal was approved by a narrow [margin].	그 예산안은 근소한 【차이】로 승인되었다.
+226de48d52	margin	Please leave a wide [margin] on the left side of each page.	각 페이지 왼쪽에 【여백】을 넓게 남겨 주세요.
+9f612de537	margin	Our team won the sales contest by a wide [margin].	우리 팀은 판매 경쟁에서 큰 【차이】로 이겼다.
+37cb770436	margin	Luxury goods usually have high profit [margins].	명품은 보통 【이윤 폭】이 크다.
+d584784e3e	contract	Both parties signed the [contract] on Monday morning.	양측은 월요일 아침에 【계약서】에 서명했다.
+80fb70d111	contract	The city [contracted] a local firm to repair the bridge.	시는 다리 보수를 위해 지역 업체와 【계약했다】.
+d2f97d042d	contract	The company won a three-year [contract] to supply uniforms.	그 회사는 유니폼을 공급하는 3년짜리 【계약】을 따냈다.
+b979ae83e2	contract	Ms. Lee works on a [contract] basis for several publishers.	이 씨는 여러 출판사와 【계약】직으로 일한다.
+ee28ca3e3b	contract	Demand for office space [contracted] sharply last year.	지난해 사무실 수요가 크게 【줄었다】.
+057ab84c2c	agreement	The two companies reached an [agreement] after months of talks.	두 회사는 몇 달간의 협상 끝에 【합의】에 이르렀다.
+fde2a977b1	agreement	The staff were in [agreement] about the new dress code.	직원들은 새 복장 규정에 대해 【의견이 같았다】.
+4a8b71c1e1	agreement	Please read the rental [agreement] carefully before signing it.	서명하기 전에 임대 【계약서】를 꼼꼼히 읽어 주세요.
+9d7413c1aa	agreement	Under the new trade [agreement], tariffs will be lowered.	새 무역 【협정】에 따라 관세가 인하될 것이다.
+a923f05ffc	clause	A new [clause] regarding late deliveries was added to the contract.	배송 지연에 관한 새 【조항】이 계약서에 추가되었다.
+26b94596e7	clause	The lease includes a [clause] that allows early termination.	그 임대 계약서에는 조기 해지를 허용하는 【조항】이 들어 있다.
+daf75599c5	clause	Legal staff reviewed every [clause] before the contract was signed.	계약 체결 전에 법무 직원들이 모든 【조항】을 검토했다.
+d896afb43d	clause	Under [Clause] 7, the tenant is responsible for minor repairs.	제7【조】에 따라 세입자는 경미한 수리를 책임진다.
+8af7ddf366	provision	Under the [provisions] of the agreement, the supplier covers all shipping costs.	계약 【조항】에 따라 공급업체가 모든 배송비를 부담한다.
+38bed27660	provision	The city is responsible for the [provision] of clean water.	시는 깨끗한 물의 【공급】을 책임진다.
+6f2c57ac08	provision	The new law includes a [provision] for paid family leave.	새 법에는 유급 가족 돌봄 휴가에 관한 【조항】이 포함되어 있다.
+df96943cf2	provision	The hotel makes [provisions] for guests with special dietary needs.	그 호텔은 특별 식단이 필요한 손님들을 위한 【대비책】을 마련해 둔다.
+62679092e2	stipulate	The contract [stipulates] that payment must be made within 30 days.	계약서에는 대금을 30일 이내에 지불해야 한다고 【명시되어 있다】.
+52bed7081d	stipulate	Company rules [stipulate] a maximum of ten vacation days per year.	회사 규칙은 연간 휴가를 최대 10일로 【규정하고】 있다.
+48cd9b6c43	stipulate	As [stipulated] in the lease, pets are not allowed in the building.	임대 계약서에 【명시된】 대로 건물 안에는 반려동물을 들일 수 없다.
+741e482a90	stipulate	It is clearly [stipulated] that refunds are not available after 14 days.	14일이 지나면 환불이 불가하다고 분명히 【규정되어】 있다.
+0292d00484	binding	The agreement becomes legally [binding] once both parties sign it.	그 합의는 양측이 서명하면 법적 【구속력】을 갖게 된다.
+ca688d76c8	binding	The results of the staff vote are not [binding] on the board.	직원 투표 결과는 이사회에 대해 【구속력】을 갖지 않는다.
+a14206a0aa	binding	Both companies signed a [binding] contract to share the costs.	두 회사는 비용을 분담하기로 【구속력 있는】 계약을 체결했다.
+ec4145f885	binding	The judge's decision is final and [binding] on all parties.	판사의 결정은 최종적이며 모든 당사자에게 【구속력이 있다】.
+e44d81fc0f	signature	The document requires the [signature] of the department head.	그 문서에는 부서장의 【서명】이 필요하다.
+ae5c77fa6d	signature	Chocolate cake is the bakery's [signature] dessert.	초콜릿 케이크는 그 제과점의 【대표】 디저트이다.
+950e3ef75b	signature	Please add your [signature] at the bottom of the form.	양식 아래쪽에 【서명】을 해 주세요.
+65a78b8479	signature	The petition collected over 2,000 [signatures] in one week.	그 청원은 일주일 만에 2,000명이 넘는 【서명】을 모았다.
+46c12ff199	renew	The company decided not to [renew] its contract with the supplier.	그 회사는 공급업체와의 계약을 【갱신하지】 않기로 했다.
+369826b65a	renew	Staff must [renew] their parking passes before May 1.	직원들은 5월 1일 전에 주차권을 【갱신해야】 한다.
+bf2308a456	renew	Your magazine subscription will be [renewed] automatically each year.	귀하의 잡지 구독은 매년 자동으로 【갱신됩니다】.
+8a9c677e9e	renew	The library sent a reminder about [renewing] borrowed books.	도서관은 빌린 책의 대출 【연장】에 관한 알림을 보냈다.
+40afb48f59	renew	The city [renewed] its efforts to attract new businesses.	시는 새로운 기업을 유치하기 위한 노력을 【다시 강화했다】.
+a4ab6a2534	expire	The current lease will [expire] at the end of December.	현재 임대 계약은 12월 말에 【만료될】 것이다.
+7aabbd60cf	expire	Mr. Voss's gym membership [expired] last month.	보스 씨의 헬스장 회원권은 지난달 【만료되었다】.
+55e4abc912	expire	The special offer [expires] at midnight on Sunday.	이 특별 혜택은 일요일 자정에 【종료된다】.
+8d84909a76	expire	This coupon has [expired] and can no longer be used.	이 쿠폰은 【기한이 지나】 더 이상 사용할 수 없다.
+e61c3adc14	violate	The supplier [violated] the terms of the agreement by delivering late.	그 공급업체는 배송을 늦게 하여 계약 조건을 【위반했다】.
+ab13453629	violate	Smoking inside the building [violates] company policy.	건물 안에서 흡연하는 것은 회사 방침을 【어기는】 것이다.
+749df33df3	violate	Drivers who [violate] parking rules will be fined.	주차 규정을 【위반하는】 운전자는 벌금을 내게 된다.
+3ab8ef5f5b	violate	The company was accused of [violating] safety regulations.	그 회사는 안전 규정을 【위반한】 혐의를 받았다.
+27a9aa16c8	penalty	A [penalty] will be charged for early cancellation of the lease.	임대 계약을 조기 해지하면 【위약금】이 부과된다.
+b59b8bc359	penalty	The new law increases [penalties] for illegal dumping.	새 법은 불법 투기에 대한 【처벌】을 강화한다.
+573d0c2d0b	penalty	There is no [penalty] for paying off the loan early.	대출금을 일찍 갚아도 【위약금】은 없다.
+d0e71abda9	penalty	Late tax payments are subject to a five percent [penalty].	세금을 늦게 내면 5퍼센트의 【가산금】이 부과된다.
+0fd968678c	fine	Drivers who park in the loading zone will pay a $100 [fine].	하역 구역에 주차하는 운전자는 100달러의 【벌금】을 내게 된다.
+5b0f7307f2	fine	The factory was [fined] for exceeding pollution limits.	그 공장은 오염 기준을 초과하여 【벌금을 부과받았다】.
+8a3652585c	fine	City officials will [fine] restaurants that do not recycle.	시 공무원들은 재활용을 하지 않는 식당에 【벌금을 부과할】 것이다.
+2d94081864	fine	The airline paid a large [fine] for keeping passengers waiting on the runway.	그 항공사는 승객들을 활주로에서 오래 기다리게 해 거액의 【벌금】을 냈다.
+2e2719b445	lawsuit	The customer filed a [lawsuit] against the airline.	그 고객은 항공사를 상대로 【소송】을 제기했다.
+50aaf826dc	lawsuit	The [lawsuit] over the logo design lasted nearly three years.	로고 디자인을 둘러싼 【소송】은 거의 3년 동안 이어졌다.
+b6596b7700	lawsuit	The two firms settled the [lawsuit] out of court.	두 회사는 법정 밖에서 【소송】을 합의로 해결했다.
+8bf6913d93	lawsuit	Several [lawsuits] have been filed over the defective heaters.	결함 있는 히터를 두고 여러 건의 【소송】이 제기되었다.
+28cff1b8ac	legal	Managers should consult the [legal] department before signing any contract.	관리자는 어떤 계약이든 서명하기 전에 【법무】팀과 상의해야 한다.
+2754461fb1	legal	It is not [legal] to park on this street overnight.	이 거리에 밤새 주차하는 것은 【합법적이지】 않다.
+2cc27433a8	legal	The company is facing [legal] action from a former employee.	그 회사는 전 직원으로부터 【법적】 조치를 당할 상황이다.
+782013c9be	legal	Ms. Tran gave us [legal] advice on the new partnership.	트랜 씨는 새 제휴에 대해 우리에게 【법률】 자문을 해 주었다.
+7a908bc15a	legislation	New [legislation] requires companies to report their carbon emissions.	새 【법률】은 기업들이 탄소 배출량을 보고하도록 요구한다.
+b2331672fe	legislation	The government plans to introduce [legislation] to protect small businesses.	정부는 소상공인을 보호하기 위한 【법안】을 발의할 계획이다.
+df0d712d87	legislation	The [legislation] was passed by a wide majority.	그 【법안】은 압도적 다수로 통과되었다.
+4649ea6018	legislation	Under current [legislation], stores must close by midnight.	현행 【법률】상 상점은 자정까지 문을 닫아야 한다.
+c5b6905eaf	permit	The owner needs a building [permit] to add a second floor.	소유주는 2층을 증축하려면 건축 【허가증】이 필요하다.
+7dd92c4dd1	permit	Photography is not [permitted] inside the courtroom during trials.	재판 중에는 법정 안에서 사진 촬영이 【허용되지】 않는다.
+246acbaf21	permit	Visitors are not [permitted] to bring food into the gallery.	방문객은 미술관 안에 음식을 반입하는 것이 【허용되지】 않는다.
+1c3060f2a0	permit	The city issued a [permit] for the outdoor concert.	시는 야외 콘서트에 대한 【허가증】을 발급했다.
+f4e301db1b	permit	We will hold the picnic outdoors, weather [permitting].	날씨가 【허락하면】 야유회는 야외에서 열 것이다.
+fd115c5aa2	license	All drivers must carry a valid [license] at all times.	모든 운전자는 항상 유효한 【면허증】을 소지해야 한다.
+3a335bf541	license	The software company [licensed] its technology to three manufacturers.	그 소프트웨어 회사는 세 제조업체에 자사 기술의 사용을 【허가했다】.
+7b49440186	license	Only [licensed] electricians may work on the wiring.	【면허가 있는】 전기 기술자만 배선 작업을 할 수 있다.
+12b2e153b2	license	The restaurant applied for a [license] to sell alcohol.	그 식당은 주류 판매 【허가】를 신청했다.
+b428f46ffb	exempt	Nonprofit organizations are [exempt] from this sales tax.	비영리 단체는 이 판매세가 【면제된다】.
+e3cc513341	exempt	Small businesses will be [exempted] from the new reporting rules.	소기업은 새 보고 규정에서 【면제될】 것이다.

@@ -5,3 +5,9 @@ node_modules/
 !.dev.vars.example
 .env*
 !.env.example
+
+# 이미지 생성 작업 파일
+tools/imggen/*.log
+tools/imggen/STOP
+__pycache__/
+public/img/**/*.tmp

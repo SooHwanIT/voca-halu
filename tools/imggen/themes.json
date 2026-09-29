@@ -1,0 +1,37 @@
+{
+  "checkpoint": "DreamShaper_8_pruned.safetensors",
+  "gen_size": 512,
+  "out_size": 448,
+  "webp_quality": 62,
+  "steps": 20,
+  "cfg": 7.0,
+  "sampler": "dpmpp_2m",
+  "scheduler": "karras",
+  "negative_base": "text, letters, words, numbers, caption, speech bubble, logo, watermark, signature, lowres, bad anatomy, bad hands, extra fingers, missing fingers, deformed face, disfigured, worst quality, low quality, blurry, jpeg artifacts, nsfw",
+  "themes": [
+    {
+      "key": "cartoon",
+      "label": "카툰",
+      "prompt": "cartoon illustration, {scene}, flat colors, bold clean outlines, vibrant, cute expressive characters, simple clean background",
+      "negative": "photo, photorealistic, realistic skin, 3d render"
+    },
+    {
+      "key": "real",
+      "label": "리얼리티",
+      "prompt": "RAW photo, {scene}, photorealistic, natural lighting, 35mm lens, sharp focus, high detail, candid",
+      "negative": "cartoon, illustration, painting, drawing, anime, 3d render, cgi"
+    },
+    {
+      "key": "water",
+      "label": "수채화",
+      "prompt": "soft watercolor storybook illustration, {scene}, pastel colors, gentle brush strokes, paper texture, warm light",
+      "negative": "photo, photorealistic, 3d render, harsh lines"
+    },
+    {
+      "key": "clay",
+      "label": "3D 클레이",
+      "prompt": "3d render, {scene}, cute pixar style characters, clay material, soft studio lighting, miniature diorama, vibrant colors",
+      "negative": "photo, photorealistic, 2d, flat, sketch"
+    }
+  ]
+}
