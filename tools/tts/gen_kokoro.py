@@ -10,8 +10,14 @@ Cloudflare 무료 요금제는 파일이 2만 개까지라서 음성 하나하�
 앱(index.html)의 packText()와 같은 규칙으로 문장을 만들고 같은 해시(FNV-1a 32)를 쓴다.
 이미 만든 Day는 건너뛴다(다시 만들려면 해당 json을 지운다).
 """
-import argparse, io, json, os, re, sys, time
+import argparse, glob, io, json, os, re, shutil, sys, time
 from concurrent.futures import ProcessPoolExecutor
+
+# phonemizer(espeak)가 부를 때마다 임시 폴더에 dll을 복사하고 지우지 못한다(0.4MB × 수천 개).
+# C 드라이브가 가득 차서 멈춘 적이 있어 임시 폴더를 D로 옮기고 Day마다 치운다
+TMP = r'D:\voca-tts\tmp'
+os.makedirs(TMP, exist_ok=True)
+os.environ['TMP'] = os.environ['TEMP'] = TMP
 
 ROOT = os.path.dirname(os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
 OUT = os.path.join(ROOT, 'public', 'tts', 'heart')
@@ -91,6 +97,8 @@ def do_day(args):
         open(os.path.join(OUT, f'{di}-{n // CHUNK}.bin'), 'wb').write(blob)
         size += len(blob)
     json.dump(index, open(path, 'w'), separators=(',', ':'))  # 마지막에 써야 반쯤 된 Day를 건너뛰지 않는다
+    for d in glob.glob(os.path.join(TMP, 'tmp*')):
+        shutil.rmtree(d, ignore_errors=True)  # 다른 작업이 쓰는 중인 dll은 지워지지 않고 남는다
     return di, len(texts), size, time.time() - t0
 
 

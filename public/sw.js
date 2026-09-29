@@ -3,7 +3,7 @@
 // 그림(img/): 캐시 우선 — 본 적 있는 포카만 저장한다(전체 1만 7천 장을 미리 받지 않는다).
 // 글꼴 등 외부 정적 파일: 캐시를 먼저 쓰고 뒤에서 갱신.
 // 음성(/api/tts): 캐시하지 않는다. 앱에 넣은 음성(tts/)은 같은 곳 파일이라 본 것만 저장된다.
-const SHELL = 'pv-shell-8', IMG = 'pv-img-1';
+const SHELL = 'pv-shell-9', IMG = 'pv-img-1';
 const CORE = ['./', './index.html', './manifest.json', './icon.svg', './icon-192.png', './icon-512.png'];
 
 self.addEventListener('install', e => {
@@ -11,6 +11,12 @@ self.addEventListener('install', e => {
 });
 self.addEventListener('activate', e => {
   e.waitUntil(caches.keys().then(ks => Promise.all(ks.filter(k => k !== SHELL && k !== IMG).map(k => caches.delete(k)))).then(() => self.clients.claim()));
+});
+
+// 알림을 누르면 열려 있는 창을 앞으로, 없으면 새로 연다
+self.addEventListener('notificationclick', e => {
+  e.notification.close();
+  e.waitUntil(self.clients.matchAll({ type: 'window', includeUncontrolled: true }).then(cs => cs.length ? cs[0].focus() : self.clients.openWindow('./')));
 });
 
 self.addEventListener('fetch', e => {
