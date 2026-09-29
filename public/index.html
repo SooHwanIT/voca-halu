@@ -77,8 +77,8 @@ h1,h2,h3{margin:0;text-wrap:balance}
 .bottomnav .in{display:grid;grid-template-columns:repeat(2,1fr);height:var(--nav-h);max-width:360px;margin:0 auto}
 .bottomnav button{border:0;background:transparent;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:3px;color:var(--ink-3);font-size:11.5px;font-weight:500}
 .bottomnav svg{width:24px;height:24px;stroke-width:1.7}
-.bottomnav button[aria-selected="true"]{color:var(--ink)}
-.bottomnav button[aria-selected="true"] svg{stroke-width:2.3}
+.bottomnav button[aria-current="page"]{color:var(--ink)}
+.bottomnav button[aria-current="page"] svg{stroke-width:2.3}
 
 /* ---------- page ---------- */
 .page-h{display:flex;align-items:flex-end;justify-content:space-between;gap:12px;padding-top:24px}
@@ -551,7 +551,7 @@ body.opening-on{overflow:hidden}
 /* ---------- 개봉 중 퀴즈 ---------- */
 .opening .ostage{transition:width .4s var(--ease)}
 .opening.asking{justify-content:flex-start;padding:calc(16px + env(safe-area-inset-top)) 16px calc(16px + env(safe-area-inset-bottom));gap:10px}
-.opening.asking .ostage{width:min(56vw,236px,33dvh);flex:none}
+.opening.asking .ostage{width:clamp(150px,calc((100dvh - 410px) * .72),min(70vw,320px));flex:none}
 .ocard.ask .front .cap em{opacity:0}
 .ocard.ask .front .cap::before{content:"?";font-size:15cqw;font-weight:700;line-height:1;margin-right:auto}
 .ocard.missed .front .pcard{filter:grayscale(.85) brightness(.6)}
@@ -660,6 +660,48 @@ body.opening-on{overflow:hidden}
   .ostage.done .fan .fc{animation:deal2 .62s cubic-bezier(.34,1.56,.64,1) backwards;animation-delay:calc(var(--k) * 90ms)}
 }
 
+
+
+/* ---------- 인쇄된 카드처럼: 필름 입자 · 세트 기호 · 등급 보석 · 판권 줄 ---------- */
+.pcard>img{filter:saturate(.92) contrast(1.02) sepia(.06)}
+.pcard .grain{position:absolute;inset:0;z-index:2;pointer-events:none;mix-blend-mode:overlay;opacity:.36;
+  background:radial-gradient(ellipse 80% 70% at 50% 42%,transparent 55%,rgba(0,0,0,.35) 100%),
+    url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='140' height='140'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.9' numOctaves='2' stitchTiles='stitch'/%3E%3CfeColorMatrix type='saturate' values='0'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='.55'/%3E%3C/svg%3E") 0 0/140px 140px}
+.pcard .cap{bottom:8.6cqw}
+.pcard .cap small{font-size:5.2cqw;letter-spacing:.04em;font-variant-numeric:tabular-nums}
+.pcard .mt{position:absolute;left:6cqw;top:6cqw;z-index:4;display:flex;align-items:center;gap:1.8cqw;color:#fff;font-size:4cqw;font-weight:700;letter-spacing:.14em;line-height:1;padding:1.5cqw 2.4cqw 1.5cqw 2.8cqw;border-radius:99px;background:rgba(12,10,16,.5);-webkit-backdrop-filter:blur(3px);backdrop-filter:blur(3px)}
+.pcard .gem{display:block;width:2.8cqw;height:2.8cqw;transform:rotate(45deg);border-radius:.5cqw;box-shadow:0 0 0 .5cqw rgba(0,0,0,.25)}
+.pcard .g1{background:transparent;box-shadow:inset 0 0 0 .55cqw rgba(255,255,255,.9),0 0 0 .4cqw rgba(0,0,0,.2)}
+.pcard .g2{background:linear-gradient(135deg,#fff,#9aa3ad)}
+.pcard .g3{background:var(--gold)}
+.pcard .g4,.pcard .g5{background:var(--foil);background-size:200% 200%}
+.pcard .g5{box-shadow:0 0 2cqw rgba(255,255,255,.8)}
+.pcard .fine{position:absolute;left:0;right:0;bottom:4.3cqw;z-index:4;text-align:center;font-size:2.9cqw;font-weight:600;letter-spacing:.22em;color:#fff;opacity:.5;white-space:nowrap}
+.pcard.sm .mt,.pcard.sm .fine,.pcard.xs .mt,.pcard.xs .fine,.pcard.xs .grain{display:none}
+.pcard.sm .cap{bottom:6.5cqw}
+.pocket .pcard .fine{display:none}
+.pocket .pcard .cap{bottom:6.5cqw}
+
+/* ---------- 발음 ---------- */
+.orow{display:flex;align-items:center;justify-content:center;gap:4px;min-height:26px;max-width:360px}
+.osay{flex:none;width:36px;height:36px;border:0;border-radius:50%;background:rgba(255,255,255,.08);color:#EDEBF0;display:grid;place-items:center}
+.osay:hover{background:rgba(255,255,255,.16)}
+.osay svg{width:18px;height:18px}
+.opening.asking .orow{min-height:21px}
+#wordList .row .en.say{cursor:pointer;border-radius:3px}
+#wordList .row .en.say:hover{color:var(--signal)}
+.xsay{border:0;background:transparent;color:var(--ink-3);width:30px;height:30px;margin:-4px 0 -8px 2px;border-radius:50%;display:inline-grid;place-items:center;vertical-align:middle}
+.xsay:hover{color:var(--ink);background:var(--surface-2)}
+.xsay svg{width:16px;height:16px}
+.type.wide{grid-column:1/-1}
+.type:disabled{opacity:.4}
+.prompt.aud{margin-bottom:10px}
+.prompt .listen{display:inline-grid;place-items:center;width:84px;height:84px;border-radius:50%;background:var(--surface-2);color:var(--ink);cursor:pointer;border:1px solid var(--line)}
+.prompt .listen:hover{border-color:var(--ink-3)}
+.prompt .listen svg{width:36px;height:36px}
+@media (prefers-reduced-motion:no-preference){.prompt .listen{animation:listenPulse 1.8s ease-out 2}}
+@keyframes listenPulse{0%{box-shadow:0 0 0 0 color-mix(in srgb,var(--signal) 45%,transparent)}100%{box-shadow:0 0 0 18px transparent}}
+
 /* ---------- 충전 · 광고 ---------- */
 .adrow{display:flex;align-items:center;justify-content:space-between;gap:12px;margin-top:10px;padding-left:4px;font-size:13.5px;color:var(--ink-3)}
 .adrow b{color:var(--ink-2);font-weight:600;font-variant-numeric:tabular-nums}
@@ -682,7 +724,7 @@ body.opening-on{overflow:hidden}
 .switcher{display:none}
 html[data-nav="a"] .switcher{display:flex;gap:20px;padding-top:22px}
 .switcher button{border:0;background:transparent;padding:0;font-size:26px;font-weight:700;letter-spacing:-.025em;line-height:1.2;color:var(--ink-3);opacity:.55}
-.switcher button[aria-selected="true"]{color:var(--ink);opacity:1}
+.switcher button[aria-current="page"]{color:var(--ink);opacity:1}
 html[data-nav="a"] .page-h h1{display:none}
 html[data-nav="a"] .page-h{padding-top:6px}
 html[data-nav="a"] .tabs,html[data-nav="c"] .tabs{display:none!important}
@@ -694,7 +736,7 @@ html[data-nav="c"] #view-binder{margin-top:64px;padding-top:8px;border-top:1px s
     background:color-mix(in srgb,var(--surface) 82%,transparent);-webkit-backdrop-filter:blur(18px) saturate(1.4);backdrop-filter:blur(18px) saturate(1.4);box-shadow:0 12px 32px -14px rgba(0,0,0,.45)}
   html[data-nav="b"] .bottomnav .in{display:flex;gap:2px;height:auto;max-width:none}
   html[data-nav="b"] .bottomnav button{flex-direction:row;gap:7px;height:46px;padding:0 18px;border-radius:999px;font-size:14px;font-weight:600;transition:padding .25s var(--ease),background-color .2s}
-  html[data-nav="b"] .bottomnav button[aria-selected="true"]{background:color-mix(in srgb,var(--ink) 9%,transparent)}
+  html[data-nav="b"] .bottomnav button[aria-current="page"]{background:color-mix(in srgb,var(--ink) 9%,transparent)}
   html[data-nav="b"] .bottomnav svg{width:21px;height:21px}
   html[data-nav="b"] .bottomnav.mini button{padding:0 14px}
   html[data-nav="b"] .bottomnav.mini button span{display:none}
@@ -775,7 +817,7 @@ dialog.sheet.carddlg{transition:transform .28s var(--ease),opacity .28s}
 </div></header>
 
 <!-- ===== 오늘 ===== -->
-<nav class="switcher" id="switcher" aria-label="화면"><button type="button" data-view="today" aria-selected="true">오늘</button><button type="button" data-view="binder" aria-selected="false">바인더</button></nav>
+<nav class="switcher" id="switcher" aria-label="화면"><button type="button" data-view="today" aria-current="page">오늘</button><button type="button" data-view="binder">바인더</button></nav>
 <section id="view-today">
   <div class="page-h"><div><h1>오늘</h1><p class="sub" id="todaySub"></p></div></div>
   <div class="packs" id="packs"></div>
@@ -849,12 +891,12 @@ dialog.sheet.carddlg{transition:transform .28s var(--ease),opacity .28s}
 </div><!-- /app -->
 
 <nav class="bottomnav" aria-label="화면"><div class="in">
-  <button data-view="today" aria-selected="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round"><path d="M3 10.5L12 3l9 7.5V20a1 1 0 01-1 1h-5v-6h-6v6H4a1 1 0 01-1-1z"/></svg><span>오늘</span></button>
-  <button data-view="binder" aria-selected="false"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round"><rect x="8" y="3" width="12" height="16" rx="2.4"/><path d="M5 6.5v11.5A2.5 2.5 0 007.5 20.5H15"/></svg><span>바인더</span></button>
+  <button data-view="today" aria-current="page"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round"><path d="M3 10.5L12 3l9 7.5V20a1 1 0 01-1 1h-5v-6h-6v6H4a1 1 0 01-1-1z"/></svg><span>오늘</span></button>
+  <button data-view="binder"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round"><rect x="8" y="3" width="12" height="16" rx="2.4"/><path d="M5 6.5v11.5A2.5 2.5 0 007.5 20.5H15"/></svg><span>바인더</span></button>
 </div></nav>
 
 <dialog class="sheet carddlg" id="cardDlg" aria-labelledby="cardTitle">
-  <div class="hd"><h2 id="cardTitle">포카</h2><button class="x" id="cardClose" aria-label="닫기"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round"><path d="M6 6l12 12M18 6L6 18"/></svg></button></div>
+  <div class="hd"><h2 id="cardTitle">포카</h2><span class="spacer"></span><button class="x" id="cardSay" aria-label="발음 듣기" hidden><svg width="19" height="19" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M11 5L6 9H2v6h4l5 4z"/><path d="M15.5 8.5a5 5 0 010 7"/></svg></button><button class="x" id="cardClose" aria-label="닫기"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round"><path d="M6 6l12 12M18 6L6 18"/></svg></button></div>
   <div class="bd" id="cardBody"></div>
 </dialog>
 
@@ -867,6 +909,7 @@ dialog.sheet.carddlg{transition:transform .28s var(--ease),opacity .28s}
       <button type="button" class="type" data-v="mc-ko">단어 고르기</button>
       <button type="button" class="type" data-v="sa">단어 쓰기</button>
       <button type="button" class="type" data-v="fill">예문 빈칸</button>
+      <button type="button" class="type wide" data-v="aud">듣고 고르기</button>
     </div>
     <span class="p-l">범위</span>
     <div class="seg" id="pPool"></div>
@@ -881,7 +924,7 @@ dialog.sheet.carddlg{transition:transform .28s var(--ease),opacity .28s}
   <button type="button" class="btn ghost oskip" id="oSkip">모두 열기</button>
   <div class="ostage" id="oStage" role="button" tabindex="0" aria-label="카드 열기"></div>
   <div class="odots" id="oDots"></div>
-  <div class="olabel" id="oLabel"></div>
+  <div class="orow"><div class="olabel" id="oLabel"></div><button type="button" class="osay" id="oSay" aria-label="발음 듣기" hidden><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M11 5L6 9H2v6h4l5 4z"/><path d="M15.5 8.5a5 5 0 010 7"/></svg></button></div>
   <div class="oquiz" id="oQuiz" hidden></div>
   <div class="oacts" id="oActs" hidden><button type="button" class="btn" id="oClose">닫기</button><button type="button" class="btn primary" id="oPrimary">한 팩 더</button></div>
 </div>
@@ -905,7 +948,7 @@ dialog.sheet.carddlg{transition:transform .28s var(--ease),opacity .28s}
       <div class="seg" id="setRate"><button data-v="0.8">느리게</button><button data-v="1">보통</button><button data-v="1.2">빠르게</button></div></div>
     <div class="set-row"><div class="l"><b>효과음</b></div>
       <div class="seg" id="setSfx"><button type="button" data-v="1">켬</button><button type="button" data-v="0">끔</button></div></div>
-    <div class="set-row"><div class="l"><b>문제 자동 읽기</b></div>
+    <div class="set-row"><div class="l"><b>자동 발음</b></div>
       <div class="seg" id="setAuto"><button data-v="1">켬</button><button data-v="0">끔</button></div></div>
     <div class="set-row"><div class="l"><b>처음 안내</b></div><button type="button" class="btn sm" id="tutAgain">다시 보기</button></div>
     <div class="set-row"><div class="l"><b>백업</b><small id="bkMeta"></small></div>
@@ -977,8 +1020,10 @@ function pickVoice(lang){
   return null;
 }
 let ttsRate=+load('voca.rate',1);
-let autoRead=load('voca.autoRead',true);
-const VOICES=[['luna','여성 · 차분함'],['asteria','여성 · 밝음'],['stella','여성 · 또렷함'],['athena','여성 · 낮음'],['hera','여성 · 안정감'],['orion','남성 · 부드러움'],['arcas','남성 · 자연스러움'],['perseus','남성 · 또렷함'],['angus','남성 · 낮음'],['orpheus','남성 · 따뜻함'],['helios','남성 · 힘 있음'],['zeus','남성 · 깊음']];
+let autoRead=load('voca.autoRead',true);   // 자동 발음: 문제·새 카드·카드 상세에서 저절로 읽는다 (직접 누르는 발음은 항상)
+const canSay=()=>hasSpeech||canNeural;
+const sent=x=>String(x.ex||'').replace(/[\[\]]/g,'');
+const VOICES=[['luna','여성 · 친근함'],['thalia','여성 · 또렷함'],['athena','여성 · 차분함'],['asteria','여성 · 밝음'],['helena','여성 · 따뜻함'],['andromeda','여성 · 편안함'],['orion','남성 · 부드러움'],['arcas','남성 · 자연스러움'],['apollo','남성 · 편안함'],['odysseus','남성 · 차분함'],['orpheus','남성 · 또렷함'],['zeus','남성 · 깊음']];
 let speaker=load('voca.speaker','luna');if(!VOICES.some(v=>v[0]===speaker))speaker='luna';
 // 영어는 Cloudflare Workers AI 음성, 안 되면 기기 음성
 const TTS_API='https://voca-halu.suhwanit.workers.dev/api/tts';
@@ -1174,10 +1219,10 @@ function renderList(){
 }
 function wordRow(w){const hasMemo=!!(memos[w.id]&&memos[w.id].trim());const st=stars.has(w.id);return `<div class="row${hasMemo?' has-memo':''}" data-id="${w.id}">
   <span class="th">${picsOn?(w.i?picTag(w.i):PH):''}</span>
-  <div class="t"><span class="en" lang="en">${esc(w.w)}<i class="memo-dot" aria-hidden="true"></i></span><span class="m">${posOf(w)?`<i>${esc(w.p)}</i>`:''}${esc(w.m)}</span></div>
+  <div class="t"><span class="en say" lang="en" role="button" tabindex="0" aria-label="${esc(w.w)} 발음">${esc(w.w)}<i class="memo-dot" aria-hidden="true"></i></span><span class="m">${posOf(w)?`<i>${esc(w.p)}</i>`:''}${esc(w.m)}</span></div>
   <button type="button" class="ib star${st?' on':''}" aria-pressed="${st}" aria-label="별표">${st?STAR:STAR_O}</button>
   <div class="more">
-    ${w.xs.map(x=>`<div class="exi${picsOn&&x.i?' has-pic':''}">${picTag(x.i)}<div>${x.u?`<span class="u">${esc(x.u)}</span>`:''}<div class="en-s" lang="en">${exEn(x,'bold')}</div><div class="ko-s">${exKo(x)}</div></div></div>`).join('')}
+    ${w.xs.map(x=>`<div class="exi${picsOn&&x.i?' has-pic':''}">${picTag(x.i)}<div>${x.u?`<span class="u">${esc(x.u)}</span>`:''}<div class="en-s" lang="en">${exEn(x,'bold')}${canSay()?`<button type="button" class="xsay" data-say="${esc(sent(x))}" aria-label="예문 듣기">${SPK}</button>`:''}</div><div class="ko-s">${exKo(x)}</div></div></div>`).join('')}
     <div class="memo"><textarea rows="1" placeholder="메모" aria-label="${esc(w.w)} 메모">${esc(memos[w.id]||'')}</textarea></div>
     <div class="rowbar"><button type="button" class="chip say-word">${SPK}발음</button></div>
   </div>
@@ -1197,11 +1242,13 @@ document.addEventListener('click',e=>{
   if(st){const id=+st.closest('.row').dataset.id;const on=!stars.has(id);on?stars.add(id):stars.delete(id);save('voca.stars',[...stars]);
     st.classList.toggle('on',on);st.setAttribute('aria-pressed',on);st.innerHTML=on?STAR:STAR_O;return;}
   // 줄을 누르면 예문·메모가 펼쳐진다. 뜻을 가렸으면 먼저 뜻부터 보여 준다
+  const xs=e.target.closest('.xsay');if(xs){sayNow(xs.dataset.say,'en');return;}
   const r=e.target.closest('#wordList .row[data-id]');
+  if(r&&e.target.closest('.en.say')){sayNow(BYID.get(+r.dataset.id).w,'en');return;}
   if(r&&!e.target.closest('button,textarea,input,a,.pic,.more')){
     const open=r.classList.toggle('open');if(open){const ta=r.querySelector('textarea');if(ta)autoGrow(ta);}}
 });
-document.addEventListener('keydown',e=>{if((e.key==='Enter'||e.key===' ')&&e.target.matches('.colls .en.say')){e.preventDefault();e.target.click();}});
+document.addEventListener('keydown',e=>{if((e.key==='Enter'||e.key===' ')&&e.target.matches('.colls .en.say, #wordList .en.say')){e.preventDefault();e.target.click();}});
 function autoGrow(ta){ta.style.height='auto';ta.style.height=ta.scrollHeight+'px';}
 document.addEventListener('input',e=>{
   const ta=e.target.closest('.row .memo textarea');if(!ta)return;autoGrow(ta);
@@ -1232,7 +1279,8 @@ function pracPool(){let p=pool();if(PRAC.pool==='star')p=p.filter(w=>stars.has(w
 function renderPrac(){
   const all=pool(),sc=all.filter(w=>stars.has(w.id)).length,wn=all.filter(w=>wc(w.id)>0).length;
   if((PRAC.pool==='star'&&!sc)||(PRAC.pool==='wrong'&&!wn))PRAC.pool='all';
-  $$('#pType .type').forEach(b=>b.setAttribute('aria-pressed',b.dataset.v===PRAC.type));
+  if(PRAC.type==='aud'&&!canSay())PRAC.type='mc-en';
+  $$('#pType .type').forEach(b=>{b.setAttribute('aria-pressed',b.dataset.v===PRAC.type);if(b.dataset.v==='aud')b.disabled=!canSay();});
   $('#pPool').innerHTML=[['all','전체',all.length],['star','★',sc],['wrong','틀린 단어',wn]].map(([k,l,n])=>`<button type="button" data-v="${k}" aria-pressed="${PRAC.pool===k}"${n?'':' disabled'}>${l} ${n}</button>`).join('');
   $$('#pCount button').forEach(b=>b.setAttribute('aria-pressed',b.dataset.v===PRAC.count));
   const p=pracPool(),n=PRAC.count==='all'?p.length:Math.min(+PRAC.count,p.length);
@@ -1251,7 +1299,7 @@ $('#pStart').addEventListener('click',()=>{
   pracDlg.close();
   let items=PRAC.pool==='wrong'?shuffle(p.slice(0,n)):shuffle(p).slice(0,n);
   if(PRAC.type==='fill')items=items.map(x=>({...x,...x.xs[Math.floor(Math.random()*x.xs.length)]})); // 예문 중 하나를 무작위로
-  const [mode,dir]=PRAC.type==='mc-en'?['mc','en']:PRAC.type==='mc-ko'?['mc','ko']:[PRAC.type,'ko'];
+  const [mode,dir]=PRAC.type==='mc-en'?['mc','en']:PRAC.type==='mc-ko'?['mc','ko']:PRAC.type==='aud'?['mc','aud']:[PRAC.type,'ko'];
   startQuiz(items,{mode,dir});
 });
 
@@ -1265,7 +1313,7 @@ function startQuiz(items,o={}){
   window.scrollTo({top:0});showQ();
 }
 function distractors(w){
-  const key=x=>(Q.mode==='mc'&&Q.dir==='en')?x.m:x.w;
+  const key=x=>(Q.mode==='mc'&&Q.dir!=='ko')?x.m:x.w;
   const cand=shuffle(WORDS.filter(x=>x.id!==w.id&&x.m!==w.m&&x.w!==w.w));
   cand.sort((a,b)=>(b.p===w.p)-(a.p===w.p));
   const seen=new Set([key(w)]),out=[];
@@ -1275,16 +1323,18 @@ function distractors(w){
 const norm=s=>s.toLowerCase().replace(/[^a-z]/g,'');
 function showQ(){
   const w=Q.items[Q.i];Q.answered=false;
-  const askEn=Q.mode==='mc'&&Q.dir==='en';const fill=Q.mode==='fill';
+  const aud=Q.mode==='mc'&&Q.dir==='aud',askEn=Q.mode==='mc'&&(Q.dir==='en'||aud);const fill=Q.mode==='fill';
   $('#qPos').textContent=`${Q.i+1} / ${Q.items.length}`;
   $('#qProg').style.width=(Q.i/Q.items.length*100)+'%';
   $('#qFoot').hidden=true;$('#qFeed').className='qfeed';$('#qFeed').textContent='';
   $('#qNext').textContent=Q.i===Q.items.length-1?'결과 보기':'다음';
   const prompt=$('#qPrompt');const P=prompt.parentElement;P.classList.toggle('fill',fill);P.classList.toggle('ko',!askEn&&!fill);
   if(fill){prompt.innerHTML=exEn(w,'blank');$('#qKo').hidden=false;$('#qKo').innerHTML=exKo(w);}
+  else if(aud){prompt.innerHTML=`<span class="listen" role="button" tabindex="0" aria-label="다시 듣기">${SPK}</span>`;$('#qKo').hidden=true;}
   else{prompt.textContent=askEn?w.w:w.m;$('#qKo').hidden=true;}
+  P.classList.toggle('aud',aud);
   syncQPic();
-  $('#qSay').hidden=!(askEn||fill)||!(hasSpeech||canNeural);
+  $('#qSay').hidden=aud||!(askEn||fill)||!canSay();
   $('#qHint').textContent=fill?'':w.p;$('#qHint').hidden=fill;
   const ch=$('#qChoices');ch.innerHTML='';
   if(Q.mode==='mc'||fill){
@@ -1300,7 +1350,8 @@ function showQ(){
   const nx=Q.items[Q.i+1];if(nx&&picsOn&&nx.i)new Image().src=picSrc(nx.i,nx.v||picTheme);
   if(nx)prefetch(Q.mode==='fill'?nx.ex.replace(/[\[\]]/g,''):nx.w);
   if(fill)prefetch(w.ex.replace(/[\[\]]/g,''));
-  if(autoRead&&(hasSpeech||canNeural)){if(askEn)sayNow(w.w,'en');else if(fill)sayNow(w.ex.replace(/\[[^\]]+\]/,' ... '),'en');}
+  if(aud&&canSay())sayNow(w.w,'en');
+  else if(autoRead&&canSay()){if(askEn)sayNow(w.w,'en');else if(fill)sayNow(w.ex.replace(/\[[^\]]+\]/,' ... '),'en');}
 }
 // 빈칸 문제는 그림을 단서로 바로 보여 주고, 단어 문제는 답을 고를 때까지 흐리게 가려 둔다
 function syncQPic(){
@@ -1317,7 +1368,7 @@ function answerMC(btn,x,w,opts){
   $$('#qChoices .choice').forEach((b,k)=>{b.disabled=true;if(opts[k].id===w.id)b.classList.add('correct');});
   if(!ok)btn.classList.add('wrong');
   if(Q.mode==='fill')$('#qPrompt').innerHTML=exEn(w,'ok');
-  finish(ok,w,(Q.mode==='mc'&&Q.dir==='en')?x.m:x.w);
+  finish(ok,w,(Q.mode==='mc'&&Q.dir!=='ko')?x.m:x.w);
 }
 function answerSA(){
   if(Q.answered)return;const w=Q.items[Q.i];const inp=$('#qInput');const v=inp.value.trim();if(!v){inp.focus();return;}
@@ -1350,9 +1401,11 @@ function finish(ok,w,given){
     }
     if(line){fb.insertAdjacentHTML('beforeend',`<div class="gainline${ok?'':' miss'}">${CARD_ICO}${line}</div>`);if(ok)buzz(8);}
   }
-  if(hasSpeech||canNeural){if(Q.mode==='fill')sayNow(w.ex.replace(/[\[\]]/g,''),'en');else if(!(Q.mode==='mc'&&Q.dir==='en'))sayNow(w.w,'en');}
+  if(autoRead&&canSay()){if(Q.mode==='fill')sayNow(w.ex.replace(/[\[\]]/g,''),'en');else if(!(Q.mode==='mc'&&Q.dir==='en'))sayNow(w.w,'en');}
   $('#qFoot').hidden=false;$('#qNext').focus({preventScroll:true});
 }
+$('#qPrompt').addEventListener('click',e=>{if(e.target.closest('.listen')&&Q)sayNow(Q.items[Q.i].w,'en');});
+$('#qPrompt').addEventListener('keydown',e=>{if((e.key==='Enter'||e.key===' ')&&e.target.closest('.listen')){e.preventDefault();e.stopPropagation();sayNow(Q.items[Q.i].w,'en');}});
 $('#qSay').addEventListener('click',()=>{if(!Q)return;const w=Q.items[Q.i];sayNow(Q.mode==='fill'?(Q.answered?w.ex.replace(/[\[\]]/g,''):w.ex.replace(/\[[^\]]+\]/,' ... ')):w.w,'en');});
 $('#qCheck').addEventListener('click',answerSA);
 $('#qInput').addEventListener('keydown',e=>{if(e.key==='Enter'){e.preventDefault();e.stopPropagation();Q.answered?next():answerSA();}});
@@ -1498,9 +1551,10 @@ function packTheme(e){const k=EXPS.indexOf(e),sp=e.id.startsWith('sp');
 function packFace(e){const t=packTheme(e);
   return `<span class="pf${t.sp?' sp':''}" style="--c1:${t.c1};--c2:${t.c2}"><span class="pf-art">${t.cover?`<img src="${picSrc(t.cover,'cartoon')}" alt="" loading="lazy" onerror="this.remove()">`:''}<span class="pf-mk"></span></span><span class="pf-foil"></span><span class="pf-k">${t.kicker}</span><b class="pf-n">${esc(t.num)}</b><span class="pf-s">${esc(t.sub)} · ${PACK_N} CARDS</span></span>`;}
 // ----- 카드 그리기
+const setCode=e=>{const k=EXPS.indexOf(e);return e.id.startsWith('sp')?`SP-${e.id.slice(2)}`:`PV-${String(k+1).padStart(2,'0')}`;};
 function cardFace(i,v,no,cls=''){
-  const {w}=CARD_WORD.get(i),lv=owned(i)?lvOf(i):1,full=isFull(i);
-  return `<span class="pcard lv${lv}${lv>=4?' holo':''}${w.w.length>9?' long':''}${w.w.length>13?' xlong':''}${cls}"><img src="${picSrc(i,v)}" alt="" loading="lazy" decoding="async">${lv>=2?'<span class="fr"></span>':''}<span class="cap"><em lang="en">${esc(w.w)}</em><small>${no?`No.${pad3(no)}`:VNAME[v]}</small></span>${full&&!/xs/.test(cls)?'<span class="star">FULL</span>':''}</span>`;
+  const {w}=CARD_WORD.get(i),lv=owned(i)?lvOf(i):1,full=isFull(i),e=expOfCard(i);
+  return `<span class="pcard lv${lv}${lv>=4?' holo':''}${w.w.length>9?' long':''}${w.w.length>13?' xlong':''}${cls}"><img src="${picSrc(i,v)}" alt="" loading="lazy" decoding="async"><span class="grain"></span>${lv>=2?'<span class="fr"></span>':''}<span class="mt"><b>${setCode(e)}</b><i class="gem g${lv}"></i></span><span class="cap"><em lang="en">${esc(w.w)}</em><small>${no?`${pad3(no)}/${expCards(e).length}`:VNAME[v]}</small></span><span class="fine">© POCAVOCA · ${VNAME[v]}</span>${full&&!/xs/.test(cls)?'<span class="star">FULL</span>':''}</span>`;
 }
 const backHTML=no=>`<div class="pback"><span class="mk"></span><span class="wm">POCAVOCA</span>${no?`<span class="nn">No.${pad3(no)}</span>`:''}</div>`;
 // 결과 카드(1080×1350) — 단어는 넣지 않는다(스포일러 없음)
@@ -1609,7 +1663,9 @@ function backInfo(i,no){
 function sibsHTML(w,i){const ids=wordCards(w);if(ids.length<2)return '';
   return `<div class="sibs">${ids.map((j,k)=>`<button type="button" class="sib${j===i?' on':''}" data-sib="${j}" aria-label="카드 ${k+1}" aria-pressed="${j===i}">${owned(j)?cardFace(j,verFor(j),0,' xs'):pend[j]?cardFace(j,pend[j].v,0,' xs dim'):'<span class="ph"></span>'}</button>`).join('')}</div>`;}
 function openCard(i,v,no){
+  const fresh=cardCur!==i||!cardDlg.open;
   cardCur=i;cardNo=no||noOf(i);const c=cards[i],{w}=CARD_WORD.get(i),e=expOfCard(i);
+  $('#cardSay').hidden=!(canSay()&&(c||pend[i]));if((c||pend[i])&&fresh&&autoRead&&canSay())sayNow(w.w,'en');
   if(!c){$('#cardTitle').textContent=`No.${pad3(cardNo)}`;
     const ch=charges();
     $('#cardBody').innerHTML=`<div class="stage"><div class="flip solo"><div class="face">${pend[i]?cardFace(i,pend[i].v,cardNo):backHTML(cardNo)}</div></div></div>${sibsHTML(w,i)}
@@ -1633,9 +1689,10 @@ cardDlg.addEventListener('pointermove',e=>{
 });
 cardDlg.addEventListener('pointerleave',()=>{const f=$('#flip');if(f){f.classList.remove('tilting');f.style.setProperty('--rx','0deg');f.style.setProperty('--ry','0deg');}},true);
 $('#cardClose').addEventListener('click',()=>cardDlg.close());
+$('#cardSay').addEventListener('click',()=>{const {w,x}=CARD_WORD.get(cardCur);const f=$('#flip');sayNow(f&&f.classList.contains('flipped')?sent(x):w.w,'en');});
 cardDlg.addEventListener('click',e=>{
   if(e.target===cardDlg){cardDlg.close();return;}
-  const f=e.target.closest('#flip:not(.solo)');if(f){f.classList.toggle('flipped');return;}
+  const f=e.target.closest('#flip:not(.solo)');if(f){const back=f.classList.toggle('flipped');if(back&&autoRead&&canSay())sayNow(sent(CARD_WORD.get(cardCur).x),'en');return;}
   const b=e.target.closest('#cardSeg button');if(b&&!b.disabled){openCard(cardCur,b.dataset.v,cardNo);return;}
   const sb=e.target.closest('[data-sib]');if(sb){openCard(sb.dataset.sib,null,0);return;}
 });
@@ -1647,16 +1704,30 @@ document.addEventListener('click',e=>{
 
 // ---------- 효과음: 파일 없이 Web Audio로 만든다 ----------
 const SFX=(()=>{
-  let ctx=null,out=null,on=load('voca.sfx',true),nbuf=null;
+  let ctx=null,out=null,verb=null,on=load('voca.sfx',true),nbuf=null;
+  // 실제 카드 소리: Kenney "Casino Audio" (CC0) — public/sfx/CREDITS.txt
+  const SAMPLES={place:['place1','place2','place3','place4'],slide:['slide1','slide2','slide3','slide4'],fan:['fan'],open:['open1','open2'],takeout:['takeout'],shove:['shove']};
+  const bufs={};let loading=null;
+  function loadSamples(){if(loading||!ctx)return loading;
+    loading=Promise.all(Object.values(SAMPLES).flat().map(n=>fetch(`sfx/${n}.wav`).then(r=>r.arrayBuffer()).then(a=>new Promise(res=>ctx.decodeAudioData(a,b=>{bufs[n]=b;res();},()=>res()))).catch(()=>{})));return loading;}
   function ac(){
     if(!ctx){const C=window.AudioContext||window.webkitAudioContext;if(!C)return null;ctx=new C();
       out=ctx.createDynamicsCompressor();const g=ctx.createGain();g.gain.value=.55;out.connect(g);g.connect(ctx.destination);
-      nbuf=ctx.createBuffer(1,ctx.sampleRate,ctx.sampleRate);const d=nbuf.getChannelData(0);for(let i=0;i<d.length;i++)d[i]=Math.random()*2-1;}
+      nbuf=ctx.createBuffer(1,ctx.sampleRate,ctx.sampleRate);const d=nbuf.getChannelData(0);for(let i=0;i<d.length;i++)d[i]=Math.random()*2-1;
+      // 짧은 방 울림: 전자음이 맨살로 들리지 않게 음에만 살짝 섞는다
+      const len=Math.floor(ctx.sampleRate*1.1),ir=ctx.createBuffer(2,len,ctx.sampleRate);
+      for(let c=0;c<2;c++){const ch=ir.getChannelData(c);for(let i=0;i<len;i++)ch[i]=(Math.random()*2-1)*Math.pow(1-i/len,3.2);}
+      verb=ctx.createConvolver();verb.buffer=ir;const vg=ctx.createGain();vg.gain.value=.32;verb.connect(vg);vg.connect(out);
+      loadSamples();}
     if(ctx.state==='suspended')ctx.resume();return ctx;}
+  // 녹음된 소리 하나: 같은 소리가 기계처럼 반복되지 않게 음높이를 조금씩 흔든다
+  function sample(group,{at=0,vol=.85,rate=1}={}){const list=(SAMPLES[group]||[]).filter(n=>bufs[n]);if(!list.length)return false;
+    const src=ctx.createBufferSource(),g=ctx.createGain();src.buffer=bufs[list[Math.floor(Math.random()*list.length)]];src.playbackRate.value=rate*(.94+Math.random()*.12);
+    g.gain.value=vol;src.connect(g);g.connect(out);src.start(ctx.currentTime+at);return true;}
   // 음 하나: 빠르게 올라갔다가 부드럽게 사라진다
   function tone(f,at,dur,{type='sine',vol=.12,to=null,atk=.006}={}){
     const t=ctx.currentTime+at,o=ctx.createOscillator(),g=ctx.createGain();o.type=type;o.frequency.setValueAtTime(f,t);if(to)o.frequency.exponentialRampToValueAtTime(to,t+dur);
-    g.gain.setValueAtTime(0,t);g.gain.linearRampToValueAtTime(vol,t+atk);g.gain.exponentialRampToValueAtTime(.0001,t+dur);o.connect(g);g.connect(out);o.start(t);o.stop(t+dur+.02);}
+    g.gain.setValueAtTime(0,t);g.gain.linearRampToValueAtTime(vol,t+atk);g.gain.exponentialRampToValueAtTime(.0001,t+dur);o.connect(g);g.connect(out);if(verb)g.connect(verb);o.start(t);o.stop(t+dur+.02);}
   // 걸러 낸 잡음: 종이 찢는 소리, 바람 소리
   function hiss(at,dur,{vol=.2,f0=2000,f1=800,q=1,kind='bandpass'}={}){
     const t=ctx.currentTime+at,s=ctx.createBufferSource(),f=ctx.createBiquadFilter(),g=ctx.createGain();s.buffer=nbuf;
@@ -1666,23 +1737,23 @@ const SFX=(()=>{
   const P={
     tick:(k=0)=>tone(1400+k*90,0,.035,{type:'triangle',vol:.05}),
     zip:()=>{for(let k=0;k<7;k++)tone(1300+k*110,k*.04,.035,{type:'triangle',vol:.045});},
-    tear:()=>{hiss(0,.32,{vol:.42,f0:4200,f1:700,q:.7});hiss(.04,.18,{vol:.18,f0:1400,f1:5200,q:1.4});tone(160,0,.18,{type:'triangle',vol:.1,to:80});},
-    rise:()=>{hiss(0,.5,{vol:.08,f0:500,f1:3000,q:.6});},
-    flip:()=>hiss(0,.14,{vol:.14,f0:900,f1:3800,q:.8}),
+    tear:()=>{if(!sample('open',{vol:1})){hiss(0,.32,{vol:.42,f0:4200,f1:700,q:.7});hiss(.04,.18,{vol:.18,f0:1400,f1:5200,q:1.4});}tone(150,0,.2,{type:'sine',vol:.07,to:75});},
+    rise:()=>{if(!sample('takeout',{vol:.8}))hiss(0,.5,{vol:.08,f0:500,f1:3000,q:.6});},
+    flip:()=>{if(!sample('place',{vol:.9}))hiss(0,.14,{vol:.14,f0:900,f1:3800,q:.8});},
     reveal:()=>{tone(1318.5,0,.45,{vol:.07});tone(1975.5,.05,.5,{vol:.05});},
     rare:()=>{[1046.5,1318.5,1568,2093,2637].forEach((f,k)=>tone(f,k*.06,.6,{type:'triangle',vol:.06}));hiss(.05,.8,{vol:.05,f0:6000,f1:9000,q:3});},
     ok:()=>{tone(783.99,0,.14,{type:'triangle',vol:.11});tone(1046.5,.08,.32,{type:'triangle',vol:.11});},
     reg:()=>{tone(783.99,0,.12,{type:'triangle',vol:.1});tone(987.77,.07,.12,{type:'triangle',vol:.1});tone(1318.5,.14,.4,{type:'triangle',vol:.1});},
     up:()=>{[523.25,659.25,783.99,1046.5,1318.5,1568].forEach((f,k)=>tone(f,k*.055,.5,{type:'square',vol:.035}));hiss(.2,.9,{vol:.06,f0:5000,f1:9000,q:2});},
     no:()=>{tone(220,0,.25,{vol:.14,to:140});tone(110,0,.25,{type:'triangle',vol:.06});},
-    fling:()=>hiss(0,.2,{vol:.12,f0:700,f1:2600,q:.9}),
-    deal:(k=0)=>{hiss(k*.07,.07,{vol:.07,f0:2500,f1:1500,q:1.2});tone(700+k*60,k*.07,.05,{type:'triangle',vol:.03});},
-    lift:()=>{hiss(0,.18,{vol:.07,f0:400,f1:1600,q:.8});tone(520,0,.16,{vol:.04,to:780});},
+    fling:()=>{if(!sample('slide',{vol:.85}))hiss(0,.2,{vol:.12,f0:700,f1:2600,q:.9});},
+    deal:(k=0)=>{if(k===0&&sample('fan',{vol:.7}))return;if(k>0&&bufs.fan)return;if(!sample('place',{at:k*.08,vol:.55,rate:1.08}))hiss(k*.07,.07,{vol:.07,f0:2500,f1:1500,q:1.2});},
+    lift:()=>{if(!sample('slide',{vol:.45,rate:1.15}))hiss(0,.18,{vol:.07,f0:400,f1:1600,q:.8});},
     charge:()=>{tone(220,0,.8,{type:'sawtooth',vol:.02,to:880,atk:.3});tone(440,0,.8,{vol:.05,to:1760,atk:.3});hiss(0,.8,{vol:.06,f0:800,f1:6500,q:1.5});},
     boom:()=>{tone(92,0,.55,{vol:.3,to:38});hiss(0,.4,{vol:.2,f0:1800,f1:260,q:.6});},
     coin:()=>{tone(1567.98,0,.09,{type:'square',vol:.045});tone(2093,.08,.35,{type:'square',vol:.045});},
   };
-  return {play(n,...a){if(!on||!P[n])return;try{if(ac())P[n](...a);}catch(e){}},get on(){return on},set(v){on=!!v;save('voca.sfx',on);if(on)this.play('ok');}};
+  return {play(n,...a){if(!on||!P[n])return;try{if(ac())P[n](...a);}catch(e){}},warm(){if(on)try{ac();}catch(e){}},get on(){return on},set(v){on=!!v;save('voca.sfx',on);if(on)this.play('ok');}};
 })();
 
 // ---------- 파티클: 개봉 화면 위에 캔버스 한 장 ----------
@@ -1747,6 +1818,7 @@ function startOpening(items,o={}){
     +items.map((it,k)=>`<div class="ocard t-${tierOf(it)}${isRare(it)?' rare':''}${it.kind==='new'?' isnew':''}" style="--z:${items.length-k};--i:${k}"><div class="oface">${backHTML(noOf(it.i))}</div><div class="oface front">${cardFace(it.i,it.v,noOf(it.i))}</div></div>`).join('');
   $('#oQuiz').hidden=true;$('#opening').classList.remove('asking');
   $('#oActs').hidden=true;$('#oSkip').hidden=false;
+  items.forEach(it=>{const {w,x}=CARD_WORD.get(it.i);prefetch(w.w);prefetch(sent(x));});SFX.warm();
   OPEN.back=document.activeElement;$('#opening').hidden=false;document.body.classList.add('opening-on');syncOpening();setTimeout(()=>st.focus(),50);
 }
 function openLabel(it){
@@ -1764,6 +1836,7 @@ function syncOpening(){
   else if(OPEN.asking)setLabel(it.hot&&owned(it.i)?hotHint(it.i):'',true);
   else setLabel(it&&flipped?openLabel(it):'',false);
   $('#oSkip').hidden=OPEN.mode==='pack';
+  $('#oSay').hidden=!(canSay()&&phase==='cards'&&it&&flipped&&!OPEN.asking);
 }
 // 맞히면 무엇이 되는지 미리 알려 준다 (기대 슬롯)
 function hotHint(i){const c=cards[i],lv=lvOf(i),next=LV[lv];
@@ -1790,7 +1863,7 @@ function revealCard(c,it,tier){
   const st=$('#oStage');st.classList.remove('burst');
   if(tier==='gold'){void st.offsetWidth;st.classList.add('burst');impact();light('gold',.55);SFX.play('boom');
     setTimeout(()=>{SFX.play('rare');const [x,y]=stageMid();FX.ring(x,y,{color:'#FFD27A',r1:280,w:6});FX.ring(x,y,{color:'#c39bff',r1:340,w:3,life:.8});FX.burst(x,y,{n:34,colors:FOIL,shape:'star',speed:[160,460],size:[3.5,7],grav:120});FX.glitter(stageRect(),{n:22,colors:FOIL});},200);}
-  else{light(tier,tier==='new'?.3:.14);setTimeout(()=>{SFX.play('reveal');const r=stageRect();FX.glitter({left:r.left,right:r.right,top:r.top,bottom:r.top+r.height*.6},{n:9,colors:tier==='new'?['#fff','#9CD3FF','#5AB8FF']:['#fff','#FFE7CC']});FX.burst(r.left+r.width/2,r.top+r.height/2,{n:12,colors:tier==='new'?['#9CD3FF','#fff']:['#fff'],speed:[200,380],size:[1.4,2.6],grav:0,life:[.35,.6]});},230);}
+  else{light(tier,tier==='new'?.3:.14);if(autoRead&&canSay()){const ww=CARD_WORD.get(it.i).w.w;setTimeout(()=>{if(OPEN&&OPEN.items[OPEN.k]===it)sayNow(ww,'en');},480);}setTimeout(()=>{SFX.play('reveal');const r=stageRect();FX.glitter({left:r.left,right:r.right,top:r.top,bottom:r.top+r.height*.6},{n:9,colors:tier==='new'?['#fff','#9CD3FF','#5AB8FF']:['#fff','#FFE7CC']});FX.burst(r.left+r.width/2,r.top+r.height/2,{n:12,colors:tier==='new'?['#9CD3FF','#fff']:['#fff'],speed:[200,380],size:[1.4,2.6],grav:0,life:[.35,.6]});},230);}
   buzz(tier==='gold'?[14,50,26]:12);syncOpening();
 }
 function tapOpening(){
@@ -1903,6 +1976,7 @@ function closeOpening(){
     if(e.type==='pointercancel')return;
     if(!moved)tapOpening();};
   st.addEventListener('pointerup',end);st.addEventListener('pointercancel',end);}
+$('#oSay').addEventListener('click',e=>{e.stopPropagation();if(!OPEN)return;const it=OPEN.items[OPEN.k];if(!it)return;const {w,x}=CARD_WORD.get(it.i);sayNow(it.kind==='new'?w.w:sent(x),'en');});
 $('#oStage').addEventListener('keydown',e=>{if(e.key==='Enter'||e.key===' '){e.preventDefault();e.stopPropagation();tapOpening();}});
 {const O=$('#opening');let t=null;
   const ready=()=>OPEN&&OPEN.phase==='cards'&&OPEN.flipped&&!OPEN.asking&&!OPEN.charging;
@@ -2091,7 +2165,7 @@ window.addEventListener('click',e=>{if(Date.now()-swallowT<300){e.stopPropagatio
 {const ov=document.createElement('div');ov.className='peekov';ov.hidden=true;ov.setAttribute('aria-hidden','true');document.body.appendChild(ov);
   let t=null,s=null;
   document.addEventListener('pointerdown',e=>{const p=e.target.closest('.pocket.got,.pocket.pend');if(!p||e.button>0)return;s={x:e.clientX,y:e.clientY};clearTimeout(t);
-    t=setTimeout(()=>{if(!s)return;const i=p.dataset.card;ov.innerHTML=`<div class="pk-card">${cardFace(i,owned(i)?verFor(i):pend[i].v,noOf(i))}</div>`;ov.hidden=false;s.on=true;buzz(10);},420);});
+    t=setTimeout(()=>{if(!s)return;const i=p.dataset.card;ov.innerHTML=`<div class="pk-card">${cardFace(i,owned(i)?verFor(i):pend[i].v,noOf(i))}</div>`;ov.hidden=false;s.on=true;buzz(10);if(autoRead&&canSay())sayNow(CARD_WORD.get(i).w.w,'en');},420);});
   document.addEventListener('pointermove',e=>{if(s&&!s.on&&Math.hypot(e.clientX-s.x,e.clientY-s.y)>10){clearTimeout(t);s=null;}});
   const up=()=>{clearTimeout(t);if(s&&s.on){ov.hidden=true;swallowClick();}s=null;};
   document.addEventListener('pointerup',up);document.addEventListener('pointercancel',up);

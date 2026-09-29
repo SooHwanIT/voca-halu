@@ -1,7 +1,10 @@
 // Static site + /api/tts (Cloudflare Workers AI, English only)
-const SPEAKERS = ['luna','asteria','stella','athena','hera','orion','arcas','perseus','angus','orpheus','helios','zeus'];
+// aura-2 목소리 (앱 설정에 보이는 12개 + 예비)
+const SPEAKERS = ['luna','thalia','athena','asteria','helena','andromeda','orion','arcas','apollo','odysseus','orpheus','zeus','hera','aries','amalthea','callista'];
+const AURA1 = ['angus','asteria','arcas','orion','orpheus','athena','luna','zeus','perseus','helios','hera','stella'];
 const MODELS = [
-  { id: '@cf/deepgram/aura-1', input: (t, s) => ({ text: t, speaker: s }), type: 'audio/mpeg' },
+  { id: '@cf/deepgram/aura-2-en', input: (t, s) => ({ text: t, speaker: s }), type: 'audio/mpeg' },
+  { id: '@cf/deepgram/aura-1', input: (t, s) => ({ text: t, speaker: AURA1.includes(s) ? s : 'luna' }), type: 'audio/mpeg' },
   { id: '@cf/myshell-ai/melotts', input: t => ({ prompt: t, lang: 'en' }), type: 'audio/mpeg' },
 ];
 
@@ -11,13 +14,13 @@ async function tts(env, text, speaker) {
     try {
       const res = await env.AI.run(m.id, m.input(text, speaker));
       if (res instanceof ReadableStream || res instanceof ArrayBuffer || res instanceof Uint8Array) {
-        return new Response(res, { headers: { 'content-type': m.type } });
+        return new Response(res, { headers: { 'content-type': m.type, 'x-tts-model': m.id } });
       }
       if (res && res.audio) { // base64
         const bin = Uint8Array.from(atob(res.audio), c => c.charCodeAt(0));
-        return new Response(bin, { headers: { 'content-type': m.type } });
+        return new Response(bin, { headers: { 'content-type': m.type, 'x-tts-model': m.id } });
       }
-      if (res instanceof Response) return new Response(res.body, { headers: { 'content-type': m.type } });
+      if (res instanceof Response) return new Response(res.body, { headers: { 'content-type': m.type, 'x-tts-model': m.id } });
       lastErr = new Error('unexpected response from ' + m.id);
     } catch (e) { lastErr = e; }
   }
@@ -34,13 +37,13 @@ export default {
       const sp = url.searchParams.get('s') || 'luna';
       const speaker = SPEAKERS.includes(sp) ? sp : 'luna';
       const cache = caches.default;
-      const key = new Request(new URL('/api/tts?v=1&s=' + speaker + '&t=' + encodeURIComponent(text.toLowerCase()), url.origin).toString());
+      const key = new Request(new URL('/api/tts?v=2&s=' + speaker + '&t=' + encodeURIComponent(text.toLowerCase()), url.origin).toString());
       const hit = await cache.match(key);
       if (hit) return hit;
       try {
         const r = await tts(env, text, speaker);
         const buf = await r.arrayBuffer();
-        const out = new Response(buf, { headers: { 'content-type': r.headers.get('content-type') || 'audio/mpeg', 'cache-control': 'public, max-age=2592000', 'access-control-allow-origin': '*' } });
+        const out = new Response(buf, { headers: { 'content-type': r.headers.get('content-type') || 'audio/mpeg', 'x-tts-model': r.headers.get('x-tts-model') || '', 'cache-control': 'public, max-age=2592000', 'access-control-allow-origin': '*' } });
         ctx.waitUntil(cache.put(key, out.clone()));
         return out;
       } catch (e) {
