@@ -3,7 +3,7 @@
 // 그림(img/): 캐시 우선 — 본 적 있는 포카만 저장한다(전체 1만 7천 장을 미리 받지 않는다).
 // 글꼴 등 외부 정적 파일: 캐시를 먼저 쓰고 뒤에서 갱신.
 // 음성(/api/tts): 캐시하지 않는다.
-const SHELL = 'pv-shell-2', IMG = 'pv-img-1';
+const SHELL = 'pv-shell-3', IMG = 'pv-img-1';
 const CORE = ['./', './index.html', './manifest.json', './icon.svg', './icon-192.png', './icon-512.png'];
 
 self.addEventListener('install', e => {
