@@ -1,0 +1,56 @@
+<!doctype html>
+<html lang="ko"><head><meta charset="utf-8"><title>포카보카 아이콘 후보 M</title>
+<style>
+body{margin:0;background:#2b2b30;font-family:"Malgun Gothic",sans-serif;color:#eee;padding:28px;width:1700px}
+h1{font-size:26px;margin:0 0 20px}
+.grid{display:grid;grid-template-columns:repeat(4,1fr);gap:22px}
+.c{background:#1c1c20;border-radius:18px;padding:18px}
+.c h2{font-size:19px;margin:0 0 4px}.c p{font-size:13px;color:#aaa;margin:0 0 14px;line-height:1.45;height:38px}
+.row{display:flex;align-items:flex-end;gap:14px}
+.big svg{width:220px;height:220px;display:block;border-radius:48px;overflow:hidden}
+.side{display:flex;flex-direction:column;gap:12px;align-items:center}
+.circ svg{width:84px;height:84px;border-radius:50%;display:block}
+.home{width:140px;height:120px;border-radius:14px;background:linear-gradient(160deg,#7a8fb8,#c9a38a);display:grid;grid-template-columns:repeat(3,1fr);place-items:center;padding:8px;box-sizing:border-box}
+.home span{width:34px;height:34px;border-radius:10px;background:rgba(255,255,255,.35)}
+.home svg{width:40px;height:40px;border-radius:11px;display:block}
+</style></head><body>
+<h1>단순하게 — 무채색 + 그라데이션 하나, 작은 요소 없음</h1>
+<div class="grid" id="g"></div>
+<svg width="0" height="0" style="position:absolute">
+<defs>
+  <!-- 따뜻한 홀로: 주황 → 분홍 -->
+  <linearGradient id="warm" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#FF8A3D"/><stop offset="1" stop-color="#FF3D8B"/></linearGradient>
+  <!-- 차가운 홀로: 보라 → 하늘 -->
+  <linearGradient id="cool" x1="0" y1="1" x2="1" y2="0"><stop offset="0" stop-color="#7B5CFF"/><stop offset="1" stop-color="#5EE0FF"/></linearGradient>
+  <linearGradient id="warmBg" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#FF8A3D"/><stop offset="1" stop-color="#FF3D8B"/></linearGradient>
+  <linearGradient id="ink" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#24242a"/><stop offset="1" stop-color="#111114"/></linearGradient>
+  <filter id="sh" x="-30%" y="-30%" width="160%" height="160%"><feDropShadow dx="0" dy="18" stdDeviation="20" flood-color="#000" flood-opacity=".4"/></filter>
+  <mask id="starCut"><rect width="512" height="512" fill="#fff"/><path d="M256 170C264 234 278 244 338 252C278 260 264 270 256 334C248 270 234 260 174 252C234 244 248 234 256 170Z" fill="#000"/></mask>
+  <mask id="heartCut"><rect width="512" height="512" fill="#fff"/><path d="M256 330c-54-36-86-64-86-100 0-28 22-48 46-48 18 0 32 11 40 26 8-15 22-26 40-26 24 0 46 20 46 48 0 36-32 64-86 100z" fill="#000"/></mask>
+  <mask id="winCut"><rect width="512" height="512" fill="#fff"/><rect x="176" y="126" width="160" height="196" rx="22" fill="#000"/></mask>
+</defs></svg>
+<script>
+// 카드: 가운데 240x336, 모서리 32, 기울기 a
+const card=(fill,a=-8,extra='')=>`<g filter="url(#sh)" transform="rotate(${a} 256 256)"><rect x="136" y="88" width="240" height="336" rx="32" fill="${fill}" ${extra}/></g>`;
+const C=[
+ ['M1 · 그라데이션 카드','검정 바탕에 주황→분홍 카드 한 장. 가장 단순한 형태.',
+  `<rect width="512" height="512" fill="url(#ink)"/>`+card('url(#warm)')],
+ ['M2 · 흰 바탕','흰 바탕에 같은 카드. 밝은 앱 목록에서 깔끔하게 보여요.',
+  `<rect width="512" height="512" fill="#F6F5F2"/>`+card('url(#warm)')],
+ ['M3 · 별 뚫린 카드','카드 가운데를 큰 별 모양으로 뚫었어요. 레어 카드 느낌.',
+  `<rect width="512" height="512" fill="url(#ink)"/><g mask="url(#starCut)">`+card('url(#warm)',0)+`</g>`],
+ ['M4 · 하트 뚫린 카드','카드 가운데를 하트로 뚫었어요. 포카 감성.',
+  `<rect width="512" height="512" fill="url(#ink)"/><g mask="url(#heartCut)">`+card('url(#warm)',0)+`</g>`],
+ ['M5 · 사진 창 카드','카드에 큰 사진 창 하나. 포토카드 모양을 가장 단순하게.',
+  `<rect width="512" height="512" fill="url(#ink)"/><g mask="url(#winCut)">`+card('url(#warm)',0)+`</g>`],
+ ['M6 · 두 장 겹침','뒤에 흰 카드, 앞에 그라데이션 카드. 모으는 느낌.',
+  `<rect width="512" height="512" fill="url(#ink)"/>`+card('#ffffff',10,'opacity=".92"')+card('url(#warm)',-10)],
+ ['M7 · 주황 바탕 흰 카드','그라데이션 바탕 + 흰 카드. 색 반전형.',
+  `<rect width="512" height="512" fill="url(#warmBg)"/>`+card('#ffffff')],
+ ['M8 · 차가운 홀로','같은 M1 모양에 보라→하늘 그라데이션. 색만 비교용.',
+  `<rect width="512" height="512" fill="url(#ink)"/>`+card('url(#cool)')]
+];
+const g=document.getElementById('g');
+C.forEach(([t,d,s])=>{const svg=`<svg viewBox="0 0 512 512" xmlns="http://www.w3.org/2000/svg">${s}</svg>`;
+ g.insertAdjacentHTML('beforeend',`<div class="c"><h2>${t}</h2><p>${d}</p><div class="row"><div class="big">${svg}</div><div class="side"><div class="circ">${svg}</div><div class="home"><span></span>${svg}<span></span><span></span><span></span><span></span></div></div></div></div>`);});
+</script></body></html>

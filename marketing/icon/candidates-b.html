@@ -1,0 +1,73 @@
+<!doctype html>
+<html lang="ko"><head><meta charset="utf-8"><title>포카보카 아이콘 후보 B</title>
+<style>
+body{margin:0;background:#2b2b30;font-family:"Malgun Gothic",sans-serif;color:#eee;padding:28px;width:1700px}
+h1{font-size:26px;margin:0 0 20px}
+.grid{display:grid;grid-template-columns:repeat(4,1fr);gap:22px}
+.c{background:#1c1c20;border-radius:18px;padding:18px}
+.c h2{font-size:19px;margin:0 0 4px}.c p{font-size:13px;color:#aaa;margin:0 0 14px;line-height:1.45;height:38px}
+.row{display:flex;align-items:flex-end;gap:14px}
+.big svg{width:220px;height:220px;display:block;border-radius:48px;overflow:hidden}
+.side{display:flex;flex-direction:column;gap:12px;align-items:center}
+.circ svg{width:84px;height:84px;border-radius:50%;display:block}
+.home{width:140px;height:120px;border-radius:14px;background:linear-gradient(160deg,#7a8fb8,#c9a38a);display:grid;grid-template-columns:repeat(3,1fr);place-items:center;padding:8px;box-sizing:border-box}
+.home span{width:34px;height:34px;border-radius:10px;background:rgba(255,255,255,.35)}
+.home svg{width:40px;height:40px;border-radius:11px;display:block}
+</style></head><body>
+<h1>B 홀로 포카 — 글씨 없는 변형</h1>
+<div class="grid" id="g"></div>
+<svg width="0" height="0" style="position:absolute">
+<defs>
+  <linearGradient id="holo" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#ff8fd0"/><stop offset=".3" stop-color="#8ff3ff"/><stop offset=".55" stop-color="#fff38f"/><stop offset=".8" stop-color="#c39bff"/><stop offset="1" stop-color="#ff9ad5"/></linearGradient>
+  <linearGradient id="holo2" x1="1" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#9ef0ff"/><stop offset=".35" stop-color="#d8a8ff"/><stop offset=".7" stop-color="#ffb3d9"/><stop offset="1" stop-color="#fff0a0"/></linearGradient>
+  <linearGradient id="gloss" x1="0" y1="0" x2="1" y2="1"><stop offset=".28" stop-color="#fff" stop-opacity="0"/><stop offset=".44" stop-color="#fff" stop-opacity=".85"/><stop offset=".5" stop-color="#fff" stop-opacity=".2"/><stop offset=".56" stop-color="#fff" stop-opacity=".7"/><stop offset=".66" stop-color="#fff" stop-opacity="0"/></linearGradient>
+  <linearGradient id="night" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#2a2635"/><stop offset="1" stop-color="#121117"/></linearGradient>
+  <linearGradient id="deep" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#1f1a3a"/><stop offset="1" stop-color="#0d0c14"/></linearGradient>
+  <linearGradient id="orange" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#FF8A4C"/><stop offset="1" stop-color="#EE4E14"/></linearGradient>
+  <linearGradient id="sky" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#3b2f78"/><stop offset="1" stop-color="#ff7a5a"/></linearGradient>
+  <linearGradient id="gold" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#fff1c2"/><stop offset=".5" stop-color="#d9a441"/><stop offset="1" stop-color="#fff1c2"/></linearGradient>
+  <radialGradient id="glow" cx=".5" cy=".55" r=".55"><stop offset="0" stop-color="#b98bff" stop-opacity=".55"/><stop offset="1" stop-color="#b98bff" stop-opacity="0"/></radialGradient>
+  <radialGradient id="glowO" cx=".5" cy=".6" r=".6"><stop offset="0" stop-color="#FF6A2E" stop-opacity=".55"/><stop offset="1" stop-color="#FF6A2E" stop-opacity="0"/></radialGradient>
+  <pattern id="lines" width="14" height="14" patternUnits="userSpaceOnUse" patternTransform="rotate(35)"><rect width="14" height="14" fill="none"/><rect width="5" height="14" fill="#fff" opacity=".18"/></pattern>
+  <filter id="sh" x="-30%" y="-30%" width="160%" height="160%"><feDropShadow dx="0" dy="16" stdDeviation="18" flood-color="#000" flood-opacity=".5"/></filter>
+  <clipPath id="card"><rect x="136" y="80" width="240" height="336" rx="28"/></clipPath>
+</defs></svg>
+<script>
+const spark=(x,y,r,o=1)=>`<path d="M${x} ${y-r}C${x+r*.12} ${y-r*.12} ${x+r*.12} ${y-r*.12} ${x+r} ${y}C${x+r*.12} ${y+r*.12} ${x+r*.12} ${y+r*.12} ${x} ${y+r}C${x-r*.12} ${y+r*.12} ${x-r*.12} ${y+r*.12} ${x-r} ${y}C${x-r*.12} ${y-r*.12} ${x-r*.12} ${y-r*.12} ${x} ${y-r}Z" fill="#fff" opacity="${o}"/>`;
+// 기본 홀로 카드 (기울기 a)
+const holoCard=(inner='',a=-8,fill='url(#holo)')=>`<g filter="url(#sh)" transform="rotate(${a} 256 248)"><g clip-path="url(#card)">
+  <rect x="136" y="80" width="240" height="336" fill="${fill}"/><rect x="136" y="80" width="240" height="336" fill="url(#lines)"/>${inner}
+  <rect x="136" y="80" width="240" height="336" fill="url(#gloss)" opacity=".75"/></g>
+  <rect x="136" y="80" width="240" height="336" rx="28" fill="none" stroke="#fff" stroke-opacity=".7" stroke-width="4"/></g>`;
+const C=[
+ ['B1 · 사진 창','홀로 테두리 안에 노을 풍경 사진. "그림이 있는 카드"라는 뜻이 살아요.',
+  `<rect width="512" height="512" fill="url(#night)"/><rect width="512" height="512" fill="url(#glow)"/>`+
+  holoCard(`<rect x="160" y="104" width="192" height="236" rx="14" fill="url(#sky)"/><circle cx="256" cy="232" r="38" fill="#FFD27A"/><path d="M160 300 L214 250 L252 284 L298 236 L352 290 L352 340 L160 340Z" fill="#1d1640"/><rect x="160" y="356" width="120" height="14" rx="7" fill="#fff" opacity=".8"/>`)+spark(402,118,26)+spark(112,372,16,.85)],
+ ['B2 · 별 컷','카드 가운데에 큰 반짝이 별. 가장 단순해서 작게 봐도 또렷해요.',
+  `<rect width="512" height="512" fill="url(#night)"/><rect width="512" height="512" fill="url(#glow)"/>`+
+  holoCard(`<path d="M256 150C262 222 274 236 334 248C274 260 262 274 256 346C250 274 238 260 178 248C238 236 250 222 256 150Z" fill="#fff"/>`)],
+ ['B3 · 주황 점','어두운 창 안에 앱의 주황 점. 지금 아이콘을 홀로로 업그레이드한 버전.',
+  `<rect width="512" height="512" fill="url(#night)"/><rect width="512" height="512" fill="url(#glowO)"/>`+
+  holoCard(`<rect x="162" y="106" width="188" height="226" rx="16" fill="#17151f"/><circle cx="256" cy="219" r="54" fill="#FF6A2E"/><rect x="162" y="350" width="110" height="14" rx="7" fill="#17151f" opacity=".7"/><rect x="162" y="374" width="64" height="12" rx="6" fill="#17151f" opacity=".45"/>`)+spark(400,122,24)],
+ ['B4 · 두 장 겹침','뒤에 어두운 카드, 앞에 홀로 카드. "모은다" 느낌을 조금 더했어요.',
+  `<rect width="512" height="512" fill="url(#deep)"/><rect width="512" height="512" fill="url(#glow)"/>
+   <g filter="url(#sh)" transform="rotate(12 256 248)"><rect x="160" y="84" width="232" height="324" rx="28" fill="#2d2946" stroke="#6b5fa8" stroke-width="4"/></g>`+
+  holoCard(`<path d="M256 170C261 226 270 236 316 246C270 256 261 266 256 322C251 266 242 256 196 246C242 236 251 226 256 170Z" fill="#fff" opacity=".95"/>`,-10)],
+ ['B5 · 주황 바탕','브랜드 주황 바탕에 홀로 카드. 앱 목록에서 제일 밝게 튀어요.',
+  `<rect width="512" height="512" fill="url(#orange)"/>`+
+  holoCard(`<rect x="162" y="106" width="188" height="226" rx="16" fill="#fff" opacity=".35"/><path d="M256 168C261 222 270 232 314 242C270 252 261 262 256 316C251 262 242 252 198 242C242 232 251 222 256 168Z" fill="#fff"/>`)+spark(404,112,24)+spark(106,392,15,.9)],
+ ['B6 · 하트 창','카드 안에 하트. 포카 수집(덕질) 감성이 가장 강해요.',
+  `<rect width="512" height="512" fill="url(#night)"/><rect width="512" height="512" fill="url(#glow)"/>`+
+  holoCard(`<path d="M256 318c-58-40-94-70-94-110 0-30 24-52 50-52 20 0 36 12 44 28 8-16 24-28 44-28 26 0 50 22 50 52 0 40-36 70-94 110z" fill="#fff"/>`)+spark(402,120,24)],
+ ['B7 · 금테 레어','금색 테두리 + 홀로 면. 레어 등급 카드처럼 고급스러워요.',
+  `<rect width="512" height="512" fill="url(#deep)"/><rect width="512" height="512" fill="url(#glow)"/>
+   <g filter="url(#sh)" transform="rotate(-8 256 248)"><rect x="124" y="68" width="264" height="360" rx="34" fill="url(#gold)"/></g>`+
+  holoCard(`<path d="M256 176C261 228 270 238 312 246C270 254 261 264 256 316C251 264 242 254 200 246C242 238 251 228 256 176Z" fill="#fff"/>`,-8,'url(#holo2)')+spark(410,110,22)],
+ ['B8 · 인물 실루엣','사진 칸에 사람 실루엣. "포토카드" 그대로의 모습.',
+  `<rect width="512" height="512" fill="url(#night)"/><rect width="512" height="512" fill="url(#glow)"/>`+
+  holoCard(`<rect x="160" y="104" width="192" height="250" rx="14" fill="#2a2140"/><circle cx="256" cy="200" r="42" fill="#fff" opacity=".92"/><path d="M178 354c4-58 38-94 78-94s74 36 78 94z" fill="#fff" opacity=".92"/>`)+spark(402,118,24)]
+];
+const g=document.getElementById('g');
+C.forEach(([t,d,s])=>{const svg=`<svg viewBox="0 0 512 512" xmlns="http://www.w3.org/2000/svg">${s}</svg>`;
+ g.insertAdjacentHTML('beforeend',`<div class="c"><h2>${t}</h2><p>${d}</p><div class="row"><div class="big">${svg}</div><div class="side"><div class="circ">${svg}</div><div class="home"><span></span>${svg}<span></span><span></span><span></span><span></span></div></div></div></div>`);});
+</script></body></html>
