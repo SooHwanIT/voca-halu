@@ -685,29 +685,54 @@ body.opening-on{overflow:hidden}
 
 /* ---------- 팩 선반 ---------- */
 .packs{margin-top:10px}
-.shelf{--pw:min(50vw,200px);position:relative;display:flex;overflow-x:auto;overflow-y:visible;scroll-snap-type:x mandatory;scrollbar-width:none;margin:0 -16px;padding:22px 0 30px;-webkit-overflow-scrolling:touch}
-.shelf::-webkit-scrollbar{display:none}
-.shelf-pack{flex:none;position:relative;width:var(--pw);aspect-ratio:.66;margin:0 calc(var(--pw) * -.06);padding:0;border:0;background:none;scroll-snap-align:center;border-radius:6%/4.5%;
-  transform:translateY(calc(var(--ad,0) * 18px)) scale(calc(1 - var(--ad,0) * .2)) rotate(calc(var(--d,0) * 5deg));opacity:calc(1 - var(--ad,0) * .4);filter:brightness(calc(1 - var(--ad,0) * .35)) saturate(calc(1 - var(--ad,0) * .3));
-  z-index:calc(10 - var(--ad,0) * 5);transition:filter .2s}
+.shelf{--pw:min(50vw,200px);position:relative;height:calc(var(--pw) / .66 + 56px);margin:0 -16px;overflow:hidden;touch-action:pan-y;user-select:none;-webkit-user-select:none;outline:none;cursor:grab}
+.shelf.dragging{cursor:grabbing}
+.shelf-pack{position:absolute;left:50%;top:24px;width:var(--pw);aspect-ratio:.66;margin-left:calc(var(--pw) / -2);padding:0;border:0;background:none;border-radius:6%/4.5%;will-change:transform;backface-visibility:hidden;-webkit-tap-highlight-color:transparent}
+.shelf-pack img{-webkit-user-drag:none;pointer-events:none}
 .shelf-pack .pf{box-shadow:0 22px 40px -18px rgba(0,0,0,.55)}
 .shelf-pack.on .pf{box-shadow:0 30px 50px -20px rgba(0,0,0,.6),0 0 0 1px rgba(255,255,255,.25)}
 .shelf-done{position:absolute;left:50%;top:44%;z-index:5;transform:translate(-50%,-50%) rotate(-10deg);font-size:12px;font-weight:800;letter-spacing:.18em;color:#fff;border:2px solid #fff;border-radius:4px;padding:3px 8px;background:rgba(0,0,0,.35)}
 .shelf-pack.done .pf{filter:saturate(.5)}
 @media (prefers-reduced-motion:no-preference){.shelf-pack.on .pf{animation:bob 3.4s ease-in-out infinite}}
-.shelf-info{display:flex;flex-wrap:wrap;align-items:baseline;justify-content:center;gap:2px 10px;margin-top:-8px;text-align:center}
-.shelf-info b{font-size:18px;font-weight:700;letter-spacing:-.01em;white-space:nowrap}
-.shelf-info span{font-size:13.5px;color:var(--ink-3);font-variant-numeric:tabular-nums}
-.shelf-bar{display:flex;align-items:center;gap:10px;margin:16px 0 10px;min-height:34px}
-.pips{display:flex;gap:5px}
-.pips i{width:13px;height:18px;border-radius:3px;background:var(--surface-3);box-shadow:inset 0 0 0 1px var(--line)}
-.pips i.on{background:var(--signal);box-shadow:none}
-.pips i.fill{background:linear-gradient(to top,color-mix(in srgb,var(--signal) 55%,transparent) var(--p,0%),var(--surface-3) var(--p,0%))}
-.tmr{display:inline-flex;align-items:center;gap:5px;font-size:13.5px;color:var(--ink-3)}
-.tmr b{color:var(--ink-2);font-weight:600;font-variant-numeric:tabular-nums}
-.tmr svg{width:15px;height:15px}
-.shelf-open{width:100%;min-height:54px;font-size:16px;border-radius:12px}
-.shelf-bar .btn{margin-right:-6px}
+/* ---------- 팩 고르기 → 개봉: 다른 요소는 밖으로, 고른 팩은 들려서 개봉 팩으로 ---------- */
+.topbar,.switcher,.bottomnav,#view-today>.page-h,#view-today>.sec,#view-today>.nums,#view-today>.bars,#view-today>.bar-lab,.shelf-info,.shelf-open,.shelf-sub,.nask{transition:transform .34s cubic-bezier(.4,0,.2,1),opacity .28s ease-in}
+body.morphing .topbar,body.morphing .switcher{transform:translateY(-30px);opacity:0}
+body.morphing #view-today>.page-h{transform:translateY(-40px);opacity:0}
+body.morphing .shelf-info,body.morphing .shelf-open,body.morphing .shelf-sub,body.morphing .nask{transform:translateY(48px);opacity:0}
+body.morphing #view-today>.sec,body.morphing #view-today>.nums,body.morphing #view-today>.bars,body.morphing #view-today>.bar-lab{transform:translateY(90px);opacity:0}
+body.morphing .bottomnav{transform:translateY(100%);opacity:0}
+html[data-nav="b"] body.morphing .bottomnav{transform:translate(-50%,160%)}
+.btn.shelf-open{transition:transform .34s cubic-bezier(.4,0,.2,1),opacity .28s ease-in,background-color .15s ease-out,color .15s ease-out}
+.shelf-pack.lift .pf{animation:none;transform:translateY(-10px) scale(1.07);transition:transform .26s cubic-bezier(.3,1.4,.5,1),box-shadow .26s;box-shadow:0 40px 60px -22px rgba(0,0,0,.7)}
+.opening.morph{animation:none!important}
+.opening.morph>:not(.ostage):not(#oFlash):not(#oBg){animation:morphIn .45s .38s var(--ease) backwards}
+@keyframes morphIn{from{opacity:0;transform:translateY(10px)}}
+/* 닫고 돌아올 때 새로 그려진 선반 아래 요소가 제자리로 올라온다 */
+.returning .shelf-info,.returning .shelf-open,.returning .shelf-sub{animation:backIn .42s var(--ease) backwards}
+.returning .shelf-open{animation-delay:.05s}.returning .shelf-sub{animation-delay:.08s}
+.returning .shelf-pack.on .pf{animation:packBack .5s var(--ease) backwards}
+@keyframes backIn{from{opacity:0;transform:translateY(40px)}}
+@keyframes packBack{from{opacity:0;transform:scale(1.1)}}
+/* 팩 이름 + 모은 정도(얇은 막대) — 팩 바로 아래에 한 덩어리 */
+.shelf-info{display:flex;flex-direction:column;align-items:center;gap:8px;margin-top:-6px;text-align:center}
+.shelf-info b{font-size:19px;font-weight:700;letter-spacing:-.01em;white-space:nowrap}
+.shelf-prog{display:flex;align-items:center;gap:10px;font-size:13px;color:var(--ink-3);font-variant-numeric:tabular-nums;min-height:18px}
+.shelf-prog i{display:block;width:120px;height:4px;border-radius:2px;background:var(--surface-3);overflow:hidden}
+.shelf-prog i b{display:block;height:100%;width:var(--g,0%);background:var(--ink-2);border-radius:inherit;font-size:0;transition:width .5s var(--ease)}
+.shelf-prog.lock i{display:none}
+/* 여는 버튼: 왼쪽 글자, 오른쪽 충전 칸 — 쓰는 자원(팩)과 쓰는 동작을 한곳에 */
+.shelf-open{width:100%;min-height:56px;font-size:16px;border-radius:14px;margin-top:22px;justify-content:space-between;padding-inline:20px}
+.shelf-open .so-t{display:inline-flex;align-items:center;gap:6px}
+.shelf-open:not(.primary){justify-content:center}
+.pips{display:flex;gap:4px;flex:none}
+.pips i{width:7px;height:16px;border-radius:2px;background:currentColor;opacity:.28}
+.pips i.on{opacity:1}
+.pips i.fill{opacity:1;background:linear-gradient(to top,currentColor var(--p,0%),color-mix(in srgb,currentColor 28%,transparent) var(--p,0%))}
+.shelf-open:disabled .pips i.on{opacity:.28}
+.shelf-sub{display:flex;align-items:center;justify-content:center;gap:6px;min-height:20px;margin:10px 0 0;font-size:13px;color:var(--ink-3);font-variant-numeric:tabular-nums}
+.shelf-sub svg{width:14px;height:14px}
+.shelf-sub b{color:var(--ink-2);font-weight:600}
+.shelf-sub .lnk{border:0;background:none;padding:4px 2px;font:inherit;color:var(--ink-2);text-decoration:underline;text-underline-offset:3px;cursor:pointer}
 
 
 /* 잠긴 챕터 */
@@ -1699,13 +1724,24 @@ function composePack(e){
   if(star){items=items.filter(x=>x!==star);items.push(star);star.hot=true;}
   return items;
 }
+// 오늘 화면에서 팩을 열 때: 다른 요소는 위아래로 밀려나고, 고른 팩은 살짝 들린 뒤 그대로 커져 개봉 팩이 된다
+function packMorphOpen(x){
+  const b=$('#shelf')&&$('#shelf').querySelector(`[data-shelf="${x.id}"]`),pf=b&&b.querySelector('.pf');
+  if(calm()||!pf||document.body.classList.contains('morphing')){openPack(x);return;}
+  shelfStop();b.classList.add('lift');document.body.classList.add('morphing');SFX.play('lift');buzz(8);
+  // 옆 팩들은 원통 바깥쪽으로 밀려난다
+  $$('#shelf .shelf-pack').forEach(o=>{if(o===b||o.style.visibility==='hidden')return;const sg=o.getBoundingClientRect().left<b.getBoundingClientRect().left?-1:1;
+    o.animate([{opacity:o.style.opacity||1},{opacity:0,transform:o.style.transform+` translateX(${sg*140}px)`}],{duration:300,easing:'cubic-bezier(.4,0,1,1)',fill:'forwards'});});
+  setTimeout(()=>{const from=pf.getBoundingClientRect();b.style.visibility='hidden';openPack(x,{from});if(!OPEN)packMorphBack();},250);}
+function packMorphBack(){if(!document.body.classList.contains('morphing'))return;document.body.classList.remove('morphing');
+  const pk=$('#packs');if(pk){pk.classList.add('returning');setTimeout(()=>pk.classList.remove('returning'),700);}}
 function openPack(e,o={}){
   e=e||packExp();if(!e||isLocked(e)||(!o.free&&charges()<1))return;
   const items=composePack(e);if(!items.length)return;
   if(!o.free)useCharge();
   items.filter(it=>it.kind==='new').forEach(it=>pend[it.i]={v:it.v,t:dkey()});save('voca.pending',pend);
   logPack({opened:1});
-  startOpening(items,{mode:'pack',exp:e,intro:o.intro,back:o.back});
+  startOpening(items,{mode:'pack',exp:e,intro:o.intro,back:o.back,from:o.from});
 }
 // ----- 챕터 팩 디자인: 챕터마다 색 · 표지 그림 · 큰 번호. 시즌 팩은 검정과 금색
 const PACK_COLORS=[['#FF7A3D','#6E200C'],['#4C8DFF','#132766'],['#22C29A','#0A463A'],['#B45CFF','#361260'],['#FF5C8A','#651230'],['#F5B83D','#634006'],['#2EC4E0','#0A4050'],['#94A3C2','#252E48']];
@@ -1833,23 +1869,75 @@ if(NATIVE){const L=LNP();if(L&&L.addListener)L.addListener('localNotificationAct
 // ---------- 오늘 ----------
 const chargePct=()=>Math.round(100-nextChargeIn()/CHARGE_MS*100);
 let pipPop=-1,shownOwns=null,barsGrown=false;   // 방금 찬 충전 칸 · 오늘 화면에 마지막으로 보여 준 모은 카드 수
-// 선반 가운데 맞추기 · 가운데에서 멀수록 작고 어둡게(커버플로)
-function shelfPad(){const sh=$('#shelf'),b=sh&&sh.querySelector('.shelf-pack');if(!b)return;const pad=(sh.clientWidth-b.offsetWidth)/2+b.offsetWidth*.06;sh.style.paddingLeft=sh.style.paddingRight=pad+'px';}
-function shelfCenter(smooth){const sh=$('#shelf'),b=sh&&sh.querySelector(`[data-shelf="${expSel}"]`);if(!b)return;sh.scrollTo({left:b.offsetLeft-(sh.clientWidth-b.offsetWidth)/2,behavior:smooth&&!matchMedia('(prefers-reduced-motion: reduce)').matches?'smooth':'auto'});}
-function shelfFx(){const sh=$('#shelf');if(!sh)return null;const mid=sh.scrollLeft+sh.clientWidth/2;let best=null,bd=1e9;
-  sh.querySelectorAll('.shelf-pack').forEach(b=>{const c=b.offsetLeft+b.offsetWidth/2,d=(c-mid)/b.offsetWidth;b.style.setProperty('--d',Math.max(-1.6,Math.min(1.6,d)).toFixed(3));b.style.setProperty('--ad',Math.min(1.6,Math.abs(d)).toFixed(3));if(Math.abs(c-mid)<bd){bd=Math.abs(c-mid);best=b;}});
-  return best;}
+// ----- 팩 선반: 리볼버처럼 돌려 넘기는 판 -----
+// p = 가운데에 온 팩 번호(소수). 배치는 예전 커버플로 그대로 — 옆 팩은 조금 작고, 아래로, 살짝 기울고, 어둡다.
+// 끌면 손가락을 1:1로 따라오고, 튕기면 관성으로 여러 칸을 돈 뒤 용수철처럼 한 칸에 딸깍 멈춘다. 칸을 지날 때마다 딸깍 소리
+const SH={p:0,v:0,target:null,raf:0,last:-1,drag:null,wheelT:0};
+const shelfIdx=()=>Math.max(0,EXPS.findIndex(x=>x.id===expSel));
+function shelfLayout(){
+  const sh=$('#shelf');if(!sh)return;const ps=sh.querySelectorAll('.shelf-pack');if(!ps.length)return;
+  const w=ps[0].offsetWidth||200,gap=w*.88;   // 팩 사이 간격(예전 배치와 같다)
+  ps.forEach((b,i)=>{const d=i-SH.p,ad=Math.min(1.6,Math.abs(d)),dc=Math.max(-1.6,Math.min(1.6,d));
+    if(Math.abs(d)>3.2){b.style.visibility='hidden';return;}b.style.visibility='';
+    b.style.transform=`translateX(${(d*gap).toFixed(1)}px) translateY(${(ad*18).toFixed(1)}px) scale(${(1-ad*.2).toFixed(3)}) rotate(${(dc*5).toFixed(2)}deg)`;
+    b.style.opacity=(1-ad*.4).toFixed(3);
+    b.style.filter=`brightness(${(1-ad*.35).toFixed(3)}) saturate(${(1-ad*.3).toFixed(3)})`;b.style.zIndex=String(10-Math.round(ad*5));});
+  const c=Math.max(0,Math.min(EXPS.length-1,Math.round(SH.p)));
+  if(c!==SH.last){const first=SH.last<0;SH.last=c;const x=EXPS[c];
+    if(x&&x.id!==expSel){expSel=x.id;save('voca.exp',expSel);daySel='all';save('voca.day',daySel);}
+    syncShelf();if(!first){buzz(3);SFX.play('tick',2);const bt=ps[c];if(bt){bt.classList.remove('shine');void bt.offsetWidth;bt.classList.add('shine');}}}
+}
+function shelfStop(){cancelAnimationFrame(SH.raf);SH.raf=0;}
+// 용수철: 목표 칸으로 살짝 넘쳤다가 딸깍 멈춘다 (단위: 칸/ms)
+function shelfSpring(target){
+  const n=EXPS.length-1;SH.target=Math.max(0,Math.min(n,target));shelfStop();
+  if(calm()){SH.p=SH.target;SH.v=0;shelfLayout();return;}
+  let last=performance.now();const K=.00016,C=.021;
+  const step=now=>{const dt=Math.min(32,now-last);last=now;
+    SH.v+=(-K*(SH.p-SH.target)-C*SH.v)*dt;SH.p+=SH.v*dt;
+    if(Math.abs(SH.p-SH.target)<.0015&&Math.abs(SH.v)<.00025){SH.p=SH.target;SH.v=0;shelfLayout();SH.raf=0;return;}
+    shelfLayout();SH.raf=requestAnimationFrame(step);};
+  SH.raf=requestAnimationFrame(step);}
+function shelfCenter(smooth){const i=shelfIdx();if(smooth)shelfSpring(i);else{shelfStop();SH.p=i;SH.v=0;shelfLayout();}}
+function shelfBind(sh){
+  const step=()=>{const b=sh.querySelector('.shelf-pack');return (b?b.offsetWidth:200)*.88;};   // 손가락과 1:1
+  const n=()=>EXPS.length-1;
+  const rub=p=>p<0?p*.3:p>n()?n()+(p-n())*.3:p;   // 끝에서는 고무줄처럼 덜 따라온다
+  sh.addEventListener('pointerdown',e=>{if(e.button>0)return;shelfStop();
+    SH.drag={x:e.clientX,y:e.clientY,id:e.pointerId,p0:SH.p,ax:null,t:performance.now(),lx:e.clientX,v:0};});
+  sh.addEventListener('pointermove',e=>{const g=SH.drag;if(!g||e.pointerId!==g.id)return;const dx=e.clientX-g.x,dy=e.clientY-g.y;
+    if(!g.ax){if(Math.hypot(dx,dy)<7)return;g.ax=Math.abs(dx)>Math.abs(dy)?'x':'y';if(g.ax==='y'){SH.drag=null;shelfSpring(Math.round(SH.p));return;}
+      try{sh.setPointerCapture(e.pointerId);}catch(err){}sh.classList.add('dragging');}
+    const now=performance.now(),dt=Math.max(1,now-g.t),inst=-(e.clientX-g.lx)/step()/dt;g.v=g.v*.6+inst*.4;g.t=now;g.lx=e.clientX;
+    SH.p=rub(g.p0-dx/step());shelfLayout();});
+  const end=e=>{const g=SH.drag;if(!g||e.pointerId!==g.id)return;SH.drag=null;sh.classList.remove('dragging');
+    if(!g.ax)return;swallowClick();
+    const v=Math.max(-.03,Math.min(.03,g.v));SH.v=v;          // 튕긴 속도만큼 관성으로 더 돈다
+    shelfSpring(Math.round(SH.p+v*320));};
+  sh.addEventListener('pointerup',end);sh.addEventListener('pointercancel',end);
+  // 트랙패드·가로 휠
+  sh.addEventListener('wheel',e=>{const d=Math.abs(e.deltaX)>Math.abs(e.deltaY)?e.deltaX:(e.shiftKey?e.deltaY:0);if(!d)return;e.preventDefault();shelfStop();
+    SH.p=rub(SH.p+d/step());shelfLayout();clearTimeout(SH.wheelT);SH.wheelT=setTimeout(()=>shelfSpring(Math.round(SH.p)),110);},{passive:false});
+  sh.addEventListener('keydown',e=>{if(e.key==='ArrowRight'||e.key==='ArrowLeft'){e.preventDefault();shelfSpring(Math.round(SH.target??SH.p)+(e.key==='ArrowRight'?1:-1));}});
+}
+// 버튼 안 충전 칸: 찬 칸 · 차오르는 칸 · 빈 칸
+const pipsHTML=ch=>`<span class="pips" role="img" aria-label="남은 팩 ${ch}개">${Array.from({length:CHARGE_MAX},(_,k)=>`<i class="${k<ch?'on':k===ch?'fill':''}${k===pipPop?' pop':''}"${k===ch?` style="--p:${chargePct()}%"`:''}></i>`).join('')}</span>`;
+// 버튼 아래 한 줄: 다음 팩까지 남은 시간 (+광고). 가득 차 있으면 비운다
+function shelfSub(ch,can){const el=$('#shelfSub');if(!el)return;
+  el.innerHTML=ch<CHARGE_MAX&&can?`${CLOCK}<span>다음 팩 <b data-timer>${fmtClock(nextChargeIn())}</b></span>${adLeft()>0?`<span aria-hidden="true">·</span><button type="button" class="lnk" data-ad>광고 보고 +1</button>`:''}`:'';}
 function syncShelf(){
   const e=curExp(),ch=charges(),al=expCards(e),got=al.filter(owned).length,can=hasFree(e)||dueCount()>0,L=lockInfo(e);
   $$('#shelf .shelf-pack').forEach(b=>{const on=b.dataset.shelf===e.id;b.classList.toggle('on',on);b.setAttribute('aria-selected',on);});
-  $('#shelfName').textContent=e.label;$('#shelfMeta').textContent=L?lockMsg(L):`${got} / ${al.length}`;
+  $('#shelfName').textContent=e.label;
+  const pg=$('#shelfProg');pg.classList.toggle('lock',!!L);pg.style.setProperty('--g',(al.length?got/al.length*100:0)+'%');$('#shelfMeta').textContent=L?lockMsg(L):`${got} / ${al.length}`;
   const o=$('#shelfOpen');o.classList.toggle('primary',!L);
   // 잠긴 팩: 버튼이 조건 챕터로 데려간다
-  if(L){delete o.dataset.openpack;o.dataset.goshelf=L.prev.id;o.disabled=false;o.innerHTML=`${LOCK}${L.prev.pk} 보러 가기`;return;}
+  if(L){delete o.dataset.openpack;o.dataset.goshelf=L.prev.id;o.disabled=false;o.innerHTML=`<span class="so-t">${LOCK}${L.prev.pk} 보러 가기</span>`;shelfSub(ch,false);return;}
   delete o.dataset.goshelf;o.dataset.openpack=e.id;o.disabled=!(can&&ch>0);
-  o.innerHTML=!can?'다 모았어요':ch?`${e.pk} 열기`:`<span data-timer>${fmtClock(nextChargeIn())}</span>&nbsp;뒤 충전`;
+  o.innerHTML=!can?'<span class="so-t">다 모았어요</span>':`<span class="so-t">${ch?`${e.pk} 열기`:`<span data-timer>${fmtClock(nextChargeIn())}</span>&nbsp;뒤 충전`}</span>${pipsHTML(ch)}`;
+  shelfSub(ch,can);
 }
-addEventListener('resize',()=>{if($('#shelf')){shelfPad();shelfCenter(false);shelfFx();}});
+addEventListener('resize',()=>{if($('#shelf'))shelfLayout();});
 function renderToday(){
   const now=new Date(),s=streakDays();
   // 연속 일수가 늘어난 뒤 처음 볼 때 한 번 튄다
@@ -1858,13 +1946,12 @@ function renderToday(){
   if(up&&!calm()){setTimeout(()=>SFX.play('coin'),350);buzz(8);}
   const due=dueCount(),ch=charges(),owns=Object.keys(cards).length,cur=curExp();
   // 팩 선반: 챕터 팩이 가로로 늘어서고, 가운데 팩이 고른 팩이다
-  $('#packs').innerHTML=`<div class="shelf" id="shelf" role="listbox" aria-label="챕터 팩">${EXPS.map(x=>{const L=lockInfo(x);return `<button type="button" class="shelf-pack${x===cur?' on':''}${L?' locked':hasFree(x)?'':' done'}" data-shelf="${x.id}" role="option" aria-selected="${x===cur}" aria-label="${esc(x.pk)}${L?', 잠김':''}">${packFace(x)}${L?`<span class="shelf-lock">${LOCK}<b>${L.got} / ${UNLOCK_N}</b></span>`:hasFree(x)?'':'<span class="shelf-done">COMPLETE</span>'}</button>`;}).join('')}</div>
-    <div class="shelf-info"><b id="shelfName"></b><span id="shelfMeta"></span></div>
-    <div class="shelf-bar"><span class="pips" role="img" aria-label="남은 팩 ${ch}개">${Array.from({length:CHARGE_MAX},(_,k)=>`<i class="${k<ch?'on':k===ch?'fill':''}${k===pipPop?' pop':''}"${k===ch?` style="--p:${chargePct()}%"`:''}></i>`).join('')}</span>${ch<CHARGE_MAX?`<span class="tmr">${CLOCK}<b data-timer aria-label="다음 팩 충전까지">${fmtClock(nextChargeIn())}</b></span>`:''}<span class="spacer"></span>${ch<CHARGE_MAX&&adLeft()>0?`<button type="button" class="btn ghost sm" data-ad>${PLAY}광고 보고 +1</button>`:''}</div>
-    <button type="button" class="btn primary lg shelf-open" id="shelfOpen"></button>${askRow(ch)}`;
-  syncShelf();pipPop=-1;
-  const sh=$('#shelf');requestAnimationFrame(()=>{shelfPad();shelfCenter(false);shelfFx();});
-  sh.addEventListener('scroll',()=>{const bt=shelfFx();if(bt&&bt.dataset.shelf!==expSel){expSel=bt.dataset.shelf;save('voca.exp',expSel);daySel='all';save('voca.day',daySel);syncShelf();buzz(3);SFX.play('tick',2);bt.classList.remove('shine');void bt.offsetWidth;bt.classList.add('shine');}},{passive:true});
+  $('#packs').innerHTML=`<div class="shelf" id="shelf" role="listbox" aria-label="챕터 팩 — 옆으로 밀어 고르기">${EXPS.map(x=>{const L=lockInfo(x);return `<button type="button" class="shelf-pack${x===cur?' on':''}${L?' locked':hasFree(x)?'':' done'}" data-shelf="${x.id}" role="option" aria-selected="${x===cur}" aria-label="${esc(x.pk)}${L?', 잠김':''}">${packFace(x)}${L?`<span class="shelf-lock">${LOCK}<b>${L.got} / ${UNLOCK_N}</b></span>`:hasFree(x)?'':'<span class="shelf-done">COMPLETE</span>'}</button>`;}).join('')}</div>
+    <div class="shelf-info"><b id="shelfName"></b><span class="shelf-prog" id="shelfProg"><i><b></b></i><span id="shelfMeta"></span></span></div>
+    <button type="button" class="btn primary lg shelf-open" id="shelfOpen"></button>
+    <p class="shelf-sub" id="shelfSub" aria-live="polite"></p>${askRow(ch)}`;
+  const sh=$('#shelf');sh.tabIndex=0;shelfBind(sh);SH.last=-1;shelfStop();SH.p=shelfIdx();SH.v=0;SH.target=SH.p;
+  syncShelf();shelfLayout();requestAnimationFrame(shelfLayout);pipPop=-1;
   const t=packs[dkey()];$('#shareToday').hidden=!(t&&t.v===2&&t.opened);
   const mon=new Date(now);mon.setDate(now.getDate()-((now.getDay()+6)%7));
   const W=sumLog(dkey(mon),dkey(now));
@@ -1974,7 +2061,7 @@ document.addEventListener('click',e=>{
   const s=e.target.closest('.pocket[data-card]');if(s){openCard(s.dataset.card,null,+s.dataset.no||0);return;}
   const gs=e.target.closest('[data-goshelf]');if(gs){expSel=gs.dataset.goshelf;save('voca.exp',expSel);daySel='all';save('voca.day',daySel);syncShelf();shelfCenter(true);return;}
   const sp=e.target.closest('[data-shelf]');if(sp){if(sp.dataset.shelf===expSel){const o=$('#shelfOpen');if(o&&!o.disabled&&o.dataset.openpack)o.click();else if(sp.classList.contains('locked')){sp.classList.remove('shake');void sp.offsetWidth;sp.classList.add('shake');buzz([12,40,12]);SFX.play('locked');}}else{expSel=sp.dataset.shelf;save('voca.exp',expSel);daySel='all';save('voca.day',daySel);syncShelf();shelfCenter(true);}return;}
-  const op=e.target.closest('[data-openpack]');if(op&&!op.disabled){if(cardDlg.open)cardDlg.close();openPack(EXPS.find(x=>x.id===op.dataset.openpack));return;}
+  const op=e.target.closest('[data-openpack]');if(op&&!op.disabled){if(cardDlg.open)cardDlg.close();const x=EXPS.find(x=>x.id===op.dataset.openpack);if(op.id==='shelfOpen')packMorphOpen(x);else openPack(x);return;}
   const ex=e.target.closest('[data-exp]');if(ex){setExp(ex.dataset.exp);return;}
 });
 
@@ -2101,7 +2188,12 @@ function startOpening(items,o={}){
   $('#oActs').hidden=true;$('#oSkip').hidden=false;
   items.forEach(it=>{const {w,x}=CARD_WORD.get(it.i);prefetch(w.w);prefetch(sent(x));});SFX.warm();
   OPEN.back=o.back||document.activeElement;$('#opening').hidden=false;$('#opening').classList.remove('out');document.body.classList.add('opening-on');syncOpening();setTimeout(()=>st.focus(),50);
-  if(OPEN.phase==='sealed'&&!calm()){const my=OPEN;st.classList.add('enter');SFX.play('whoosh');
+  if(OPEN.phase==='sealed'&&o.from&&!calm()){const my=OPEN,O=$('#opening'),p=$('#oPack');O.classList.add('morph');
+    const to=p.getBoundingClientRect(),f=o.from,dx=(f.left+f.width/2)-(to.left+to.width/2),dy=(f.top+f.height/2)-(to.top+to.height/2);
+    p.animate([{transform:`translate(${dx}px,${dy}px) scale(${f.width/to.width},${f.height/to.height})`},{transform:'translate(0,-6px) scale(1.035,1.02)',offset:.72},{transform:'none'}],{duration:640,easing:'cubic-bezier(.22,.9,.28,1)'});
+    O.animate([{backgroundColor:'rgba(14,14,15,0)'},{backgroundColor:'rgba(14,14,15,1)'}],{duration:380,easing:'ease-out'});
+    SFX.play('whoosh');setTimeout(()=>{if(OPEN===my){SFX.play('land');buzz(8);}},470);setTimeout(()=>O.classList.remove('morph'),900);}
+  else if(OPEN.phase==='sealed'&&!calm()){const my=OPEN;st.classList.add('enter');SFX.play('whoosh');
     setTimeout(()=>{if(OPEN!==my)return;SFX.play('land');buzz(8);},430);setTimeout(()=>{if(OPEN===my)st.classList.remove('enter');},760);}
 }
 function openLabel(it){
@@ -2250,7 +2342,7 @@ function finishOpening(){
 }
 function closeOpening(){
   $('#opening').hidden=true;$('#opening').classList.remove('asking');document.body.classList.remove('opening-on');
-  const o=OPEN;OPEN=null;render();if(o&&o.back&&document.contains(o.back))o.back.focus({preventScroll:true});return o;
+  const o=OPEN;OPEN=null;render();packMorphBack();if(o&&o.back&&document.contains(o.back))o.back.focus({preventScroll:true});return o;
 }
 {const st=$('#oStage');let d=null;
   st.addEventListener('pointerdown',e=>{if(!OPEN||OPEN.k>=OPEN.items.length||OPEN.asking)return;
@@ -2452,7 +2544,7 @@ document.addEventListener('click',e=>{if(e.target.closest('[data-ad]'))watchAdFo
 // 충전 타이머: 1초마다 남은 시간을 고치고, 팩이 차면 화면을 다시 그린다
 {let last=charges();setInterval(()=>{if(document.hidden)return;const ch=charges();
   if(ch!==last){if(ch>last){pipPop=ch-1;if(view==='today'&&!OPEN)SFX.play('coin');}last=ch;if(!OPEN&&view!=='quiz'&&!(view==='binder'&&bMode==='words'))render();return;}
-  const t=fmtClock(nextChargeIn());$$('[data-timer]').forEach(el=>{if(el.textContent!==t)el.textContent=t;});const pf=$('.pips i.fill');if(pf)pf.style.setProperty('--p',chargePct()+'%');},1000);}
+  const t=fmtClock(nextChargeIn());$$('[data-timer]').forEach(el=>{if(el.textContent!==t)el.textContent=t;});$$('.pips i.fill').forEach(pf=>pf.style.setProperty('--p',chargePct()+'%'));},1000);}
 
 // ---------- 제스처 ----------
 // 끌기로 끝난 동작 뒤에 따라오는 click은 한 번 버린다
