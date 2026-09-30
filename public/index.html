@@ -384,7 +384,7 @@ body.focus .q{min-height:calc(100dvh - env(safe-area-inset-top) - env(safe-area-
 .abar{height:2px;background:var(--surface-3);border-radius:1px;margin:12px 0 18px;overflow:hidden}
 .abar i{display:block;height:100%;background:var(--signal)}
 .pockets{display:grid;grid-template-columns:repeat(auto-fill,minmax(var(--pmin,100px),1fr));gap:22px 12px;padding-top:10px;content-visibility:auto;contain-intrinsic-size:auto 600px}
-.pocket{position:relative;display:block;aspect-ratio:.72;padding:0;border:0;border-radius:8px;background:color-mix(in srgb,var(--ink) 4%,transparent);box-shadow:inset 0 0 0 1px color-mix(in srgb,var(--ink) 10%,transparent);cursor:pointer;container-type:inline-size}
+.pocket{position:relative;display:block;aspect-ratio:.72;content-visibility:auto;padding:0;border:0;border-radius:8px;background:color-mix(in srgb,var(--ink) 4%,transparent);box-shadow:inset 0 0 0 1px color-mix(in srgb,var(--ink) 10%,transparent);cursor:pointer;container-type:inline-size}
 .pocket .pcard{position:absolute;inset:0;border-radius:inherit}
 .pocket .under{position:absolute;inset:0;border-radius:inherit;transform-origin:50% 0}
 .pocket .under.u1{transform:translateY(-4.5%) scale(.92)}
@@ -484,7 +484,7 @@ body.opening-on{overflow:hidden}
 .op-cut{opacity:0}.opack.cutting .op-cut,.opack.auto .op-cut{opacity:1}
 .opack.cutting .op-cut{transition:none}
 .opack.auto .op-cut{transition:width .3s cubic-bezier(.4,0,.2,1)}
-.op-body::before{content:"";position:absolute;inset:0;background:linear-gradient(105deg,transparent 38%,rgba(255,255,255,.16) 50%,transparent 62%);background-size:260% 100%;background-position:130% 0}
+.op-body::before{content:"";position:absolute;inset:0;background:linear-gradient(105deg,transparent 30%,rgba(255,255,255,.16) 50%,transparent 70%);transform:translateX(130%);will-change:transform}
 .opack.torn{opacity:0;transition:opacity .25s .4s}
 .opack.torn .op-cut{opacity:0;transition:opacity .15s}
 .ostage.sealed .ocard{opacity:0!important;transform:translateY(22%) scale(.92)!important;transition:none}
@@ -504,7 +504,7 @@ body.opening-on{overflow:hidden}
 @keyframes hintBlink{0%,100%{opacity:.5}50%{opacity:1}}
 @media (prefers-reduced-motion:no-preference){
   .ostage.sealed .opack{animation:bob 3.2s ease-in-out infinite}
-  .ostage.sealed .op-body::before{animation:sheenIdle 3.4s ease-in-out infinite}
+  .ostage.sealed .op-body::before{animation:sheenMove 3.4s ease-in-out infinite}
   .opack.torn{animation:none}
   .opack.torn .op-top{animation:tearOff .6s var(--ease) forwards}
   .opack.torn.rtl .op-top{animation-name:tearOffL}
@@ -549,7 +549,7 @@ body.opening-on{overflow:hidden}
 .bstack{position:relative;width:min(40%,150px);aspect-ratio:.66}
 .pack.hero.drained .bstack{opacity:.4}
 /* ---------- 개봉 중 퀴즈 ---------- */
-.opening .ostage{transition:width .4s var(--ease)}
+
 .opening.asking{justify-content:flex-start;padding:calc(16px + env(safe-area-inset-top)) 16px calc(16px + env(safe-area-inset-bottom));gap:10px}
 .opening.asking .ostage{width:clamp(150px,calc((100dvh - 410px) * .72),min(70vw,320px));flex:none}
 .ocard.ask .front .cap em{opacity:0}
@@ -615,7 +615,12 @@ body.opening-on{overflow:hidden}
 .pf.sp{box-shadow:inset 0 0 0 1.6cqw rgba(226,182,89,.55),inset 0 0 0 1px rgba(255,236,190,.6)}
 .pf.sp .pf-n{font-size:15cqw;top:71%;background:linear-gradient(180deg,#fff1c2,#d4a647);-webkit-background-clip:text;background-clip:text;color:transparent}
 .pf.sp .pf-k{color:#F3D98C}
-@media (prefers-reduced-motion:no-preference){.pf-foil{animation:sheenIdle 4.2s ease-in-out infinite}}
+/* 빛 띠: 배경 위치를 움직이면 매 프레임 다시 그리므로, 띠 하나를 transform으로 옮긴다(합성 단계에서 처리) */
+.pf-foil{background:none!important;overflow:hidden}
+.pf-foil::before{content:"";position:absolute;inset:0;background:linear-gradient(115deg,transparent 30%,rgba(255,255,255,.35) 50%,transparent 70%);transform:translateX(130%);will-change:transform}
+@media (prefers-reduced-motion:no-preference){.pf-foil::before{animation:sheenMove 4.2s ease-in-out infinite}.shelf-pack:not(.on) .pf-foil::before{animation:none}}
+@keyframes sheenMove{0%{transform:translateX(130%)}60%,100%{transform:translateX(-130%)}}
+@keyframes sheenMoveOnce{from{transform:translateX(130%)}to{transform:translateX(-130%)}}
 .bstack .bpk{position:absolute;inset:0;transition:transform .35s var(--ease)}
 .bstack .bpk.b1{transform:translate(9%,-3%) rotate(6deg);filter:brightness(.72)}
 .bstack .bpk.b2{transform:translate(17%,-5%) rotate(12deg);filter:brightness(.55)}
@@ -632,7 +637,7 @@ body.opening-on{overflow:hidden}
 /* ---------- 쫀득한 개봉 ---------- */
 .obg{position:absolute;inset:0;pointer-events:none;opacity:0;background:radial-gradient(55% 42% at 50% 42%,var(--tc,#fff),transparent 70%)}
 .oflash{position:absolute;inset:0;pointer-events:none;background:#fff;opacity:0;z-index:70}
-.ocard.cur:not(.open) .oface:not(.front){transition:box-shadow .45s ease-out}
+.ocard.cur:not(.open) .oface:not(.front){transition:box-shadow .45s ease-out,scale .14s ease-out}
 .ocard.cur.t-new:not(.open) .oface:not(.front){box-shadow:0 0 0 1.5px rgba(130,200,255,.6),0 0 38px 4px rgba(90,170,255,.38)}
 .ocard.cur.t-dup:not(.open) .oface:not(.front){box-shadow:0 0 0 1px rgba(255,255,255,.4),0 0 26px 2px rgba(255,255,255,.16)}
 .ocard.charge.t-new .oface:not(.front){box-shadow:0 0 0 2px rgba(150,210,255,.9),0 0 56px 10px rgba(90,170,255,.55)}
@@ -689,6 +694,8 @@ body.opening-on{overflow:hidden}
 .shelf.dragging{cursor:grabbing}
 .shelf-pack{position:absolute;left:50%;top:24px;width:var(--pw);aspect-ratio:.66;margin-left:calc(var(--pw) / -2);padding:0;border:0;background:none;border-radius:6%/4.5%;will-change:transform;backface-visibility:hidden;-webkit-tap-highlight-color:transparent}
 .shelf-pack img{-webkit-user-drag:none;pointer-events:none}
+/* 옆 팩 어둡게: filter는 매 프레임 그림을 다시 그리므로 검은 덮개의 투명도로 한다 */
+.shelf-pack::after{content:"";position:absolute;inset:0;z-index:6;border-radius:6%/4.5%;background:#000;opacity:var(--dim,0);pointer-events:none;will-change:opacity}
 .shelf-pack .pf{box-shadow:0 22px 40px -18px rgba(0,0,0,.55)}
 .shelf-pack.on .pf{box-shadow:0 30px 50px -20px rgba(0,0,0,.6),0 0 0 1px rgba(255,255,255,.25)}
 .shelf-done{position:absolute;left:50%;top:44%;z-index:5;transform:translate(-50%,-50%) rotate(-10deg);font-size:12px;font-weight:800;letter-spacing:.18em;color:#fff;border:2px solid #fff;border-radius:4px;padding:3px 8px;background:rgba(0,0,0,.35)}
@@ -705,6 +712,7 @@ html[data-nav="b"] body.morphing .bottomnav{transform:translate(-50%,160%)}
 .btn.shelf-open{transition:transform .34s cubic-bezier(.4,0,.2,1),opacity .28s ease-in,background-color .15s ease-out,color .15s ease-out}
 .shelf-pack.lift .pf{animation:none;transform:translateY(-10px) scale(1.07);transition:transform .26s cubic-bezier(.3,1.4,.5,1),box-shadow .26s;box-shadow:0 40px 60px -22px rgba(0,0,0,.7)}
 .opening.morph{animation:none!important}
+.opening.prep{visibility:hidden!important}
 .opening.morph>:not(.ostage):not(#oFlash):not(#oBg){animation:morphIn .45s .38s var(--ease) backwards}
 @keyframes morphIn{from{opacity:0;transform:translateY(10px)}}
 /* 닫고 돌아올 때 새로 그려진 선반 아래 요소가 제자리로 올라온다 */
@@ -801,7 +809,7 @@ html[data-nav="b"] body.morphing .bottomnav{transform:translate(-50%,160%)}
   @media (hover:hover){.ostage.done .fan .fc:hover{transform:rotate(var(--r)) translateY(calc(var(--y) - 14px)) scale(1.04);z-index:9}}
   #oqInput.no,#qInput.no{animation:nope .4s}
   #oqInput.ok,#qInput.ok{animation:okPop .42s cubic-bezier(.34,1.56,.64,1)}
-  .shelf-pack.shine .pf-foil{animation:sheenOnce .7s ease-out}
+  .shelf-pack.shine .pf-foil::before{animation:sheenMoveOnce .7s ease-out}
   .bars.grow i{animation:barUp .55s var(--ease) backwards;animation-delay:calc(var(--k) * 16ms + .1s);transform-origin:50% 100%}
   .stk.up{animation:stkPop .9s .3s cubic-bezier(.34,1.56,.64,1) backwards}
   .stk.up::after{content:"+1";position:absolute;right:-4px;top:-2px;font-size:12px;font-weight:800;color:var(--signal);animation:floatUp 1.1s .45s ease-out both}
@@ -831,6 +839,26 @@ html[data-nav="b"] body.morphing .bottomnav{transform:translate(-50%,160%)}
 .nask>svg{width:17px;height:17px;flex:none;color:var(--signal)}
 .nask .x{width:32px;height:32px;display:grid;place-items:center;border:0;background:none;color:var(--ink-3);border-radius:8px;flex:none}
 @media (prefers-reduced-motion:no-preference){.nask{animation:goIn .35s var(--ease)}}
+
+
+/* 개봉 화면의 배치를 뒤 페이지와 떼어 계산한다 */
+.opening{contain:layout style}
+/* ---------- 터치 흔적 · 누르는 느낌 ---------- */
+/* 누를 때 파란 네모(탭 강조)·글자 선택·그림 끌기가 뜨지 않게 — 웹 티가 나는 흔적 */
+html{-webkit-tap-highlight-color:transparent}
+.opening,.ostage,.ocard,.pcard,.pf,.flip,.shelf,.pocket,.fan,.pack,.coach,.bottomnav,.switcher,.topbar{-webkit-user-select:none;user-select:none;-webkit-touch-callout:none}
+.opening input,.opening textarea{-webkit-user-select:text;user-select:text}
+img{-webkit-user-drag:none}
+/* 카드를 누르고 있는 동안 살짝 눌린다(scale 속성이라 기존 transform·애니메이션과 겹치지 않는다) */
+.ocard .oface,.opack,.pocket,.shelf-pack .pf,.fan .fc .pcard{transition:scale .14s ease-out}
+.flip{transition:transform .5s var(--ease),scale .14s ease-out}
+.ocard.press .oface{scale:.96}
+.opack.press{scale:.975}
+.pocket:active{scale:.96}
+.shelf-pack:active .pf{scale:.965}
+.shelf.dragging .shelf-pack:active .pf{scale:1}
+.flip:active{scale:.98}
+@media (prefers-reduced-motion:reduce){.ocard.press .oface,.opack.press,.pocket:active,.shelf-pack:active .pf,.flip:active{scale:1}}
 
 /* ---------- 발음 ---------- */
 .orow{display:flex;align-items:center;justify-content:center;gap:4px;min-height:26px;max-width:360px}
@@ -1732,7 +1760,21 @@ function packMorphOpen(x){
   // 옆 팩들은 원통 바깥쪽으로 밀려난다
   $$('#shelf .shelf-pack').forEach(o=>{if(o===b||o.style.visibility==='hidden')return;const sg=o.getBoundingClientRect().left<b.getBoundingClientRect().left?-1:1;
     o.animate([{opacity:o.style.opacity||1},{opacity:0,transform:o.style.transform+` translateX(${sg*140}px)`}],{duration:300,easing:'cubic-bezier(.4,0,1,1)',fill:'forwards'});});
-  setTimeout(()=>{const from=pf.getBoundingClientRect();b.style.visibility='hidden';openPack(x,{from});if(!OPEN)packMorphBack();},250);}
+  // 무거운 준비(카드 5장·그림·레이아웃)는 팩이 들리는 동안 화면에 안 보이게 미리 한다.
+  // 들림·밀려남은 변형·투명도 전환이라 합성 단계에서 돌아서, 그 사이 계산이 있어도 끊기지 않는다
+  const t0=performance.now();
+  requestAnimationFrame(()=>requestAnimationFrame(()=>{
+    openPack(x,{morph:true});
+    if(!OPEN){$('#opening').classList.remove('prep','morph');packMorphBack();return;}
+    const p=$('#oPack');if(p)p.getBoundingClientRect();
+    setTimeout(()=>{const from=pf.getBoundingClientRect();b.style.visibility='hidden';morphIn(from);},Math.max(0,260-(performance.now()-t0)));}));}
+// 선반 자리에서 개봉 팩 자리로 커진다
+function morphIn(f){const O=$('#opening'),p=$('#oPack'),my=OPEN;O.classList.remove('prep');
+  if(!p||!my){O.classList.remove('morph');return;}
+  const to=p.getBoundingClientRect(),dx=(f.left+f.width/2)-(to.left+to.width/2),dy=(f.top+f.height/2)-(to.top+to.height/2);
+  p.animate([{transform:`translate(${dx}px,${dy}px) scale(${f.width/to.width},${f.height/to.height})`},{transform:'translate(0,-6px) scale(1.035,1.02)',offset:.72},{transform:'none'}],{duration:640,easing:'cubic-bezier(.22,.9,.28,1)'});
+  O.animate([{backgroundColor:'rgba(14,14,15,0)'},{backgroundColor:'rgba(14,14,15,1)'}],{duration:380,easing:'ease-out'});
+  SFX.play('whoosh');setTimeout(()=>{if(OPEN===my){SFX.play('land');buzz(8);}},470);setTimeout(()=>{O.classList.remove('morph');if(OPEN===my)document.body.classList.add('opening-on');},900);setTimeout(()=>{const st=$('#oStage');if(st&&OPEN===my)st.focus();},80);}
 function packMorphBack(){if(!document.body.classList.contains('morphing'))return;document.body.classList.remove('morphing');
   const pk=$('#packs');if(pk){pk.classList.add('returning');setTimeout(()=>pk.classList.remove('returning'),700);}}
 function openPack(e,o={}){
@@ -1741,7 +1783,7 @@ function openPack(e,o={}){
   if(!o.free)useCharge();
   items.filter(it=>it.kind==='new').forEach(it=>pend[it.i]={v:it.v,t:dkey()});save('voca.pending',pend);
   logPack({opened:1});
-  startOpening(items,{mode:'pack',exp:e,intro:o.intro,back:o.back,from:o.from});
+  startOpening(items,{mode:'pack',exp:e,intro:o.intro,back:o.back,morph:o.morph});
 }
 // ----- 챕터 팩 디자인: 챕터마다 색 · 표지 그림 · 큰 번호. 시즌 팩은 검정과 금색
 const PACK_COLORS=[['#FF7A3D','#6E200C'],['#4C8DFF','#132766'],['#22C29A','#0A463A'],['#B45CFF','#361260'],['#FF5C8A','#651230'],['#F5B83D','#634006'],['#2EC4E0','#0A4050'],['#94A3C2','#252E48']];
@@ -1881,7 +1923,7 @@ function shelfLayout(){
     if(Math.abs(d)>3.2){b.style.visibility='hidden';return;}b.style.visibility='';
     b.style.transform=`translateX(${(d*gap).toFixed(1)}px) translateY(${(ad*18).toFixed(1)}px) scale(${(1-ad*.2).toFixed(3)}) rotate(${(dc*5).toFixed(2)}deg)`;
     b.style.opacity=(1-ad*.4).toFixed(3);
-    b.style.filter=`brightness(${(1-ad*.35).toFixed(3)}) saturate(${(1-ad*.3).toFixed(3)})`;b.style.zIndex=String(10-Math.round(ad*5));});
+    b.style.setProperty('--dim',(ad*.36).toFixed(3));b.style.zIndex=String(10-Math.round(ad*5));});
   const c=Math.max(0,Math.min(EXPS.length-1,Math.round(SH.p)));
   if(c!==SH.last){const first=SH.last<0;SH.last=c;const x=EXPS[c];
     if(x&&x.id!==expSel){expSel=x.id;save('voca.exp',expSel);daySel='all';save('voca.day',daySel);}
@@ -2132,23 +2174,38 @@ const FX=(()=>{
   function size(){dpr=Math.min(2,devicePixelRatio||1);cv.width=innerWidth*dpr;cv.height=innerHeight*dpr;cv.style.width=innerWidth+'px';cv.style.height=innerHeight+'px';}
   function ensure(){if(cv)return;cv=document.createElement('canvas');cv.className='fxc';cv.setAttribute('aria-hidden','true');document.body.appendChild(cv);g=cv.getContext('2d');size();addEventListener('resize',size);}
   function kick(){if(!raf){last=performance.now();raf=requestAnimationFrame(loop);}}
-  function star(x,y,r){g.beginPath();g.moveTo(x,y-r);g.quadraticCurveTo(x,y,x+r,y);g.quadraticCurveTo(x,y,x,y+r);g.quadraticCurveTo(x,y,x-r,y);g.quadraticCurveTo(x,y,x,y-r);g.fill();}
+  // 입자는 색마다 한 번 그려 둔 작은 그림(스프라이트)을 찍는다 — 매 프레임 원·별 경로를 새로 그리지 않는다
+  const SPR=new Map(),SS=64;
+  function sprite(kind,color){const key=kind+color;let c=SPR.get(key);if(c)return c;c=document.createElement('canvas');c.width=c.height=SS;const x=c.getContext('2d'),h=SS/2;x.fillStyle=color;
+    if(kind==='star'){const r=h-2;x.beginPath();x.moveTo(h,h-r);x.quadraticCurveTo(h,h,h+r,h);x.quadraticCurveTo(h,h,h,h+r);x.quadraticCurveTo(h,h,h-r,h);x.quadraticCurveTo(h,h,h,h-r);x.fill();}
+    else{x.globalAlpha=.35;x.beginPath();x.arc(h,h,h,0,Math.PI*2);x.fill();x.globalAlpha=1;x.beginPath();x.arc(h,h,h/2.6,0,Math.PI*2);x.fill();}
+    SPR.set(key,c);return c;}
+  // 지난 프레임에 그린 영역만 지운다(화면 전체를 지우지 않는다)
+  let dirty=null;
+  const grow=(b,x0,y0,x1,y1)=>b?(b[0]=Math.min(b[0],x0),b[1]=Math.min(b[1],y0),b[2]=Math.max(b[2],x1),b[3]=Math.max(b[3],y1),b):[x0,y0,x1,y1];
   function loop(now){
     const dt=Math.max(0,Math.min(.05,(now-last)/1000));last=now;
-    g.setTransform(dpr,0,0,dpr,0,0);g.clearRect(0,0,innerWidth,innerHeight);
+    g.setTransform(dpr,0,0,dpr,0,0);
+    if(dirty)g.clearRect(dirty[0]-2,dirty[1]-2,dirty[2]-dirty[0]+4,dirty[3]-dirty[1]+4);
+    let box=null;
     ps=ps.filter(p=>(p.t+=dt)<p.life);rings=rings.filter(r=>(r.t+=dt)<r.life);
-    for(const r of rings){const k=r.t/r.life,e=1-Math.pow(1-k,3);g.globalCompositeOperation='lighter';g.globalAlpha=(1-k)*.8;g.strokeStyle=r.color;g.lineWidth=r.w*(1-k)+.5;g.beginPath();g.arc(r.x,r.y,Math.max(0,r.r0+(r.r1-r.r0)*e),0,Math.PI*2);g.stroke();}
+    g.globalCompositeOperation='source-over';
     for(const p of ps){
       p.vx*=Math.pow(p.drag,dt*60);p.vy=p.vy*Math.pow(p.drag,dt*60)+p.grav*dt;p.x+=p.vx*dt;p.y+=p.vy*dt;p.rot+=p.vr*dt;
+      if(p.shape!=='shard'||p.t<0)continue;
       const k=p.t/p.life,a=k<.15?k/.15:1-(k-.15)/.85;
-      if(p.shape==='shard'){g.globalCompositeOperation='source-over';g.globalAlpha=Math.max(0,a);g.save();g.translate(p.x,p.y);g.rotate(p.rot);g.scale(1,Math.cos(p.rot*1.7));g.fillStyle=p.color;g.fillRect(-p.s,-p.s*.45,p.s*2,p.s*.9);g.restore();continue;}
-      g.globalCompositeOperation='lighter';
-      if(p.shape==='star'){const tw=.55+.45*Math.sin(p.t*18+p.ph);g.globalAlpha=Math.max(0,a*tw);g.fillStyle=p.color;star(p.x,p.y,p.s*(1.6-k*.6));continue;}
-      g.globalAlpha=Math.max(0,a*.35);g.fillStyle=p.color;g.beginPath();g.arc(p.x,p.y,p.s*2.6,0,Math.PI*2);g.fill();
-      g.globalAlpha=Math.max(0,a);g.beginPath();g.arc(p.x,p.y,Math.max(0,p.s*(1-k*.5)),0,Math.PI*2);g.fill();
-    }
-    g.globalAlpha=1;g.globalCompositeOperation='source-over';
-    if(ps.length||rings.length)raf=requestAnimationFrame(loop);else{raf=0;g.clearRect(0,0,innerWidth,innerHeight);}
+      g.globalAlpha=Math.max(0,a);g.save();g.translate(p.x,p.y);g.rotate(p.rot);g.scale(1,Math.cos(p.rot*1.7));g.fillStyle=p.color;g.fillRect(-p.s,-p.s*.45,p.s*2,p.s*.9);g.restore();
+      box=grow(box,p.x-p.s*1.5,p.y-p.s*1.5,p.x+p.s*1.5,p.y+p.s*1.5);}
+    g.globalCompositeOperation='lighter';
+    for(const r of rings){const k=r.t/r.life,e=1-Math.pow(1-k,3),rad=Math.max(0,r.r0+(r.r1-r.r0)*e),lw=r.w*(1-k)+.5;g.globalAlpha=(1-k)*.8;g.strokeStyle=r.color;g.lineWidth=lw;g.beginPath();g.arc(r.x,r.y,rad,0,Math.PI*2);g.stroke();
+      box=grow(box,r.x-rad-lw,r.y-rad-lw,r.x+rad+lw,r.y+rad+lw);}
+    for(const p of ps){if(p.shape==='shard'||p.t<0)continue;
+      const k=p.t/p.life,a=k<.15?k/.15:1-(k-.15)/.85;let rr;
+      if(p.shape==='star'){g.globalAlpha=Math.max(0,a*(.55+.45*Math.sin(p.t*18+p.ph)));rr=p.s*(1.6-k*.6)*SS/(SS-4);g.drawImage(sprite('star',p.color),p.x-rr,p.y-rr,rr*2,rr*2);}
+      else{g.globalAlpha=Math.max(0,a);rr=p.s*2.6*(1-k*.2);g.drawImage(sprite('dot',p.color),p.x-rr,p.y-rr,rr*2,rr*2);}
+      box=grow(box,p.x-rr,p.y-rr,p.x+rr,p.y+rr);}
+    g.globalAlpha=1;g.globalCompositeOperation='source-over';dirty=box;
+    if(ps.length||rings.length)raf=requestAnimationFrame(loop);else{raf=0;g.clearRect(0,0,innerWidth,innerHeight);dirty=null;}
   }
   function burst(x,y,o={}){if(still())return;ensure();
     const {n=16,colors=['#fff'],speed=[120,340],grav=260,life=[.7,1.25],size=[1.8,4],shape='dot',angle=0,spread=Math.PI*2,drag=.94}=o;
@@ -2187,15 +2244,18 @@ function startOpening(items,o={}){
   $('#oQuiz').hidden=true;$('#opening').classList.remove('asking');
   $('#oActs').hidden=true;$('#oSkip').hidden=false;
   items.forEach(it=>{const {w,x}=CARD_WORD.get(it.i);prefetch(w.w);prefetch(sent(x));});SFX.warm();
-  OPEN.back=o.back||document.activeElement;$('#opening').hidden=false;$('#opening').classList.remove('out');document.body.classList.add('opening-on');syncOpening();setTimeout(()=>st.focus(),50);
-  if(OPEN.phase==='sealed'&&o.from&&!calm()){const my=OPEN,O=$('#opening'),p=$('#oPack');O.classList.add('morph');
-    const to=p.getBoundingClientRect(),f=o.from,dx=(f.left+f.width/2)-(to.left+to.width/2),dy=(f.top+f.height/2)-(to.top+to.height/2);
-    p.animate([{transform:`translate(${dx}px,${dy}px) scale(${f.width/to.width},${f.height/to.height})`},{transform:'translate(0,-6px) scale(1.035,1.02)',offset:.72},{transform:'none'}],{duration:640,easing:'cubic-bezier(.22,.9,.28,1)'});
-    O.animate([{backgroundColor:'rgba(14,14,15,0)'},{backgroundColor:'rgba(14,14,15,1)'}],{duration:380,easing:'ease-out'});
-    SFX.play('whoosh');setTimeout(()=>{if(OPEN===my){SFX.play('land');buzz(8);}},470);setTimeout(()=>O.classList.remove('morph'),900);}
+  OPEN.back=o.back||document.activeElement;$('#opening').hidden=false;$('#opening').classList.remove('out');if(!o.morph)document.body.classList.add('opening-on');syncOpening();setTimeout(()=>st.focus(),50);
+  if(OPEN.phase==='sealed'&&o.morph&&!calm()){$('#opening').classList.add('prep','morph');}
   else if(OPEN.phase==='sealed'&&!calm()){const my=OPEN;st.classList.add('enter');SFX.play('whoosh');
     setTimeout(()=>{if(OPEN!==my)return;SFX.play('land');buzz(8);},430);setTimeout(()=>{if(OPEN===my)st.classList.remove('enter');},760);}
 }
+// 문제가 나오고 들어갈 때 무대 크기가 바뀐다 — 너비를 매 프레임 바꾸면 레이아웃을 다시 계산하므로,
+// 한 번에 바꾼 뒤 변형(transform)으로 이전 크기에서 이어지게 보여 준다
+function stageFlip(fn){const st=$('#oStage');if(!st||calm()){fn();return;}
+  const a=st.getBoundingClientRect();fn();const b=st.getBoundingClientRect();if(!b.width||!a.width)return;
+  const sc=a.width/b.width,dx=(a.left+a.width/2)-(b.left+b.width/2),dy=(a.top+a.height/2)-(b.top+b.height/2);
+  if(Math.abs(sc-1)<.01&&Math.abs(dx)<1&&Math.abs(dy)<1)return;
+  st.animate([{transform:`translate(${dx}px,${dy}px) scale(${sc})`},{transform:'none'}],{duration:420,easing:'cubic-bezier(.16,1,.3,1)'});}
 function openLabel(it){
   if(it.kind==='new')return CARD_WORD.get(it.i).w.m;
   if(OPEN.mode==='pack')return it.res||'';
@@ -2254,7 +2314,7 @@ function tapOpening(){
     SFX.play(slow?'charge':'lift');buzz(slow?[6,60,6,60,6,60,8]:6);if(slow)light('gold',.22);
     setTimeout(()=>{if(!OPEN||OPEN.items[OPEN.k]!==it){if(OPEN)OPEN.charging=false;return;}OPEN.charging=false;c.classList.remove('charge');revealCard(c,it,tier);},slow?780:220);
     return;}
-  $('#oQuiz').hidden=true;$('#opening').classList.remove('asking');
+  if($('#opening').classList.contains('asking'))stageFlip(()=>{$('#oQuiz').hidden=true;$('#opening').classList.remove('asking');});else $('#oQuiz').hidden=true;
   {const no=c.classList.contains('missed'),yes=c.classList.contains('solved');
     if(no||yes)c.style.setProperty('--dir',no?-1:1);else if(!c.style.getPropertyValue('--dir'))c.style.setProperty('--dir',1);
     c.classList.add(no?'out-no':yes?'out-ok':'out');SFX.play(no?'flingNo':yes?'flingOk':'fling');
@@ -2276,7 +2336,7 @@ function askCard(it){
   if(fmt==='mc'){OPEN.q.opts=wordChoices(w);body=`<div class="oq-ch">${OPEN.q.opts.map((o,k)=>`<button type="button" class="oq-c" data-k="${k}"><span>${k+1}</span>${esc(o.w)}</button>`).join('')}</div>`;}
   else body=`<form class="oq-in" id="oqForm" autocomplete="off"><input id="oqInput" autocapitalize="off" autocorrect="off" spellcheck="false" placeholder="${fmt==='type'?`${esc(ans[0])}… ${ans.length}글자`:'들리는 단어'}" aria-label="답 입력"><button class="btn primary" type="submit">확인</button></form>${fmt==='listen'?'<button type="button" class="btn ghost sm oq-say">다시 듣기</button>':''}`;
   const Z=$('#oQuiz');Z.innerHTML=`<div class="oq-q"><p class="oq-s" lang="en">${exEn(x,'blank')}</p><p class="oq-k">${exKo(x)}</p></div><div class="oq-dock">${body}<button type="button" class="btn primary oq-go" tabindex="-1" aria-hidden="true">${OPEN.k>=OPEN.items.length-1?'결과 보기':'다음 카드'}</button></div>`;Z.hidden=false;
-  Z.classList.remove('in');void Z.offsetWidth;Z.classList.add('in');$('#opening').classList.add('asking');
+  Z.classList.remove('in');void Z.offsetWidth;Z.classList.add('in');stageFlip(()=>$('#opening').classList.add('asking'));
   if(fmt==='listen')setTimeout(()=>sayNow(x.ex.replace(/[\[\]]/g,''),'en'),350);
   if(fmt!=='mc')setTimeout(()=>{const inp=$('#oqInput');if(inp)inp.focus();},380);
 }
@@ -2346,15 +2406,15 @@ function closeOpening(){
 }
 {const st=$('#oStage');let d=null;
   st.addEventListener('pointerdown',e=>{if(!OPEN||OPEN.k>=OPEN.items.length||OPEN.asking)return;
-    d={x:e.clientX,id:e.pointerId,moved:false,seal:OPEN.phase==='sealed',w:st.getBoundingClientRect().width,c:$$('#oStage .ocard')[OPEN.k]};try{st.setPointerCapture(e.pointerId);}catch(err){}});
-  st.addEventListener('pointermove',e=>{if(!d||e.pointerId!==d.id)return;const dx=e.clientX-d.x;if(Math.abs(dx)>6)d.moved=true;if(!d.moved)return;
+    d={x:e.clientX,id:e.pointerId,moved:false,seal:OPEN.phase==='sealed',w:st.getBoundingClientRect().width,c:$$('#oStage .ocard')[OPEN.k]};d.pr=d.seal?$('#oPack'):d.c;if(d.pr)d.pr.classList.add('press');try{st.setPointerCapture(e.pointerId);}catch(err){}});
+  st.addEventListener('pointermove',e=>{if(!d||e.pointerId!==d.id)return;const dx=e.clientX-d.x;if(Math.abs(dx)>6){if(!d.moved&&d.pr)d.pr.classList.remove('press');d.moved=true;}if(!d.moved)return;
     if(d.seal){const p=$('#oPack');if(!p||OPEN.phase!=='sealed')return;d.prog=Math.min(1,Math.abs(dx)/(d.w*.8));p.style.setProperty('--cut',`${d.prog*100}%`);p.classList.add('cutting');{const st=Math.floor(d.prog*8);if(st>(d.step||0)){d.step=st;SFX.play('tick',st);buzz(4);const r=p.getBoundingClientRect(),cx=dx>0?r.left+r.width*(.05+.9*d.prog):r.right-r.width*(.05+.9*d.prog);FX.burst(cx,r.top+r.height*.085,{n:4,colors:['#fff','#FFD9B8','#d8d2c8'],speed:[40,150],angle:-Math.PI/2,spread:2.4,grav:420,size:[1,2.2],life:[.25,.5]});}}p.classList.toggle('rtl',dx<0);
       if(d.prog>=1){d=null;tearPack();}return;}
     if(!OPEN.flipped||OPEN.asking)return;
     const now=performance.now();d.v=(e.clientX-(d.lx??d.x))/Math.max(1,now-(d.lt??now-16));d.lx=e.clientX;d.lt=now;
     const rx=Math.sign(dx)*Math.pow(Math.abs(dx),.92);
     d.c.style.transition='none';d.c.style.transform=`translate(${rx}px,${-Math.abs(rx)*.06}px) rotate(${rx/13}deg) rotateY(180deg)`;});
-  const end=e=>{if(!d||e.pointerId!==d.id)return;const dx=e.clientX-d.x,{c,moved,seal,prog=0}=d,d0v=d.v||0;d=null;
+  const end=e=>{if(!d||e.pointerId!==d.id)return;if(d.pr)d.pr.classList.remove('press');const dx=e.clientX-d.x,{c,moved,seal,prog=0}=d,d0v=d.v||0;d=null;
     if(seal){const p=$('#oPack');if(!p||OPEN.phase!=='sealed')return;p.classList.remove('cutting');
       if(e.type==='pointercancel'){p.style.setProperty('--cut','0%');return;}
       if(!moved){autoTear();return;}
